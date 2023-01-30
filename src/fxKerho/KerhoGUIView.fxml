@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import fi.jyu.mit.fxgui.ComboBoxChooser?>
+<?import fi.jyu.mit.fxgui.ListChooser?>
+<?import fi.jyu.mit.fxgui.StringGrid?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxKerho.KerhoGUIController" styleClass="vaaleaVihrea">
+   <top>
+      <MenuBar styleClass="vaaleaVihrea" BorderPane.alignment="CENTER">
+        <menus>
+          <Menu text="_Tiedosto">
+            <items>
+                  <MenuItem mnemonicParsing="false" onAction="#handleTallenna" text="Tallenna">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+              <MenuItem mnemonicParsing="false" onAction="#handleAvaa" text="Avaa..." />
+                  <MenuItem mnemonicParsing="false" onAction="#handleTulosta" text="Tulosta...">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="P" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#handleLopeta" text="Lopeta">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+            </items>
+               <accelerator>
+                  <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+               </accelerator>
+          </Menu>
+          <Menu text="_Muokkaa">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#handleUusiJasen" text="Lisää uusi jäsen">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#handleMuokkaa" text="Muokkaa jäsenen tietoja" />
+                  <MenuItem mnemonicParsing="false" text="Lisää kierros" />
+                  <MenuItem mnemonicParsing="false" text="Poista kierros" />
+                  <MenuItem mnemonicParsing="false" onAction="#handlePoistaJasen" text="Poista jäsen..." />
+            </items>
+          </Menu>
+          <Menu text="_Apua">
+            <items>
+                  <MenuItem mnemonicParsing="false" onAction="#handleApua" text="Apua" />
+              <MenuItem mnemonicParsing="false" onAction="#handleTietoja" text="Tietoja..." />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <SplitPane dividerPositions="0.5, 0.5" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <items>
+            <BorderPane maxWidth="160.0" minWidth="140.0" prefHeight="200.0" prefWidth="138.0">
+               <center>
+                  <ListChooser rivit="Fore Felix&#10;Golffari Konrad&#10;Greeni Kalle&#10;Mulligan Mikko&#10;Ping Pinja&#10;Teetime Teemu&#10;Teetime Tiina&#10;" BorderPane.alignment="CENTER" />
+               </center>
+               <top>
+                  <VBox BorderPane.alignment="CENTER">
+                     <children>
+                        <Label text="Hakuehto" />
+                        <ComboBoxChooser maxWidth="300.0" rivit="nimi&#10;pelaajanumero&#10;katuosoite&#10;postiosoite&#10;jäsenmaksu&#10;hcp&#10;osakenumero" />
+                        <TextField />
+                        <Label alignment="CENTER" maxWidth="300.0" text="Jäsenet" />
+                     </children>
+                  </VBox>
+               </top>
+            </BorderPane>
+            <BorderPane>
+               <top>
+                  <Label text="Jäsenen tiedot" BorderPane.alignment="CENTER" />
+               </top>
+               <center>
+                  <ScrollPane fitToWidth="true" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <content>
+                        <GridPane hgap="10.0">
+                          <columnConstraints>
+                            <ColumnConstraints fillWidth="false" halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
+                            <ColumnConstraints hgrow="ALWAYS" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <padding>
+                              <Insets left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                           <children>
+                              <Label text="Nimi" />
+                              <Label text="Pelaajanumero" GridPane.rowIndex="1" />
+                              <Label text="Katuosoite" GridPane.rowIndex="2" />
+                              <Label text="Postiosoite" GridPane.rowIndex="3" />
+                              <Label text="Jäsenmaksu" GridPane.rowIndex="4" />
+                              <Label text="HCP" GridPane.rowIndex="6" />
+                              <TextField GridPane.columnIndex="1" />
+                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                              <Label text="Osakkeen numero" GridPane.rowIndex="5" />
+                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                           </children>
+                        </GridPane>
+                     </content>
+                  </ScrollPane>
+               </center>
+            </BorderPane>
+            <BorderPane>
+               <top>
+                  <Label text="Kierroshistoria" BorderPane.alignment="CENTER" />
+               </top>
+               <center>
+                  <StringGrid emptyStyleClass="" rivit="Pvm|Tulos|HCP|Kenttä&#10;9.8.2022|120|40,7|Paras Golkferho&#10;" BorderPane.alignment="CENTER" />
+               </center>
+            </BorderPane>
+         </items>
+      </SplitPane>
+   </center>
+   <bottom>
+      <BorderPane BorderPane.alignment="CENTER">
+         <left>
+            <HBox spacing="10.0" BorderPane.alignment="CENTER">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <children>
+                  <Button onAction="#handleUusiJasen" text="_Uusi jäsen">
+                     <tooltip>
+                        <Tooltip text="Lisää uusi jäsen" />
+                     </tooltip>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#handleTallenna" text="Tallenna">
+                     <tooltip>
+                        <Tooltip text="Tallenna tiedot" />
+                     </tooltip>
+                  </Button>
+               </children>
+            </HBox>
+         </left>
+         <right>
+            <HBox spacing="10.0" BorderPane.alignment="CENTER">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <children>
+                  <Button mnemonicParsing="false" text="Lisää kierros" />
+                  <Button mnemonicParsing="false" text="Poista kierros" />
+               </children>
+            </HBox>
+         </right>
+      </BorderPane>
+   </bottom>
+</BorderPane>
