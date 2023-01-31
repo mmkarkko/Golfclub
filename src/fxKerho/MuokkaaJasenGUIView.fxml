@@ -23,8 +23,10 @@
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -40,34 +42,46 @@
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label text="Katuosoite" GridPane.rowIndex="2">
+                  <Label text="Katuosoite" GridPane.rowIndex="5">
                      <GridPane.margin>
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </GridPane.margin>
                   </Label>
                   <TextField text="Pelaaja Petteri" GridPane.columnIndex="1" />
                   <TextField style="-fx-background-color: #D60000;" styleClass="virheellinenSyote" text="19o" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextField text="Pelimiehentie 1" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <TextField text="22222 Pelilä" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <TextField text="OK" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <Label text="Postiosoite" GridPane.rowIndex="3">
+                  <TextField text="Pelimiehentie 1" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <TextField text="22222 Pelilä" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <TextField text="OK" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                  <Label text="Postiosoite" GridPane.rowIndex="6">
                      <GridPane.margin>
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label text="Jäsenmaksu" GridPane.rowIndex="4">
+                  <Label text="Jäsenmaksu" GridPane.rowIndex="8">
                      <GridPane.margin>
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label text="Osakkeen numero" GridPane.rowIndex="5" />
-                  <Label text="HCP" GridPane.rowIndex="6">
+                  <Label text="Osakkeen numero" GridPane.rowIndex="7" />
+                  <Label text="HCP" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField text="15" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <TextField text="5,4" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <TextField text="15" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <TextField text="5,4" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label text="Puhelinnumero" GridPane.rowIndex="3">
+                     <GridPane.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField text="000-9999999" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField text="petepelaaja@golffari.fi" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Label text="Sähköposti" GridPane.rowIndex="4">
+                     <GridPane.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </GridPane.margin>
+                  </Label>
                </children>
                <BorderPane.margin>
                   <Insets top="5.0" />
