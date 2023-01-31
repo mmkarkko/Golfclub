@@ -47,7 +47,11 @@
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField text="Pelaaja Petteri" GridPane.columnIndex="1" />
+                  <TextField text="Pelaaja Petteri" GridPane.columnIndex="1">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </TextField>
                   <TextField style="-fx-background-color: #D60000;" styleClass="virheellinenSyote" text="19o" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <TextField text="Pelimiehentie 1" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   <TextField text="22222 Pelilä" GridPane.columnIndex="1" GridPane.rowIndex="6" />
