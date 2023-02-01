@@ -1,11 +1,11 @@
-|ID   |katuosoite      |postiosoite      |
-|190  |Pelimiehentie 1 |22222 Pelilä     |
-|231  |Tiikuja 1       |11111 Tiiala     |
-|232  |Tiikuja 1       |11111 Tiiala     |
-|239  |Forenkuja 100A  |66666 Golffila   |
-|290  |Väylä 18        |60606 Väyliäinen |
-|300  |Kasiväylä 8 a 8 |88888 Golfkylä   |
-|355  |Mönkäänmäntie 1 |22222 Pelilä     |
-|425  |Pinjakuja 410   |42542 Pinjala    |
-|499  |Mailatie 5      |12121 Viheriö    |
-|666  |Golfkuja 6      |66666 Golffila   |
+|pelaajaID |katuosoite      |postiosoite      |
+|1         |Pelimiehentie 1 |22222 Pelilä     |
+|2         |Tiikuja 1       |11111 Tiiala     |
+|3         |Tiikuja 1       |11111 Tiiala     |
+|4         |Forenkuja 100A  |66666 Golffila   |
+|5         |Väylä 18        |60606 Väyliäinen |
+|6         |Kasiväylä 8 a 8 |88888 Golfkylä   |
+|7         |Mönkäänmäntie 1 |22222 Pelilä     |
+|8         |Pinjakuja 410   |42542 Pinjala    |
+|9         |Mailatie 5      |12121 Viheriö    |
+|10        |Golfkuja 6      |66666 Golffila   |

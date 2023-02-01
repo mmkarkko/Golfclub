@@ -1,11 +1,11 @@
-pelaajaID |sukunimi etunimi |HCP  |puhelinnumero|sähköposti               |osakenro|jäsenmaksu|
-190       |Pelaaja Petteri  |5,4  |000-9999999  |petepelaaja@golffari.fi  |15      |OK        |
-231       |Teetime Teemu    |19,3 |111-2221111  |tsteetime@golffari.fi    |        |OK        |
-232       |Teetime Tiina    |11,0 |010-0101010  |tiinateetime@golffari.fi |        |OK        |
-239       |Fore Felix       |30,1 |000-1919191  |fore-felix@golffari.fi   |50      |OK        |
-290       |Driver Diana     |15,6 |222-0101010  |di_driver@golffari.fi    |        |OK        |
-300       |Greeni Kalle     |25,6 |020-2020202  |greenik@golffari.fi      |60      |OK        |
-355       |Mulligan Mikko   |18,0 |444-1112222  |mmulligan@golffari.fi    |17      |OK        |
-425       |Ping Pinja       |4,3  |425-4250425  |pingpin@golffari.fi      |23      |OK        |
-499       |Range Raija      |35,3 |000-9485235  |ranger@golffari.fi       |90      |OK        |
-666       |Golffari Konrad  |6,7  |060-6660666  |goko@golffari.fi         |44      |OK        |
+pelaajaID |sukunimi etunimi |HCP  |puhelinnumero|sähköposti               |osakenro|jäsenmaksu|kotikenttä |
+1         |Pelaaja Petteri  |5,4  |000-9999999  |petepelaaja@golffari.fi  |15      |OK        |1          |
+2         |Teetime Teemu    |19,3 |111-2221111  |tsteetime@golffari.fi    |        |OK        |1          |
+3         |Teetime Tiina    |11,0 |010-0101010  |tiinateetime@golffari.fi |        |OK        |1          |
+4         |Fore Felix       |30,1 |000-1919191  |fore-felix@golffari.fi   |50      |OK        |1          |
+5         |Driver Diana     |15,6 |222-0101010  |di_driver@golffari.fi    |        |OK        |1          |
+6         |Greeni Kalle     |25,6 |020-2020202  |greenik@golffari.fi      |60      |OK        |1          |
+7         |Mulligan Mikko   |18,0 |444-1112222  |mmulligan@golffari.fi    |17      |OK        |1          |
+8         |Ping Pinja       |4,3  |425-4250425  |pingpin@golffari.fi      |23      |OK        |1          |
+9         |Range Raija      |35,3 |000-9485235  |ranger@golffari.fi       |90      |OK        |1          |
+10        |Golffari Konrad  |6,7  |060-6660666  |goko@golffari.fi         |44      |OK        |1          |
