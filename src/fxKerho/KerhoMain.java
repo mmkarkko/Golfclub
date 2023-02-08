@@ -17,7 +17,7 @@ public class KerhoMain extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader ldr = new FXMLLoader(getClass().getResource("KerhoGUIView.fxml"));
+            final FXMLLoader ldr = new FXMLLoader(getClass().getResource("KerhoGUIView.fxml"));
             final Pane root = (Pane)ldr.load();
             final KerhoGUIController kerhoCtrl = (KerhoGUIController)ldr.getController();
             

@@ -22,11 +22,28 @@ public class KerhoGUIController implements Initializable {
     }
     
     /**
+     * Käsitellään uuden kierroksen lisääminen
+     * @param event //
+     */
+    @FXML public void handleLisaaKierros(ActionEvent event) {
+        //
+    }
+
+    
+    /**
+     * Käsitellään kierroksen poistaminen
+     * @param event //
+     */
+    @FXML public void handlePoistaKierros(ActionEvent event) {
+        //
+    }
+    
+    /**
      * Käsitellään apua-toiminto
      * @param event 
      */
     @FXML void handleApua(ActionEvent event) {
-        //
+        Dialogs.showMessageDialog("Ei osata vielä auttaa");
     }
 
     /**
@@ -34,7 +51,8 @@ public class KerhoGUIController implements Initializable {
      * @param event
      */
     @FXML void handleAvaa(ActionEvent event) {
-        //
+        //Dialogs.showMessageDialog("Ei osata vielä avata");
+        avaa();
     }
 
     /**
@@ -49,8 +67,9 @@ public class KerhoGUIController implements Initializable {
      * Käsitellään tietojen muokkaaminen
      * @param event
      */
-    @FXML void handleMuokkaa(ActionEvent event) {
-        //
+    @FXML void handleMuokkaaJasen(ActionEvent event) {
+        Dialogs.showMessageDialog("Ei osata vielä muokata");
+        //ModalController.showModal(MuokkaaJasenGUIController.class.getResource("MuokkaaJasenGUIView.fxml"), "Jäsen", modalityStage, oletus);
     }
 
     /**
@@ -58,7 +77,7 @@ public class KerhoGUIController implements Initializable {
      * @param event
      */
     @FXML void handlePoistaJasen(ActionEvent event) {
-        //
+        Dialogs.showMessageDialog("Ei osata vielä poistaa");
     }
 
     /**
@@ -74,7 +93,7 @@ public class KerhoGUIController implements Initializable {
      * @param event
      */
     @FXML void handleTietoja(ActionEvent event) {
-        //
+        Dialogs.showMessageDialog("Ei osata vielä näyttää tietoja");
     }
 
     /**
@@ -82,16 +101,18 @@ public class KerhoGUIController implements Initializable {
      * @param event
      */
     @FXML void handleTulosta(ActionEvent event) {
-        //
+        Dialogs.showMessageDialog("Ei osata vielä tulostaa");
     }
     
     /**
      * Käsitellään uuden jäsenen lisääminen
-     * @param event
+     * @param event 
      */
     @FXML void handleUusiJasen(ActionEvent event) {
         Dialogs.showMessageDialog("Ei osata vielä lisätä");
     }
+    
+    // ============================================================
     
     /**
      * Tietojen tallennus
@@ -108,4 +129,17 @@ public class KerhoGUIController implements Initializable {
         tallenna();
         return true;
     }
+    
+    
+    /**
+     * @return false, jos painetaan peruuta
+     */
+    public boolean avaa() {
+        String uusinimi = LandingGUIController.kysyNimi(null, "Paras golfkerho");
+        if (uusinimi == null)return false;
+        //lueTiedosto(uusinimi);
+        return true;
+    }
+
+
 }

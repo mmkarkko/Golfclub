@@ -55,9 +55,9 @@
                         <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
-                  <MenuItem mnemonicParsing="false" onAction="#handleMuokkaa" text="Muokkaa jäsenen tietoja" />
-                  <MenuItem mnemonicParsing="false" text="Lisää kierros" />
-                  <MenuItem mnemonicParsing="false" text="Poista kierros" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleMuokkaaJasen" text="Muokkaa jäsenen tietoja" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleLisaaKierros" text="Lisää kierros" />
+                  <MenuItem mnemonicParsing="false" onAction="#handlePoistaKierros" text="Poista kierros" />
                   <MenuItem mnemonicParsing="false" onAction="#handlePoistaJasen" text="Poista jäsen..." />
             </items>
           </Menu>
