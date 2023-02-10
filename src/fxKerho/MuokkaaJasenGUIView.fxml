@@ -47,12 +47,12 @@
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField text="Pelaaja Petteri" GridPane.columnIndex="1">
+                  <TextField fx:id="textPelaajanNimi" text="Pelaaja Petteri" GridPane.columnIndex="1">
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>
                   </TextField>
-                  <TextField style="-fx-background-color: #D60000;" styleClass="virheellinenSyote" text="19o" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField styleClass="virheellinenSyote" text="1" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <TextField text="Pelimiehentie 1" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   <TextField text="22222 Pelilä" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                   <TextField text="OK" GridPane.columnIndex="1" GridPane.rowIndex="8" />
@@ -72,7 +72,7 @@
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField text="15" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <TextField text="1" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                   <TextField text="5,4" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Label text="Puhelinnumero" GridPane.rowIndex="3">
                      <GridPane.margin>
@@ -103,14 +103,11 @@
          </center>
       </BorderPane>
    </top>
-   <center>
-      <Label text="pelaajanumero: Syötä vain numeroita" textFill="RED" BorderPane.alignment="CENTER" />
-   </center>
    <bottom>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <buttons>
-          <Button mnemonicParsing="false" text="OK" />
-            <Button mnemonicParsing="false" text="Peruuta" />
+          <Button mnemonicParsing="false" onAction="#handleOK" text="OK" />
+            <Button mnemonicParsing="false" onAction="#handleCancel" text="Peruuta" />
         </buttons>
       </ButtonBar>
    </bottom>

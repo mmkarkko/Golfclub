@@ -10,77 +10,91 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxKerho.MuokkaaKierrosGUIController">
+<BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxKerho.MuokkaaJasenGUIController">
    <top>
       <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <center>
-            <GridPane BorderPane.alignment="CENTER">
+            <GridPane minHeight="-Infinity" prefHeight="250.0" BorderPane.alignment="CENTER">
               <columnConstraints>
-                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="130.0" />
+                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="115.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="150.0" />
               </columnConstraints>
               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
+                  <Label text="Nimi">
+                     <GridPane.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </GridPane.margin>
+                  </Label>
                   <Label text="Pelaajanumero" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label text="Pelatut reiät" GridPane.rowIndex="5">
+                  <Label text="Katuosoite" GridPane.rowIndex="5">
                      <GridPane.margin>
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="textPelaajanNimi" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <TextField fx:id="textPelaajanNimi" GridPane.columnIndex="1">
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>
                   </TextField>
+                  <TextField editable="false" styleClass="virheellinenSyote" text="11" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   <TextField GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                  <Label text="HCP" GridPane.rowIndex="6">
+                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                  <Label text="Postiosoite" GridPane.rowIndex="6">
                      <GridPane.margin>
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label text="Kenttä" GridPane.rowIndex="7">
+                  <Label text="Jäsenmaksu" GridPane.rowIndex="8">
+                     <GridPane.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label text="Osakkeen numero" GridPane.rowIndex="7">
                      <GridPane.margin>
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </GridPane.margin></Label>
-                  <Label text="Päivämäärä" GridPane.rowIndex="2">
+                  <Label text="HCP" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField text="Paras Golfkerho" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="7" />
                   <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label text="Lähtöaika" GridPane.rowIndex="3">
+                  <Label text="Puhelinnumero" GridPane.rowIndex="3">
                      <GridPane.margin>
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </GridPane.margin>
                   </Label>
                   <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <Label text="Onko tasoituskierros" GridPane.rowIndex="4">
+                  <Label text="Sähköposti" GridPane.rowIndex="4">
                      <GridPane.margin>
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label text="KierrosID">
+                  <Label text="Kotikenttä" GridPane.rowIndex="9">
                      <GridPane.margin>
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField editable="false" text="14" GridPane.columnIndex="1" />
+                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="9" />
                </children>
                <BorderPane.margin>
                   <Insets top="5.0" />
@@ -95,7 +109,7 @@
    <bottom>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <buttons>
-          <Button mnemonicParsing="false" onAction="#handleTallenna" text="OK" />
+          <Button mnemonicParsing="false" onAction="#handleOK" text="OK" />
             <Button mnemonicParsing="false" onAction="#handleCancel" text="Peruuta" />
         </buttons>
       </ButtonBar>

@@ -1,21 +1,33 @@
 package fxKerho;
 
+import fi.jyu.mit.fxgui.Dialogs;
 import fi.jyu.mit.fxgui.ModalController;
 import fi.jyu.mit.fxgui.ModalControllerInterface;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
+import javafx.scene.control.TextArea;
 
 /**
  * @author Miia Arkko
  * @version 10.2.2023
  *
  */
-public class TietojaGUIController  implements ModalControllerInterface<String> {
-    
+public class TulostusGUIController  implements ModalControllerInterface<String>{
+
+    @FXML  private TextArea tulostusAlue;
+
+    @FXML void handleOK(ActionEvent event) {
+        ModalController.closeStage(tulostusAlue);
+    }
+
+    @FXML void handleTulosta(ActionEvent event) {
+        Dialogs.showMessageDialog("Ei osata vielä tulostaa");
+    }
+
     @Override
     public String getResult() {
-        return vastaus;
+        // TODO Auto-generated method stub
+        return null;
     }
 
     @Override
@@ -29,12 +41,4 @@ public class TietojaGUIController  implements ModalControllerInterface<String> {
         // TODO Auto-generated method stub
         
     }
-    
-    
-    // ===================================================
-    
-    private String vastaus = null;
-    
-    
-    
 }

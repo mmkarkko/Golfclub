@@ -6,38 +6,30 @@ import fi.jyu.mit.fxgui.ModalControllerInterface;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+
 /**
  * @author Miia Arkko
  * @version 10.2.2023
+ *
  */
+public class UusiJasenGUIController implements ModalControllerInterface<String> {
 
-
-public class UusiKerhoGUIController implements ModalControllerInterface<String> {
-
-    @FXML private TextField kerhonPono;
-
-    @FXML private TextField kerhonPuh;
-
-    @FXML private TextField textKerhonKatu;
-
-    @FXML private TextField textKerhonNimi;
-
-    @FXML private TextField textKerhonNumero;
-
+    @FXML  private TextField textPelaajanNimi;
+    
     /**
-     * Tapahtumakäsittelijä peruuta-painikkeen painamiselle
+     * Käsitellään peruuta-painikkeen painaminen
      * @param event
      */
     @FXML void handleCancel(ActionEvent event) {
-        ModalController.closeStage(textKerhonNimi);
+        ModalController.closeStage(textPelaajanNimi);
     }
-
+    
     /**
-     * Käsittelijä kun painetaan ok-näppäintä
+     * Käsitellään ok-painikkeen painaminen
      * @param event
      */
-    @FXML void handleTallennaKerho(ActionEvent event) {
-        Dialogs.showMessageDialog("Ei osata vielä tallentaa uutta kerhoa");
+    @FXML void handleOK(ActionEvent event) {
+        Dialogs.showMessageDialog("Ei osata vielä");
     }
 
     @Override
@@ -57,5 +49,7 @@ public class UusiKerhoGUIController implements ModalControllerInterface<String> 
         // TODO Auto-generated method stub
         
     }
-
+    
+    
+      
 }

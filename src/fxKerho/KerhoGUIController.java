@@ -3,6 +3,8 @@ import javafx.event.ActionEvent;
 //import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TextField;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import fi.jyu.mit.fxgui.*;
@@ -11,36 +13,55 @@ import fi.jyu.mit.fxgui.*;
  * Luokka Golfkerhon käyttöliittymien tapahtumien hoitamiseksi
  * 
  * @author Miia Arkko
- * @version 30.1.2023
+ * @version 10.2.2023
  *
  */
 public class KerhoGUIController implements Initializable {
+    @FXML private TextField textPelaajaEmail;
+    @FXML private TextField textPelaajaHCP;
+    @FXML private TextField textPelaajaID;
+    @FXML private TextField textPelaajaKatu;
+    @FXML private TextField textPelaajaNimi;
+    @FXML private TextField textPelaajaOsakeNro;
+    @FXML private TextField textPelaajaPono;
+    @FXML private TextField textPelaajaPuh;
+    @FXML private TextField textPelaajanJasenmaksu;
+    @FXML private TextField textPelaajanKotiKentta;
     
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
-        //
+        ModalController.showModal(LandingGUIController.class.getResource("LandingGUIView.fxml"), "Golfkerho", null, "Paras golfkerho");
     }
     
     /**
+     * Käsitellään uuden kerhon luominen
+     * @param event tapahtuma
+     */
+    @FXML void handleUusiKerho(ActionEvent event) {
+        ModalController.showModal(UusiKerhoGUIController.class.getResource("UusiKerhoGUIView.fxml"), "Golfkerho", null, "");
+    }
+
+    
+    /**
      * Käsitellään uuden kierroksen lisääminen
-     * @param event //
+     * @param event tapahtuma
      */
     @FXML public void handleLisaaKierros(ActionEvent event) {
-        //
+        ModalController.showModal(MuokkaaKierrosGUIController.class.getResource("MuokkaaKierrosGUIView.fxml"), "Lisää kierros", null, "");
     }
 
     
     /**
      * Käsitellään kierroksen poistaminen
-     * @param event //
+     * @param event tapahtuma
      */
     @FXML public void handlePoistaKierros(ActionEvent event) {
-        //
+        ModalController.showModal(EiVoiPoistaaGUIController.class.getResource("EiVoiPoistaaGUIView.fxml"), "Poista kierros", null, "");
     }
     
     /**
      * Käsitellään apua-toiminto
-     * @param event 
+     * @param event  tapahtuma
      */
     @FXML void handleApua(ActionEvent event) {
         Dialogs.showMessageDialog("Ei osata vielä auttaa");
@@ -48,33 +69,31 @@ public class KerhoGUIController implements Initializable {
 
     /**
      * Käsitellään tietojen avaaminen
-     * @param event
+     * @param event tapahtuma
      */
     @FXML void handleAvaa(ActionEvent event) {
-        //Dialogs.showMessageDialog("Ei osata vielä avata");
         avaa();
     }
 
     /**
      * Käsitellään lopetuskäsky
-     * @param event
+     * @param event tapahtuma
      */
     @FXML void handleLopeta(ActionEvent event) {
-        //
+        Dialogs.showMessageDialog("Ei osata lopettaa!");
     }
 
     /**
      * Käsitellään tietojen muokkaaminen
-     * @param event
+     * @param event tapahtuma
      */
     @FXML void handleMuokkaaJasen(ActionEvent event) {
-        Dialogs.showMessageDialog("Ei osata vielä muokata");
-        //ModalController.showModal(MuokkaaJasenGUIController.class.getResource("MuokkaaJasenGUIView.fxml"), "Jäsen", modalityStage, oletus);
+        ModalController.showModal(MuokkaaJasenGUIController.class.getResource("MuokkaaJasenGUIView.fxml"), "Jäsen", null, "");
     }
 
     /**
      * Käsitellään jäsenen tietojen poistaminen
-     * @param event
+     * @param event tapahtuma
      */
     @FXML void handlePoistaJasen(ActionEvent event) {
         Dialogs.showMessageDialog("Ei osata vielä poistaa");
@@ -82,34 +101,36 @@ public class KerhoGUIController implements Initializable {
 
     /**
      * Käsitellään tallennuskäsky
-     * @param event
+     * @param event tapahtuma
      */
     @FXML void handleTallenna(ActionEvent event) {
-        //
+        Dialogs.showMessageDialog("Ei osata vielä tallentaa");
     }
 
     /**
-     * Käsitellään tietoja-käsky
-     * @param event
+     * Näyttää 'tietoja' ikkunan
+     * @param event tapahtuma
      */
     @FXML void handleTietoja(ActionEvent event) {
-        Dialogs.showMessageDialog("Ei osata vielä näyttää tietoja");
+        ModalController.showModal(LandingGUIController.class.getResource("TietojaGUIView.fxml"), "Tietoja", null, "");
     }
 
     /**
      * Käsitellään tulostuskäsky
-     * @param event
+     * @param event tapahtuma
      */
     @FXML void handleTulosta(ActionEvent event) {
-        Dialogs.showMessageDialog("Ei osata vielä tulostaa");
+        ModalController.showModal(TulostusGUIController.class.getResource("TulostusGUIView.fxml"), "Tulosta", null, "");
+        //TulostusController tulostusCtrl = TulostusController.tulosta(null);
+        //tulostaValitut(tulostusCtrl.getTextArea());
     }
     
     /**
      * Käsitellään uuden jäsenen lisääminen
-     * @param event 
+     * @param event  tapahtuma
      */
     @FXML void handleUusiJasen(ActionEvent event) {
-        Dialogs.showMessageDialog("Ei osata vielä lisätä");
+        ModalController.showModal(UusiJasenGUIController.class.getResource("UusiJasenGUIView.fxml"), "Lisää jäsen", null, "");
     }
     
     // ============================================================

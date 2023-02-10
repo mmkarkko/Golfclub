@@ -9,8 +9,8 @@ import javafx.fxml.FXMLLoader;
 
 /**
  * Pääohjelma Golfkerho-ohjelman käynnistämiseksi
- * @author miiaa
- * @version 25.1.2023
+ * @author Miia Arkko
+ * @version 10.2.2023
  *
  */
 public class KerhoMain extends Application {

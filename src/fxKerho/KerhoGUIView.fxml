@@ -21,12 +21,13 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane styleClass="vaaleaVihrea" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxKerho.KerhoGUIController">
+<BorderPane  styleClass="kerho/vaaleaVihrea" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxKerho.KerhoGUIController">
    <top>
       <MenuBar styleClass="vaaleaVihrea" BorderPane.alignment="CENTER">
         <menus>
           <Menu text="_Tiedosto">
             <items>
+                  <MenuItem mnemonicParsing="false" onAction="#handleUusiKerho" text="Uusi kerho..." />
                   <MenuItem mnemonicParsing="false" onAction="#handleTallenna" text="Tallenna">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
@@ -71,7 +72,7 @@
       </MenuBar>
    </top>
    <center>
-      <SplitPane dividerPositions="0.5, 0.5" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <SplitPane dividerPositions="0.5" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <items>
             <BorderPane maxWidth="160.0" minWidth="140.0" prefHeight="200.0" prefWidth="138.0">
                <center>
@@ -93,12 +94,12 @@
                   <Label text="Jäsenen tiedot" BorderPane.alignment="CENTER" />
                </top>
                <center>
-                  <ScrollPane fitToWidth="true" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="250.0" BorderPane.alignment="CENTER">
+                  <ScrollPane fitToWidth="true" minHeight="-Infinity" minWidth="-Infinity" BorderPane.alignment="CENTER">
                      <content>
-                        <GridPane hgap="10.0" prefWidth="250.0">
+                        <GridPane hgap="10.0" minWidth="-Infinity" prefWidth="250.0">
                           <columnConstraints>
-                            <ColumnConstraints fillWidth="false" halignment="RIGHT" hgrow="SOMETIMES" />
-                            <ColumnConstraints hgrow="ALWAYS" />
+                            <ColumnConstraints fillWidth="false" halignment="RIGHT" hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="ALWAYS" minWidth="-Infinity" prefWidth="130.0" />
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -118,36 +119,28 @@
                            <children>
                               <Label text="Nimi" />
                               <Label text="Pelaajanumero" GridPane.rowIndex="1" />
+                              <Label text="HCP" GridPane.rowIndex="2" />
+                              <Label text="Puhelinnumero" GridPane.rowIndex="3" />
+                              <Label text="Sähköposti" GridPane.rowIndex="4" />
                               <Label text="Katuosoite" GridPane.rowIndex="5" />
                               <Label text="Postiosoite" GridPane.rowIndex="6" />
-                              <Label text="HCP" GridPane.rowIndex="2" />
-                              <TextField text="Driver Diana" GridPane.columnIndex="1" />
-                              <TextField text="5" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <TextField text="Väylä 18" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                              <TextField text="60606 Väyliäinen" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                              <TextField text="15,6" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                              <Label text="Puhelinnumero" GridPane.rowIndex="3" />
-                              <TextField text="222-0101010" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                               <Label text="Osakkeen numero" GridPane.rowIndex="7" />
                               <Label text="Jäsenmaksu" GridPane.rowIndex="8" />
-                              <TextField text="OK" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                              <TextField text="di_driver@golffari.fi" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                              <Label text="Sähköposti" GridPane.rowIndex="4" />
                               <Label text="Kotikenttä" GridPane.rowIndex="9" />
-                              <TextField text="Paras Golfkenttä" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                              <TextField fx:id="textPelaajaNimi" text="Driver Diana" GridPane.columnIndex="1" />
+                              <TextField fx:id="textPelaajaID" text="5" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField fx:id="textPelaajaHCP" text="15,6" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <TextField fx:id="textPelaajaPuh" text="222-0101010" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <TextField fx:id="textPelaajaEmail" text="di_driver@golffari.fi" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <TextField fx:id="textPelaajaKatu" text="Väylä 18" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <TextField fx:id="textPelaajaPono" text="60606 Väyliäinen" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                              <TextField fx:id="textPelaajaOsakeNro" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                              <TextField fx:id="textPelaajanJasenmaksu" text="OK" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                              <TextField fx:id="textPelaajanKotiKentta" text="Paras Golfkenttä" GridPane.columnIndex="1" GridPane.rowIndex="9" />
                            </children>
                         </GridPane>
                      </content>
                   </ScrollPane>
-               </center>
-            </BorderPane>
-            <BorderPane>
-               <top>
-                  <Label text="Kierroshistoria" BorderPane.alignment="CENTER" />
-               </top>
-               <center>
-                  <StringGrid emptyStyleClass="" rivit="Pvm|Lähtöaika|Tasoituskierros|Pelatut reiät|HCP|Kenttä&#10;11.8.2022|15.10|kyllä|18|15,6|Paras Golfkerho |&#10;" BorderPane.alignment="CENTER" />
                </center>
             </BorderPane>
          </items>
@@ -180,11 +173,21 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
                <children>
-                  <Button mnemonicParsing="false" text="Lisää kierros" />
-                  <Button mnemonicParsing="false" text="Poista kierros" />
+                  <Button mnemonicParsing="false" onAction="#handleLisaaKierros" text="Lisää kierros" />
+                  <Button mnemonicParsing="false" onAction="#handlePoistaKierros" text="Poista kierros" />
                </children>
             </HBox>
          </right>
       </BorderPane>
    </bottom>
+   <right>
+      <BorderPane BorderPane.alignment="CENTER">
+         <top>
+            <Label text="Kierroshistoria" BorderPane.alignment="CENTER" />
+         </top>
+         <center>
+            <StringGrid emptyStyleClass="" rivit="Pvm|Lähtöaika|Tasoituskierros|Pelatut reiät|HCP|Kenttä&#10;11.8.2022|15.10|kyllä|18|15,6|Paras Golfkerho |&#10;" BorderPane.alignment="CENTER" />
+         </center>
+      </BorderPane>
+   </right>
 </BorderPane>

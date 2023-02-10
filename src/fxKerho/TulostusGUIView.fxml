@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="497.0" prefWidth="354.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxKerho.TulostusGUIController">
+   <bottom>
+      <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <buttons>
+            <Button mnemonicParsing="false" onAction="#handleTulosta" text="Tulosta" />
+          <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOK" text="OK" />
+        </buttons>
+         <padding>
+            <Insets right="10.0" />
+         </padding>
+      </ButtonBar>
+   </bottom>
+   <center>
+      <TextArea fx:id="tulostusAlue" prefHeight="200.0" prefWidth="200.0" text="Valitut jäsenet&#10;----------------------------------------------&#10;Nimi            : Pelaaja Petteri&#10;PelaajaID       : 1&#10;HCP             : 5,4&#10;Puhelinnumero   : 000-9999999&#10;Sähköposti      : petepelaaja@golffari.fi&#10;Katuosoite      : Pelimiehentie 1&#10;Postiosoite     : 22222 Pelilä&#10;Osakkeen nro    : 1&#10;Jäsenmaksu      : OK&#10;Kotikenttä      : Paras Golfkenttä&#10;&#10;----------------------------------------------&#10;KierrosID       : 10&#10;Pvm             : 10.08.2022&#10;Lähtöaika       : 11.40&#10;Tasoituskierros : Kyllä&#10;Pelatut reiät   : 9&#10;HCP             : 5,4&#10;Kenttä          : Paras Golfkenttä&#10;&#10;&#10;&#10;" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="Consolas" size="12.0" />
+         </font>
+      </TextArea>
+   </center>
+</BorderPane>
