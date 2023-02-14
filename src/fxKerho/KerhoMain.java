@@ -24,7 +24,7 @@ public class KerhoMain extends Application {
             final Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("kerho.css").toExternalForm());
             primaryStage.setScene(scene);
-            primaryStage.setTitle("Kerho");
+            primaryStage.setTitle("Golf Pelaajarekisteri");
             
             // Platform.setImplicitExit(false); // jos tämän laittaa, pitää itse sulkea
             
