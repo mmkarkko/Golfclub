@@ -5,19 +5,27 @@
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="295.0" prefWidth="468.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxKerho.LandingGUIController">
+<BorderPane prefHeight="320.0" prefWidth="480.0" stylesheets="@kerho.css" styleClass="vaaleaVihrea" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxKerho.LandingGUIController">
    <center>
       <VBox alignment="CENTER" styleClass="vaaleaVihrea" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" prefHeight="50.0" text="GOLF PELAAJAREKISTERI">
+            <Label alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" text="GOLFKERHO">
                <font>
-                  <Font name="Arial" size="24.0" />
-               </font></Label>
+                  <Font name="Garamond" size="24.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="20.0" left="10.0" right="10.0" top="10.0" />
+               </padding></Label>
             <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Versio 2.0">
                <font>
                   <Font name="Arial" size="14.0" />
@@ -36,15 +44,18 @@
                <children>
                   <Label text="Anna golferhon nimi">
                      <padding>
-                        <Insets left="10.0" right="10.0" top="10.0" />
+                        <Insets bottom="5.0" left="30.0" right="10.0" top="5.0" />
                      </padding>
+                     <HBox.margin>
+                        <Insets bottom="20.0" top="20.0" />
+                     </HBox.margin>
                   </Label>
-                  <TextField fx:id="textVastaus" text="Golfkerho" HBox.hgrow="ALWAYS">
+                  <TextField fx:id="textVastaus" minWidth="-Infinity" prefWidth="200.0" text="Golfkerho" HBox.hgrow="ALWAYS">
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
                      <HBox.margin>
-                        <Insets right="10.0" top="5.0" />
+                        <Insets bottom="20.0" right="30.0" top="20.0" />
                      </HBox.margin>
                   </TextField>
                </children>
@@ -55,10 +66,20 @@
                   <Button cancelButton="true" mnemonicParsing="false" onAction="#handleCancel" text="Peruuta" />
               </buttons>
                <padding>
-                  <Insets right="10.0" />
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
                </padding>
             </ButtonBar>
          </children>
       </VBox>
    </bottom>
+   <left>
+      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="logo" BorderPane.alignment="CENTER">
+         <image>
+            <Image url="@../../kuvat/logo.png" />
+         </image>
+         <BorderPane.margin>
+            <Insets left="60.0" right="10.0" top="20.0" />
+         </BorderPane.margin>
+      </ImageView>
+   </left>
 </BorderPane>
