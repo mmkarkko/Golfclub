@@ -1,3 +1,11 @@
 .vaaleaVihrea {
-	-fx-background-color: #C1E756;
+	-fx-background-color: #dbf5dc;
+}
+
+.ombre {
+	-fx-background: linear-gradient(to top right, #ffffff 27%, #33cc33 100%);
+}
+
+.testi {
+	-fx-background: pink;
 }
