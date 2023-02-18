@@ -6,6 +6,8 @@ package kerho;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
+import kanta.HetunTarkistus;
+
 /**
  * Pelaaja luokka
  * @author miiaa
@@ -16,6 +18,7 @@ public class Pelaaja {
     
     private int         pelaajaNro      = 0;
     private String      nimi            = "";
+    private String      hetu            = "";
     private double      hcp             = 0;
     private String      puhNro          = "";
     private String      email           = "";
@@ -25,7 +28,7 @@ public class Pelaaja {
     private boolean     jasenMaksu      = true;
     private String      pelaajanKerho   = "";
     
-    private static int seuraavaNro  = 1;
+    private static int seuraavaPelaajaNro  = 1;
     
     
     /**
@@ -60,8 +63,8 @@ public class Pelaaja {
      * </pre>
      */
     public int rekisteroi() {
-        pelaajaNro = seuraavaNro;
-        seuraavaNro++;
+        pelaajaNro = seuraavaPelaajaNro;
+        seuraavaPelaajaNro++;
         return pelaajaNro;
     }
     
@@ -77,12 +80,12 @@ public class Pelaaja {
             jasenMaksunTila = "maksamatta";
         }
         
-        out.println(String.format("%03d", pelaajaNro) + "  " + nimi);
+        out.println(String.format("%03d", pelaajaNro) + "  " + nimi + "  " + hetu);
         out.println("  Tasoitus " + hcp);
-        out.println("  k: " + puhNro);
-        out.println("  k: " + email);
-        out.println("  " + katuOs + ",  " + postiOs);
-        out.println("  Osakkeen numero " + osakeNro + ",  Golfkerho: " + pelaajanKerho);
+        out.println("  Puhelinnumero: " + puhNro);
+        out.println("  Sähköposti: " + email);
+        out.println("  Osoite: " + katuOs + ",  " + postiOs);
+        out.println("  Golfkerho: " + pelaajanKerho + "  Osakkeen numero " + osakeNro);
         out.println("  Jäsenmaksu " + jasenMaksunTila); 
 
     }
@@ -103,6 +106,7 @@ public class Pelaaja {
      */
     public void vastaaAkuAnkka() {
         nimi          = "Pelaaja Petteri";
+        hetu          = HetunTarkistus.arvoHetu();
         hcp           = 5.4;
         puhNro        = "000-9999999";
         email         = "petepelaaja@golffari.fi";
