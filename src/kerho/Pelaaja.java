@@ -3,6 +3,7 @@
  */
 package kerho;
 
+import java.io.OutputStream;
 import java.io.PrintStream;
 
 /**
@@ -13,23 +14,55 @@ import java.io.PrintStream;
  */
 public class Pelaaja {
     
-    private int tunnusNro       = 0;
-    private String nimi         = "";
-    private double hcp          = 0;
-    private String puhNro       = "";
-    private String email        = "";
-    private String katuOs       = "";
-    private String postiOs      = "";
-    private int osakeNro        = 0;
-    private boolean jasenMaksu  = true;
-    private int pelaajanKerho   = 0;
+    private int         pelaajaNro   = 0;
+    private String      nimi        = "";
+    private double      hcp         = 0;
+    private String      puhNro      = "";
+    private String      email       = "";
+    private String      katuOs      = "";
+    private String      postiOs     = "";
+    private int         osakeNro    = 0;
+    private boolean     jasenMaksu  = true;
+    private int     pelaajanKerho   = 0;
     
+    private static int seuraavaNro  = 1;
+    
+    
+    /**
+     * Palauttaa pelaajan jäsennumeron
+     * @return pelaajan jäsennumero
+     */
+    public int getpelaajaNro() {
+        return pelaajaNro;
+    }
     
     /**
      * Alustetaan jäsenen tiedot tyhjiksi
      */
     public Pelaaja() {
         
+    }
+    
+    
+    /**
+     * Antaa pelaajalle seuraavan pejaalanumeron
+     * @return pelaajan tunnusnumero
+     * * @example
+     * <pre name="test">
+     *   Pelaaja p1 = new Pelaaja();
+     *   p1.getpelaajaNro() === 0;
+     *   p1.rekisteroi();
+     *   Pelaaja p2 = new Pelaaja();
+     *   p2.rekisteroi();
+     *   int n1 = p1.getpelaajaNro();
+     *   int n2 = p2.getpelaajaNro();
+     *   n2 === n1+1;  //
+     * </pre>
+     */
+    public int rekisteroi() {
+        pelaajaNro = seuraavaNro;
+        seuraavaNro++;
+        return pelaajaNro;
     }
     
     
@@ -44,7 +77,7 @@ public class Pelaaja {
             jasenMaksunTila = "maksamatta";
         }
         
-        out.println(String.format("%03d", tunnusNro) + "  " + nimi);
+        out.println(String.format("%03d", pelaajaNro) + "  " + nimi);
         out.println("  Tasoitus " + hcp);
         out.println("  k: " + puhNro);
         out.println("  k: " + email);
@@ -53,6 +86,16 @@ public class Pelaaja {
         out.println("  Jäsenmaksu " + jasenMaksunTila); 
 
     }
+    
+    
+    /**
+     * Tulostetaan henkilön tiedot
+     * @param os tietovirta johon tulostetaan
+     */
+    public void tulosta(OutputStream os) {
+        tulosta(new PrintStream(os));
+    }
+
 
     /**
      * @param args ei käytössä
@@ -62,8 +105,8 @@ public class Pelaaja {
         Pelaaja p1 = new Pelaaja();
         Pelaaja p2 = new Pelaaja();
         
-        //p1.rekisteroi();
-        //p2.rekisteroi();
+        p1.rekisteroi();
+        p2.rekisteroi();
         
         p1.tulosta(System.out);
         
