@@ -14,16 +14,16 @@ import java.io.PrintStream;
  */
 public class Pelaaja {
     
-    private int         pelaajaNro   = 0;
-    private String      nimi        = "";
-    private double      hcp         = 0;
-    private String      puhNro      = "";
-    private String      email       = "";
-    private String      katuOs      = "";
-    private String      postiOs     = "";
-    private int         osakeNro    = 0;
-    private boolean     jasenMaksu  = true;
-    private int     pelaajanKerho   = 0;
+    private int         pelaajaNro      = 0;
+    private String      nimi            = "";
+    private double      hcp             = 0;
+    private String      puhNro          = "";
+    private String      email           = "";
+    private String      katuOs          = "";
+    private String      postiOs         = "";
+    private int         osakeNro        = 0;
+    private boolean     jasenMaksu      = true;
+    private String      pelaajanKerho   = "";
     
     private static int seuraavaNro  = 1;
     
@@ -95,7 +95,23 @@ public class Pelaaja {
     public void tulosta(OutputStream os) {
         tulosta(new PrintStream(os));
     }
-
+    
+    
+    /**
+     * Apumetodi, jolla saadaan täytettyä testiarvot pelaajalle
+     * TODO: poista, kun kaikki toimii
+     */
+    public void vastaaAkuAnkka() {
+        nimi          = "Pelaaja Petteri";
+        hcp           = 5.4;
+        puhNro        = "000-9999999";
+        email         = "petepelaaja@golffari.fi";
+        katuOs        = "Pelimiehenkuja 1";
+        postiOs       = "11111 Pelilä";
+        osakeNro      = 1;
+        jasenMaksu    = true;
+        pelaajanKerho = "Paras Golfkerho";
+    }
 
     /**
      * @param args ei käytössä
@@ -110,8 +126,8 @@ public class Pelaaja {
         
         p1.tulosta(System.out);
         
-        //p1.vastaaAkuAnkka();
-        //p2.vastaaAkuAnkka();
+        p1.vastaaAkuAnkka();
+        p2.vastaaAkuAnkka();
         
         p1.tulosta(System.out);
         p2.tulosta(System.out);
