@@ -13,12 +13,45 @@ import java.io.PrintStream;
  */
 public class Pelaaja {
     
+    private int tunnusNro       = 0;
+    private String nimi         = "";
+    private double hcp          = 0;
+    private String puhNro       = "";
+    private String email        = "";
+    private String katuOs       = "";
+    private String postiOs      = "";
+    private int osakeNro        = 0;
+    private boolean jasenMaksu  = true;
+    private int pelaajanKerho   = 0;
+    
+    
+    /**
+     * Alustetaan jäsenen tiedot tyhjiksi
+     */
+    public Pelaaja() {
+        
+    }
+    
+    
     /**
      * Tulostaa Pelaajan tiedot
      * @param out tietovirta, mihin tulostetaan
      */
     public void tulosta(PrintStream out) {
-        out.println("Aku");
+        
+        String jasenMaksunTila = "OK";
+        if (!jasenMaksu) {
+            jasenMaksunTila = "maksamatta";
+        }
+        
+        out.println(String.format("%03d", tunnusNro) + "  " + nimi);
+        out.println("  Tasoitus " + hcp);
+        out.println("  k: " + puhNro);
+        out.println("  k: " + email);
+        out.println("  " + katuOs + ",  " + postiOs);
+        out.println("  Osakkeen numero " + osakeNro + ",  Golfkerho: " + pelaajanKerho);
+        out.println("  Jäsenmaksu " + jasenMaksunTila); 
+
     }
 
     /**
