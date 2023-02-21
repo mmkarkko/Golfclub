@@ -9,9 +9,17 @@ import java.io.PrintStream;
 import kanta.HetunTarkistus;
 
 /**
- * Pelaaja luokka
- * @author miiaa
- * @version 18.2.2023
+ * Pelaaja-luokka
+ * - Tietää jäsenen kentät (nimi, hcp, säpo jne.)
+ * - Osaa tarkistaa tietyn kentän syntaksin
+ *   (oikeellisuuden) 
+ * - Osaa muuttaa 1|Pelaaja Petteri|...| -merkkijonon
+ *   pelaajan tiedoiksi
+ * - Osaa antaa kentän i tiedot merkkijonona
+ * - Osaa lisätä merkkijonon i:neksi kentäksi  
+ * 
+ * @author Miia Arkko
+ * @version 21.2.2023
  *
  */
 public class Pelaaja {
@@ -32,12 +40,21 @@ public class Pelaaja {
     
     
     /**
+     * Hakee pelaajan nimen
+     * @return palauttaa nimen
+     */
+    public String getNimi() {
+        return nimi;
+    }
+    
+    /**
      * Palauttaa pelaajan jäsennumeron
      * @return pelaajan jäsennumero
      */
     public int getpelaajaNro() {
         return pelaajaNro;
     }
+    
     
     /**
      * Alustetaan jäsenen tiedot tyhjiksi
@@ -105,7 +122,7 @@ public class Pelaaja {
      * TODO: poista, kun kaikki toimii
      */
     public void vastaaAkuAnkka() {
-        nimi          = "Pelaaja Petteri";
+        nimi          = "Pelaaja Petteri" + HetunTarkistus.rand(1,400);
         hetu          = HetunTarkistus.arvoHetu();
         hcp           = 5.4;
         puhNro        = "000-9999999";
@@ -117,6 +134,7 @@ public class Pelaaja {
         pelaajanKerho = "Paras Golfkerho";
     }
 
+    
     /**
      * @param args ei käytössä
      * 
@@ -126,11 +144,9 @@ public class Pelaaja {
         Pelaaja p2 = new Pelaaja();
         
         p1.rekisteroi();
-        p2.rekisteroi();
-        
-        p1.tulosta(System.out);
-        
         p1.vastaaAkuAnkka();
+        
+        p2.rekisteroi();
         p2.vastaaAkuAnkka();
         
         p1.tulosta(System.out);

@@ -105,7 +105,7 @@ public class Kierros {
      * Täyttää kierroksen kentät
      * TODO: poista, kun kaikki toimii
      */
-    public void vastaaAkuAnkka() {
+    public void vastaaKierros() {
         pelaajaNro      = seuraavaPelaajaNro;
         pvm             = "11.6.2022";
         lahtoAika       = "12.40";
@@ -125,14 +125,10 @@ public class Kierros {
         Kierros k2 = new Kierros();
         
         k1.rekisteroi();
+        k1.vastaaKierros();
         k2.rekisteroi();
-        
-        
-        k1.tulosta(System.out);
-        
-        k1.vastaaAkuAnkka();
-        k2.vastaaAkuAnkka();
-        
+        k2.vastaaKierros();
+  
         k1.tulosta(System.out);
         k2.tulosta(System.out);
     

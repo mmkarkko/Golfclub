@@ -1,13 +1,12 @@
 package fxKerho;
+
 import javafx.event.ActionEvent;
-//import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import kerho.Kerho;
 import kerho.Pelaaja;
 import kerho.SailoException;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 import fi.jyu.mit.fxgui.*;
@@ -16,10 +15,11 @@ import fi.jyu.mit.fxgui.*;
  * Luokka Golfkerhon käyttöliittymien tapahtumien hoitamiseksi
  * 
  * @author Miia Arkko
- * @version 10.2.2023
+ * @version 21.2.2023
  *
  */
 public class KerhoGUIController implements Initializable {
+    
     @FXML private TextField textPelaajaEmail;
     @FXML private TextField textPelaajaHCP;
     @FXML private TextField textPelaajaID;
@@ -30,10 +30,12 @@ public class KerhoGUIController implements Initializable {
     @FXML private TextField textPelaajaPuh;
     @FXML private TextField textPelaajanPelaajamaksu;
     @FXML private TextField textPelaajanKotiKentta;
+    @FXML private ListChooser<Pelaaja> chooserPelaajat;
     
     
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
+        alusta();
         ModalController.showModal(LandingGUIController.class.getResource("LandingGUIView.fxml"), "Golfkerho", null, "Paras golfkerho");
     }
     
@@ -158,6 +160,14 @@ public class KerhoGUIController implements Initializable {
     
     
     /**
+     * Alustetaan
+     */
+    private void alusta() {
+        chooserPelaajat.clear();
+    }
+    
+    
+    /**
      * Avataan 
      * @return false, jos painetaan peruuta
      */
@@ -170,23 +180,23 @@ public class KerhoGUIController implements Initializable {
     
     
     /**
-     * Tietojen tallennus
+     * Haetaan jäsenet uudelleen
+     * @param jnro mikä jäsen valitaan aktiiviseksi
      */
-    private void tallenna() {
-        Dialogs.showMessageDialog("Tallennetetaan! Mutta ei toimi vielä");
-    }
-  
+    private void hae(int jnro) {
+        chooserPelaajat.clear();
     
-    /**
-     * Tarkistetaan onko tallennus tehty
-     * @return true jos saa sulkaa sovelluksen, false jos ei
-     */
-    public boolean voikoSulkea() {
-        tallenna();
-        return true;
+        int index = 0;
+        for (int i = 0; i < kerho.getPelaajia(); i++) {
+            Pelaaja pelaaja = kerho.annaPelaaja(i);
+            if (pelaaja.getpelaajaNro() == jnro) index = i;
+            chooserPelaajat.add(pelaaja.getNimi(), pelaaja);
+        }
+        chooserPelaajat.setSelectedIndex(index); // tästä tulee muutosviesti joka näyttää pelaajan
     }
+
     
-      
+    
     /**
      * Asetetaan käytettävä kerho
      * @param kerho jota käytetään
@@ -197,6 +207,14 @@ public class KerhoGUIController implements Initializable {
     
     
     /**
+     * Tietojen tallennus
+     */
+    private void tallenna() {
+        Dialogs.showMessageDialog("Tallennetaan! Mutta ei toimi vielä");
+    }
+
+    
+    /**
      * Lisätään kerhoon uusi pelaaja
      */
     private void uusiPelaaja() {
@@ -204,10 +222,21 @@ public class KerhoGUIController implements Initializable {
         uusi.rekisteroi();
         uusi.vastaaAkuAnkka();
         try {
-            kerho.lisaa(uusi);
+            kerho.lisaaPelaaja(uusi);
         } catch (SailoException e) {
             Dialogs.showMessageDialog("Ongelmia uuden luomisessa " + e.getMessage());
-
         }
+        hae(uusi.getpelaajaNro());
     }
+  
+    
+    /**
+     * Tarkistetaan onko tallennus tehtyja voiko sovelluksen sulkea
+     * @return true jos saa sulkaa sovelluksen, false jos ei
+     */
+    public boolean voikoSulkea() {
+        tallenna();
+        return true;
+    }
+
 }

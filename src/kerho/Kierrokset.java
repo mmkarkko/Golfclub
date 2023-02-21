@@ -112,13 +112,13 @@ public class Kierrokset {
         Kierros k3 = new Kierros();
         
         k1.rekisteroi();
-        k1.vastaaAkuAnkka();
+        k1.vastaaKierros();
         
         k2.rekisteroi();
-        k2.vastaaAkuAnkka();
+        k2.vastaaKierros();
         
         k3.rekisteroi();
-        k3.vastaaAkuAnkka();
+        k3.vastaaKierros();
         
         try {
             kierrokset.lisaa(k1);

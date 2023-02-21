@@ -1,12 +1,11 @@
 package fxKerho;
-import fi.jyu.mit.fxgui.*;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 import kerho.Kerho;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.fxml.FXMLLoader;
-
 
 /**
  * Pääohjelma Golfkerho-ohjelman käynnistämiseksi
@@ -15,6 +14,7 @@ import javafx.fxml.FXMLLoader;
  *
  */
 public class KerhoMain extends Application {
+    
     @Override
     public void start(Stage primaryStage) {
         try {
@@ -44,6 +44,7 @@ public class KerhoMain extends Application {
         }
     }
 
+    
     /**
      * Käynnistää käyttöliittymän
      * 

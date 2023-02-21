@@ -1,6 +1,7 @@
 package kerho;
 
 /**
+ * Pelaajat-luokka
  * - Pitää yllä varsinaista pelaajarekisteriä, eli
  *   osaa lisätä tai poistaa jäsenen
  * - Lukee ja kirjoittaa pelaajien tiedostoon
@@ -8,7 +9,7 @@ package kerho;
  * - Avustajaluokat: pelaaja
  * 
  * @author Miia Arkko
- * @version 18.2.2023
+ * @version 21.2.2023
  *
  */
 public class Pelaajat {
