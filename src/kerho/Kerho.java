@@ -87,6 +87,9 @@ public class Kerho {
             Pelaaja pelaaja = kerho.annaPelaaja(i);
             pelaaja.tulosta(System.out);
         }
+        
+        
+        // TODO: lisää kierrokselle samat, kuin pelaajalle
 
     }
     

@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
+import kerho.Kerho;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -133,7 +134,11 @@ public class KerhoGUIController implements Initializable {
         ModalController.showModal(UusiJasenGUIController.class.getResource("UusiJasenGUIView.fxml"), "Lisää jäsen", null, "");
     }
     
+    
     // ============================================================
+    
+    
+    private Kerho kerho;
     
     /**
      * Tietojen tallennus
@@ -162,5 +167,13 @@ public class KerhoGUIController implements Initializable {
         return true;
     }
 
+    
+    /**
+     * Asetetaan käytettävä kerho
+     * @param kerho jota käytetään
+     */
+    public void setKerho(Kerho kerho) {
+        this.kerho = kerho;
+    }
 
 }
