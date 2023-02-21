@@ -110,7 +110,7 @@ public class Pelaaja {
         hcp           = 5.4;
         puhNro        = "000-9999999";
         email         = "petepelaaja@golffari.fi";
-        katuOs        = "Pelimiehenkuja 1";
+        katuOs        = "Pelimiehenkuja " + HetunTarkistus.rand(1,400);
         postiOs       = "11111 Pelilä";
         osakeNro      = 1;
         jasenMaksu    = true;

@@ -35,7 +35,7 @@ public class Pelaajat {
      * <pre name="test">
      * #THROWS SailoException 
      * Pelaajat pelaajat = new Pelaajat();
-     * Jasen aku1 = new Jasen(), aku2 = new Jasen();
+     * Pelaaja aku1 = new Pelaaja(), aku2 = new Pelaaja();
      * pelaajat.getLkm() === 0;
      * pelaajat.lisaa(aku1); pelaajat.getLkm() === 1;
      * pelaajat.lisaa(aku2); pelaajat.getLkm() === 2;
