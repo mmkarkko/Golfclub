@@ -13,7 +13,7 @@ package kerho;
  */
 public class Pelaajat {
     
-    private static final int MAX_PELAAJIA = 5;
+    private static final int MAX_PELAAJIA = 10;
     
     private int lkm = 0;
     private Pelaaja[] alkiot;
@@ -48,8 +48,9 @@ public class Pelaajat {
      * pelaajat.anna(3) === aku1; #THROWS IndexOutOfBoundsException 
      * pelaajat.lisaa(aku1); pelaajat.getLkm() === 4;
      * pelaajat.lisaa(aku1); pelaajat.getLkm() === 5;
-     * pelaajat.lisaa(aku1);  #THROWS SailoException
+     * pelaajat.lisaa(aku1);  #THROWS SailoException;
      * </pre>
+     * TODO: poikkeuksen tilalle pitäisi kasvattaa taulukon kokoa, jotta mahdutaan lisäämään uusi jäsen
      */
     public void lisaa(Pelaaja pelaaja) throws SailoException {
         if (lkm >= alkiot.length) throw new SailoException("Liikaa alkioita");
@@ -109,7 +110,9 @@ public class Pelaajat {
 
         } catch (SailoException e) {
             System.err.println(e.getMessage());
-        }   
+        } catch (IndexOutOfBoundsException e) {
+            System.err.println(e.getMessage());
+        }
         
         System.out.println("============= Jäsenet testi =================");
         
