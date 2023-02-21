@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import kerho.Kerho;
+import kerho.Pelaaja;
+import kerho.SailoException;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -26,13 +28,15 @@ public class KerhoGUIController implements Initializable {
     @FXML private TextField textPelaajaOsakeNro;
     @FXML private TextField textPelaajaPono;
     @FXML private TextField textPelaajaPuh;
-    @FXML private TextField textPelaajanJasenmaksu;
+    @FXML private TextField textPelaajanPelaajamaksu;
     @FXML private TextField textPelaajanKotiKentta;
+    
     
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
         ModalController.showModal(LandingGUIController.class.getResource("LandingGUIView.fxml"), "Golfkerho", null, "Paras golfkerho");
     }
+    
     
     /**
      * Käsitellään uuden kerhon luominen
@@ -60,6 +64,7 @@ public class KerhoGUIController implements Initializable {
         ModalController.showModal(EiVoiPoistaaGUIController.class.getResource("EiVoiPoistaaGUIView.fxml"), "Poista kierros", null, "");
     }
     
+    
     /**
      * Käsitellään apua-toiminto
      * @param event  tapahtuma
@@ -68,6 +73,7 @@ public class KerhoGUIController implements Initializable {
         Dialogs.showMessageDialog("Ei osata vielä auttaa");
     }
 
+    
     /**
      * Käsitellään tietojen avaaminen
      * @param event tapahtuma
@@ -76,6 +82,7 @@ public class KerhoGUIController implements Initializable {
         avaa();
     }
 
+    
     /**
      * Käsitellään lopetuskäsky
      * @param event tapahtuma
@@ -84,6 +91,7 @@ public class KerhoGUIController implements Initializable {
         Dialogs.showMessageDialog("Ei osata lopettaa!");
     }
 
+    
     /**
      * Käsitellään tietojen muokkaaminen
      * @param event tapahtuma
@@ -92,6 +100,7 @@ public class KerhoGUIController implements Initializable {
         ModalController.showModal(MuokkaaJasenGUIController.class.getResource("MuokkaaJasenGUIView.fxml"), "Jäsen", null, "");
     }
 
+    
     /**
      * Käsitellään jäsenen tietojen poistaminen
      * @param event tapahtuma
@@ -100,6 +109,7 @@ public class KerhoGUIController implements Initializable {
         Dialogs.showMessageDialog("Ei osata vielä poistaa");
     }
 
+    
     /**
      * Käsitellään tallennuskäsky
      * @param event tapahtuma
@@ -108,6 +118,7 @@ public class KerhoGUIController implements Initializable {
         Dialogs.showMessageDialog("Ei osata vielä tallentaa");
     }
 
+    
     /**
      * Näyttää 'tietoja' ikkunan
      * @param event tapahtuma
@@ -116,6 +127,7 @@ public class KerhoGUIController implements Initializable {
         ModalController.showModal(LandingGUIController.class.getResource("TietojaGUIView.fxml"), "Tietoja", null, "");
     }
 
+    
     /**
      * Käsitellään tulostuskäsky
      * @param event tapahtuma
@@ -126,19 +138,36 @@ public class KerhoGUIController implements Initializable {
         //tulostaValitut(tulostusCtrl.getTextArea());
     }
     
+    
     /**
      * Käsitellään uuden jäsenen lisääminen
      * @param event  tapahtuma
      */
     @FXML void handleUusiJasen(ActionEvent event) {
-        ModalController.showModal(UusiJasenGUIController.class.getResource("UusiJasenGUIView.fxml"), "Lisää jäsen", null, "");
+        uusiPelaaja();
+        //ModalController.showModal(UusiPelaajaGUIController.class.getResource("UusiPelaajaGUIView.fxml"), "Lisää jäsen", null, "");
     }
+    
     
     
     // ============================================================
     
     
+    
     private Kerho kerho;
+    
+    
+    /**
+     * Avataan 
+     * @return false, jos painetaan peruuta
+     */
+    public boolean avaa() {
+        String uusinimi = LandingGUIController.kysyNimi(null, "Paras golfkerho");
+        if (uusinimi == null)return false;
+        //lueTiedosto(uusinimi);
+        return true;
+    }
+    
     
     /**
      * Tietojen tallennus
@@ -147,6 +176,7 @@ public class KerhoGUIController implements Initializable {
         Dialogs.showMessageDialog("Tallennetetaan! Mutta ei toimi vielä");
     }
   
+    
     /**
      * Tarkistetaan onko tallennus tehty
      * @return true jos saa sulkaa sovelluksen, false jos ei
@@ -156,18 +186,7 @@ public class KerhoGUIController implements Initializable {
         return true;
     }
     
-    
-    /**
-     * @return false, jos painetaan peruuta
-     */
-    public boolean avaa() {
-        String uusinimi = LandingGUIController.kysyNimi(null, "Paras golfkerho");
-        if (uusinimi == null)return false;
-        //lueTiedosto(uusinimi);
-        return true;
-    }
-
-    
+      
     /**
      * Asetetaan käytettävä kerho
      * @param kerho jota käytetään
@@ -175,5 +194,20 @@ public class KerhoGUIController implements Initializable {
     public void setKerho(Kerho kerho) {
         this.kerho = kerho;
     }
+    
+    
+    /**
+     * Lisätään kerhoon uusi pelaaja
+     */
+    private void uusiPelaaja() {
+        Pelaaja uusi = new Pelaaja(); 
+        uusi.rekisteroi();
+        uusi.vastaaAkuAnkka();
+        try {
+            kerho.lisaa(uusi);
+        } catch (SailoException e) {
+            Dialogs.showMessageDialog("Ongelmia uuden luomisessa " + e.getMessage());
 
+        }
+    }
 }
