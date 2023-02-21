@@ -3,10 +3,15 @@ package fxKerho;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Font;
 import kerho.Kerho;
 import kerho.Pelaaja;
 import kerho.SailoException;
+
+import java.io.PrintStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 import fi.jyu.mit.fxgui.*;
@@ -31,6 +36,7 @@ public class KerhoGUIController implements Initializable {
     @FXML private TextField textPelaajanPelaajamaksu;
     @FXML private TextField textPelaajanKotiKentta;
     @FXML private ListChooser<Pelaaja> chooserPelaajat;
+    @FXML private ScrollPane panelPelaaja;
     
     
     @Override
@@ -157,6 +163,7 @@ public class KerhoGUIController implements Initializable {
     
     
     private Kerho kerho;
+    private TextArea areaPelaaja = new TextArea(); // TODO: poista lopuksi
     
     
     /**
@@ -164,8 +171,23 @@ public class KerhoGUIController implements Initializable {
      */
     private void alusta() {
         chooserPelaajat.clear();
+        areaPelaaja.setFont(new Font("Courier New", 12));
+        panelPelaaja.setContent(areaPelaaja);
+        panelPelaaja.setFitToHeight(true);
+        chooserPelaajat.addSelectionListener(e -> naytaPelaaja());
+        
     }
     
+    private void naytaPelaaja() {
+        Pelaaja pelaajaKohdalla = chooserPelaajat.getSelectedObject();
+        
+        if (pelaajaKohdalla == null) return;
+        areaPelaaja.setText("");
+        try (PrintStream os = TextAreaOutputStream.getTextPrintStream(areaPelaaja)) {
+            pelaajaKohdalla.tulosta(os);
+        }  
+
+    }
     
     /**
      * Avataan 
