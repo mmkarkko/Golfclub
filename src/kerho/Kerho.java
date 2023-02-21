@@ -18,6 +18,40 @@ package kerho;
  */
 public class Kerho {
 
+    private Pelaajat pelaajat = new Pelaajat();
+    private Kierrokset kierrokset = new Kierrokset();
+    
+    
+    /**
+     * Kertoo i:nnen pelaajan
+     * @param i pelaajan indeksi
+     * @return palauttaa i:nnen pelaajan
+     */
+    public Pelaaja annaPelaaja(int i) {
+        return pelaajat.anna(i);
+    }
+    
+    /**
+     * Tarkistaa pelaajien lukumäärän
+     * @return palauttaa pelaajien lukumäärän
+     */
+    public int getPelaajia() {
+        return pelaajat.getLkm();
+    }
+    
+    /**
+     * Lisätään uusi pelaaja
+     * @param pelaaja lisättävä pelaaja
+     * @throws SailoException jos lisääminen ei onnistu
+     * @example
+     * <pre name="test">
+     * 
+     * </pre>
+     * 
+     */
+    public void lisaa(Pelaaja pelaaja) throws SailoException {
+        pelaajat.lisaa(pelaaja);
+    }
     
     /**
      * @param args ei käytössä
@@ -38,13 +72,22 @@ public class Kerho {
         p3.rekisteroi();
         p3.vastaaAkuAnkka();
     
-        kerho.lisaa(p1);
-        kerho.lisaa(p2);
-        kerho.lisaa(p3);
+        
+        try {
+            kerho.lisaa(p1);
+            kerho.lisaa(p2);
+            kerho.lisaa(p3);
+        } catch (SailoException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
         
         for (int i = 0; i < kerho.getPelaajia(); i++) {
             Pelaaja pelaaja = kerho.annaPelaaja(i);
             pelaaja.tulosta(System.out);
-    }
+        }
 
+    }
+    
 }
