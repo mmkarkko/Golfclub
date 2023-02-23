@@ -54,7 +54,20 @@ public class Pelaajat {
      * TODO: poikkeuksen tilalle pitäisi kasvattaa taulukon kokoa, jotta mahdutaan lisäämään uusi jäsen
      */
     public void lisaa(Pelaaja pelaaja) throws SailoException {
-        if (lkm >= alkiot.length) throw new SailoException("Liikaa alkioita");
+        
+        
+        
+        if (lkm >= alkiot.length) {
+            //throw new SailoException("Liikaa alkioita");
+            Pelaaja[] tilap = new Pelaaja[lkm  + 10];
+            
+            for (int i = 0; i < alkiot.length; i++) {
+                tilap[i] = alkiot[i];
+            }
+            
+            alkiot = tilap;
+            
+        }
         alkiot[lkm] = pelaaja;
         lkm++;
     }
@@ -94,7 +107,15 @@ public class Pelaajat {
         Pelaaja p1 = new Pelaaja();
         Pelaaja p2 = new Pelaaja();
         Pelaaja p3 = new Pelaaja();
-        
+        Pelaaja p4 = new Pelaaja();
+        Pelaaja p5 = new Pelaaja();
+        Pelaaja p6 = new Pelaaja();
+        Pelaaja p7 = new Pelaaja();
+        Pelaaja p8 = new Pelaaja();
+        Pelaaja p9 = new Pelaaja();
+        Pelaaja p10 = new Pelaaja();
+        Pelaaja p11 = new Pelaaja();
+
         p1.rekisteroi();
         p1.vastaaAkuAnkka();
         
@@ -104,11 +125,36 @@ public class Pelaajat {
         p3.rekisteroi();
         p3.vastaaAkuAnkka();
         
+        p4.rekisteroi();
+        p4.vastaaAkuAnkka();
+        p5.rekisteroi();
+        p5.vastaaAkuAnkka();
+        p6.rekisteroi();
+        p6.vastaaAkuAnkka();
+        p7.rekisteroi();
+        p7.vastaaAkuAnkka();
+        p8.rekisteroi();
+        p8.vastaaAkuAnkka();
+        p9.rekisteroi();
+        p9.vastaaAkuAnkka();
+        p10.rekisteroi();
+        p10.vastaaAkuAnkka();
+        p11.rekisteroi();
+        p11.vastaaAkuAnkka();
+        
         try {
             pelaajat.lisaa(p1);
             pelaajat.lisaa(p2);
             pelaajat.lisaa(p3);
-
+            pelaajat.lisaa(p4);
+            pelaajat.lisaa(p5);
+            pelaajat.lisaa(p6);
+            pelaajat.lisaa(p7);
+            pelaajat.lisaa(p8);
+            pelaajat.lisaa(p9);
+            pelaajat.lisaa(p10);
+            pelaajat.lisaa(p11);
+            pelaajat.lisaa(p11);
         } catch (SailoException e) {
             System.err.println(e.getMessage());
         } catch (IndexOutOfBoundsException e) {
