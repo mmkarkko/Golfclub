@@ -47,6 +47,7 @@ public class Pelaaja {
         return nimi;
     }
     
+    
     /**
      * Palauttaa pelaajan jäsennumeron
      * @return pelaajan jäsennumero

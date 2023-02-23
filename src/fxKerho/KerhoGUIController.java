@@ -178,6 +178,10 @@ public class KerhoGUIController implements Initializable {
         
     }
     
+    
+    /**
+     * Näyttää pelaajan tiedot
+     */
     private void naytaPelaaja() {
         Pelaaja pelaajaKohdalla = chooserPelaajat.getSelectedObject();
         
@@ -186,8 +190,8 @@ public class KerhoGUIController implements Initializable {
         try (PrintStream os = TextAreaOutputStream.getTextPrintStream(areaPelaaja)) {
             pelaajaKohdalla.tulosta(os);
         }  
-
     }
+    
     
     /**
      * Avataan 
@@ -217,8 +221,7 @@ public class KerhoGUIController implements Initializable {
         chooserPelaajat.setSelectedIndex(index); // tästä tulee muutosviesti joka näyttää pelaajan
     }
 
-    
-    
+     
     /**
      * Asetetaan käytettävä kerho
      * @param kerho jota käytetään
@@ -240,12 +243,15 @@ public class KerhoGUIController implements Initializable {
      * Lisätään kerhoon uusi pelaaja
      */
     private void uusiPelaaja() {
-        Pelaaja uusi = new Pelaaja(); 
+        Pelaaja uusi = new Pelaaja();
         uusi.rekisteroi();
         uusi.vastaaAkuAnkka();
         try {
             kerho.lisaaPelaaja(uusi);
         } catch (SailoException e) {
+            
+            
+            
             Dialogs.showMessageDialog("Ongelmia uuden luomisessa " + e.getMessage());
         }
         hae(uusi.getpelaajaNro());
