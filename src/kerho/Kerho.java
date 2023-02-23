@@ -131,6 +131,12 @@ public class Kerho {
         k1.rekisteroi();
         k1.vastaaKierros();
         
+        k2.rekisteroi();
+        k2.vastaaKierros();
+        
+        k3.rekisteroi();
+        k3.vastaaKierros();
+        
         
         try {
             kerho.lisaaKierros(k1);
