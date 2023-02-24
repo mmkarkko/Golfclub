@@ -72,6 +72,7 @@ public class KerhoGUIController implements Initializable {
      * @param event tapahtuma
      */
     @FXML public void handlePoistaKierros(ActionEvent event) {
+        //if (onkoTasoitus) ;
         ModalController.showModal(EiVoiPoistaaGUIController.class.getResource("EiVoiPoistaaGUIView.fxml"), "Poista kierros", null, "");
     }
     

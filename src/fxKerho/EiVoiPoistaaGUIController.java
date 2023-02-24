@@ -14,6 +14,8 @@ import javafx.scene.control.Button;
 public class EiVoiPoistaaGUIController implements ModalControllerInterface<String>  {
     
     @FXML private Button textButton;
+    
+    
     /**
      * Käsittelee mitä tapahtuu, kun painetaan ok-painiketta
      * @param event tapahtuma
@@ -29,14 +31,12 @@ public class EiVoiPoistaaGUIController implements ModalControllerInterface<Strin
 
     @Override
     public void handleShown() {
-        // TODO Auto-generated method stub
-        
+        // TODO Auto-generated method stub     
     }
 
     @Override
     public void setDefault(String oletus) {
-        // TODO Auto-generated method stub
-        
+        // TODO Auto-generated method stub       
     }
     
     

@@ -75,6 +75,7 @@ public class Kierrokset {
     
     
     /**
+     * Testataan
      * @param args ei käytossä
      * @throws SailoException jos liikaa
      */
@@ -83,26 +84,26 @@ public class Kierrokset {
     
         
         Kierros k1 = new Kierros();
+        k1.vastaaKierros(2);
         Kierros k2 = new Kierros();
+        k2.vastaaKierros(1);
         Kierros k3 = new Kierros();
+        k3.vastaaKierros(2);
+        Kierros k4 = new Kierros();
+        k4.vastaaKierros(2);
         
-        k1.rekisteroi();
-        k1.vastaaKierros(1);
+        kierrokset.lisaa(k1);
+        kierrokset.lisaa(k2);
+        kierrokset.lisaa(k3);
+        kierrokset.lisaa(k2);
+        kierrokset.lisaa(k4);
+  
+        System.out.println("============= Kierrokset testi =================");
         
-        k2.rekisteroi();
-        k2.vastaaKierros(2);
-        
-        k3.rekisteroi();
-        k3.vastaaKierros(1);
-        
-
         var kierrokset2 = kierrokset.annaKierrokset(1);
-        
-        System.out.println("============= Jäsenet testi =================");
-        
-        for (Kierros har : kierrokset2) {
-            System.out.print(har.getPelaajaNro() + " ");
-            har.tulosta(System.out);
+        for (Kierros k : kierrokset2) {
+            System.out.print(k.getPelaajaNro() + " ");
+            k.tulosta(System.out);
         }
     }
 }

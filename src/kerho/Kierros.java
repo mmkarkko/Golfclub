@@ -145,12 +145,10 @@ public class Kierros {
         Kierros k1 = new Kierros();
         Kierros k2 = new Kierros();
         
+        //k1.rekisteroi();
         k1.vastaaKierros(1);
-        k2.vastaaKierros(2);
-  
-        k1.tulosta(System.out);
-        k2.tulosta(System.out);
-    
+        //k2.rekisteroi();
+        k2.vastaaKierros(2);   
     }
 
 }
