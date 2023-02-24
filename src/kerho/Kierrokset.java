@@ -69,15 +69,7 @@ public class Kierrokset {
         k3.rekisteroi();
         k3.vastaaKierros(1);
         
-//        try {
-//            kierrokset.lisaa(k1);
-//            kierrokset.lisaa(k2);
-//            kierrokset.lisaa(k3);
-//
-//        } catch (SailoException e) {
-//            System.err.println(e.getMessage());
-//        }   
-        
+
         var kierrokset2 = kierrokset.annaKierrokset(1);
         
         System.out.println("============= Jäsenet testi =================");
@@ -85,12 +77,6 @@ public class Kierrokset {
         for (Kierros har : kierrokset2) {
             System.out.print(har.getPelaajaNro() + " ");
             har.tulosta(System.out);
-        
-//        for (int i = 0; i < kierrokset.getLkm(); i++) {
-//            Kierros kierros = kierrokset.anna(i);
-//            System.out.println("Jäsen indeksi: " + i);
-//            kierros.tulosta(System.out);
-        } 
+        }
     }
-
 }

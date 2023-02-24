@@ -32,15 +32,7 @@ public class Kierros {
     
     private static int seuraavaKierrosNro = 1;    
     
-//    /**
-//     * Palauttaa kierroksen numeron
-//     * @return kierroksen numero
-//     */
-//    public int getkierrosNro() {
-//        return kierrosNro;
-//    }
-//    
-//    
+  
     /**
      * Palautetaan, mille pelaajalle kierros kuuluu
      * @return pelaajan jäsennumeron
@@ -137,9 +129,7 @@ public class Kierros {
         Kierros k1 = new Kierros();
         Kierros k2 = new Kierros();
         
-        //k1.rekisteroi();
         k1.vastaaKierros(1);
-        //k2.rekisteroi();
         k2.vastaaKierros(2);
   
         k1.tulosta(System.out);
