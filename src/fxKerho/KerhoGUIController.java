@@ -20,7 +20,7 @@ import fi.jyu.mit.fxgui.*;
  * Luokka Golfkerhon käyttöliittymien tapahtumien hoitamiseksi
  * 
  * @author Miia Arkko
- * @version 21.2.2023
+ * @version 24.2.2023
  *
  */
 public class KerhoGUIController implements Initializable {
