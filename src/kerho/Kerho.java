@@ -3,6 +3,8 @@
  */
 package kerho;
 
+import java.util.List;
+
 /**
  * Kerho-luokka
  * - hoitaa kaiken näyttöön tulevan tekstin 
@@ -13,7 +15,7 @@ package kerho;
  *                  Pelaaja
  *                               
  * @author Miia Arkko
- * @version 21.2.2023
+ * @version 24.2.2023
  *
  */
 public class Kerho {
@@ -23,31 +25,65 @@ public class Kerho {
     
     
     /**
-     * Kertoo i:nnen kierroksen
-     * @param i kierroksen indeksi
-     * @return palauttaa i:nnen kierroksen
+     * Lisätään uusi pelaaja
+     * @param pelaaja lisättävä pelaaja
+     * @throws SailoException jos lisääminen ei onnistu
      */
-    public Kierros annaKierros(int i) {
-        return kierrokset.anna(i);
-    }
-    
-    
-    /**
-     * Tarkistaa kierrosten lukumääräm
-     * @return palauttaa kierrosten lukumäärän
-     */
-    public int getKierroksia() {
-        return kierrokset.getLkm();
+    public void lisaaPelaaja(Pelaaja pelaaja) throws SailoException {
+        pelaajat.lisaa(pelaaja);
     }
     
     
     /**
      * Lisätään uusi kierros
-     * @param kierros lisättävä kierros
-     * @throws SailoException jos lisääminen ei onnistu
+     * @param har lisättävä kierros
      */
-    public void lisaaKierros(Kierros kierros) throws SailoException {
-        kierrokset.lisaa(kierros);
+    public void lisaaKierros(Kierros har) {
+        kierrokset.lisaa(har);
+    }
+    
+    
+    /**
+     * Kertoo i:nnen kierroksen
+     * @param pelaaja jonka kierroksia haetaan
+     * @return tietorakenne, jossa on viitteet löydettyihin kierroksiin
+     * @example
+     * <pre name="test">
+     * #import java.util.*;
+     * Kerho kerho = new Kerho();
+     * Pelaaja p1 = new Pelaaja(), p2 = new Pelaaja(), p3 = new Pelaaja();
+     * p1.rekisteroi(); p2.rekisteroi(); p3.rekisteroi();
+     * int id1 = p1.getpelaajaNro();
+     * int id2 = p2.getpelaajaNro();
+     * Kierros k1 = new Kierros(id1); kerho.lisaaKierros(k1);
+     * Kierros k2 = new Kierros(id1); kerho.lisaaKierros(k2);
+     * Kierros k3 = new Kierros(id2); kerho.lisaaKierros(k3);
+     * Kierros k4 = new Kierros(id2); kerho.lisaaKierros(k4);
+     * Kierros k5 = new Kierros(id2); kerho.lisaaKierros(k5);
+     * 
+     * List<Kierros> loytyneet;
+     * loytyneet = kerho.annaKierrokset(p3);
+     * loytyneet.size() === 0;
+     * loytyneet = kerho.annaKierrokset(p1);
+     * loytyneet.size() === 2;
+     * loytyneet.get(0) == k1 === true;
+     * loytyneet.get(1) == k2 === true;
+     * loytyneet = kerho.annaKierrokset(p2);
+     * loytyneet.size() === 3;
+     * loytyneet.get(0) == k3 === true;
+     * </pre>
+     */
+    public List<Kierros> annaKierrokset(Pelaaja pelaaja) {
+        return kierrokset.annaKierrokset(pelaaja.getpelaajaNro());
+    }
+    
+    
+    /**
+     * Tarkistaa pelaajien lukumäärän
+     * @return palauttaa pelaajien lukumäärän
+     */
+    public int getPelaajia() {
+        return pelaajat.getLkm();
     }
     
     
@@ -60,34 +96,12 @@ public class Kerho {
         return pelaajat.anna(i);
     }
     
- 
-    /**
-     * Tarkistaa pelaajien lukumäärän
-     * @return palauttaa pelaajien lukumäärän
-     */
-    public int getPelaajia() {
-        return pelaajat.getLkm();
-    }
-    
-    
-    /**
-     * Lisätään uusi pelaaja
-     * @param pelaaja lisättävä pelaaja
-     * @throws SailoException jos lisääminen ei onnistu
-     * @example
-     * <pre name="test">
-     * 
-     * </pre>
-     */
-    public void lisaaPelaaja(Pelaaja pelaaja) throws SailoException {
-        pelaajat.lisaa(pelaaja);
-    }
-    
     
     /**
      * @param args ei käytössä
      */ 
     public static void main(String[] args) {
+        
         Kerho kerho = new Kerho();
         
         Pelaaja p1 = new Pelaaja();
@@ -109,49 +123,14 @@ public class Kerho {
             kerho.lisaaPelaaja(p2);
             kerho.lisaaPelaaja(p3);
         } catch (SailoException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         }
-        
-        
+                
         for (int i = 0; i < kerho.getPelaajia(); i++) {
             Pelaaja pelaaja = kerho.annaPelaaja(i);
             pelaaja.tulosta(System.out);
         }
-        
-        
-        // ========================================
-        
-        
-        // TODO: lisää kierrokselle samat, kuin pelaajalle
-        Kierros k1 = new Kierros();
-        Kierros k2 = new Kierros();
-        Kierros k3 = new Kierros();
-        
-        k1.rekisteroi();
-        k1.vastaaKierros();
-        
-        k2.rekisteroi();
-        k2.vastaaKierros();
-        
-        k3.rekisteroi();
-        k3.vastaaKierros();
-        
-        
-        try {
-            kerho.lisaaKierros(k1);
-            kerho.lisaaKierros(k2);
-            kerho.lisaaKierros(k3);
-        } catch (SailoException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        
-        
-        for (int i = 0; i < kerho.getKierroksia(); i++) {
-            Kierros kierros = kerho.annaKierros(i);
-            kierros.tulosta(System.out);
-        }
+
     }
     
 }

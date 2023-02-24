@@ -9,7 +9,7 @@ package kerho;
  * - Avustajaluokat: pelaaja
  * 
  * @author Miia Arkko
- * @version 21.2.2023
+ * @version 24.2.2023
  *
  */
 public class Pelaajat {
@@ -49,24 +49,18 @@ public class Pelaajat {
      * pelaajat.anna(3) === aku1; #THROWS IndexOutOfBoundsException 
      * pelaajat.lisaa(aku1); pelaajat.getLkm() === 4;
      * pelaajat.lisaa(aku1); pelaajat.getLkm() === 5;
-     * pelaajat.lisaa(aku1);  #THROWS SailoException;
      * </pre>
-     * TODO: poikkeuksen tilalle pitäisi kasvattaa taulukon kokoa, jotta mahdutaan lisäämään uusi jäsen
      */
     public void lisaa(Pelaaja pelaaja) throws SailoException {
         
-        
-        
         if (lkm >= alkiot.length) {
-            //throw new SailoException("Liikaa alkioita");
+            //throw new SailoException("Liikaa alkioita"); TODO: poista, jos kun valmis
             Pelaaja[] tilap = new Pelaaja[lkm  + 10];
             
             for (int i = 0; i < alkiot.length; i++) {
                 tilap[i] = alkiot[i];
-            }
-            
-            alkiot = tilap;
-            
+            }           
+            alkiot = tilap;          
         }
         alkiot[lkm] = pelaaja;
         lkm++;
@@ -162,15 +156,12 @@ public class Pelaajat {
         }
         
         System.out.println("============= Jäsenet testi =================");
-        
-        
+                
         for (int i = 0; i < pelaajat.getLkm(); i++) {
             Pelaaja pelaaja = pelaajat.anna(i);
             System.out.println("Jäsen indeksi: " + i);
             pelaaja.tulosta(System.out);
         } 
-
-        
 
     }
     

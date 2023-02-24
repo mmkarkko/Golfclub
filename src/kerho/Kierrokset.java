@@ -3,6 +3,10 @@
  */
 package kerho;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 /**
  * Kierrokset-luokka
  * - Pitää yllä tietoja kaikista kierroksista eli
@@ -13,89 +17,34 @@ package kerho;
  * - Osaa etsiä ja lajitella kierroksia
  * - Avustajaluokat: Kierros
  * @author Miia Arkko
- * @version 21.2.2023
+ * @version 24.2.2023
  *
  */
 public class Kierrokset {
-
-    private static final int MAX_KIERROKSIA = 20;
     
-    private int lkm = 0;
-    private Kierros[] alkiot;
+    private Collection<Kierros> alkiot = new ArrayList<Kierros>();
 
-
-    /**
-     * Palauttaa viitteen i:teen kierrokseen
-     * @param i monennenko kierroksen viite halutaan
-     * @return viite kierrokseen, jonka indeksi on i
-     * @throws IndexOutOfBoundsException jos i ei ole sallitulla alueella  
-     */
-    public Kierros anna(int i) throws IndexOutOfBoundsException {
-        if (i < 0 || this.lkm <= i)
-            throw new IndexOutOfBoundsException("Laiton indeksi: " + i);
-        return alkiot[i];
-    }
     
     /**
-     * Palauttaa kerhon kierrosten lukumäärän
-     * @return kierrosten lukumäärä
+     * Haetaan kaikki pelaajan kierrokset
+     * @param pelaajaNro pelaajan pelaajanumero, johon liittyviä kierroksia haetaan
+     * @return tietorakenne, jossa viitteet löydettyihin kierroksiin
      */
-    public int getLkm() {
-        return lkm;
+    public List<Kierros> annaKierrokset(int pelaajaNro) {
+        List<Kierros> loydetyt = new ArrayList<Kierros>();
+        for (Kierros har : alkiot) // iteraattori
+            if (har.getPelaajaNro() == pelaajaNro) loydetyt.add(har);
+        return loydetyt;
+        
     }
-    
-    
-    /**
-     * Luodaan alustava taulukko
-     */
-    public Kierrokset() {
-        alkiot = new Kierros[MAX_KIERROKSIA];
-    }
-    
+
     
     /**
      * Lisää uuden kierroksen tietorakenteeseen.  Ottaa kierroksen omistukseensa.
      * @param kierros lisättävän kierroksen viite. Huom. tietorakenne muuttuu omistajaksi
-     * @throws SailoException jos tietorakenne on jo täynnä
-     * @example
-     * <pre name="test">
-     * #THROWS SailoException 
-     * Kierrokset kierrokset = new Kierrokset();
-     * Kierros ki1 = new Kierros(), ki2 = new Kierros();
-     * kierrokset.getLkm() === 0;
-     * kierrokset.lisaa(ki1); kierrokset.getLkm() === 1;
-     * kierrokset.lisaa(ki2); kierrokset.getLkm() === 2;
-     * kierrokset.lisaa(ki1); kierrokset.getLkm() === 3;
-     * kierrokset.anna(0) === ki1;
-     * kierrokset.anna(1) === ki2;
-     * kierrokset.anna(2) === ki1;
-     * kierrokset.anna(1) == ki1 === false;
-     * kierrokset.anna(1) == ki2 === true;
-     * kierrokset.anna(3) === ki1; #THROWS IndexOutOfBoundsException 
-     * kierrokset.lisaa(ki1); kierrokset.getLkm() === 4;
-     * kierrokset.lisaa(ki1); kierrokset.getLkm() === 5;
-     * kierrokset.lisaa(ki1); kierrokset.getLkm() === 6;
-     * kierrokset.lisaa(ki1); kierrokset.getLkm() === 7;
-     * kierrokset.lisaa(ki1); kierrokset.getLkm() === 8;
-     * kierrokset.lisaa(ki1); kierrokset.getLkm() === 9;
-     * kierrokset.lisaa(ki1); kierrokset.getLkm() === 10;
-     * kierrokset.lisaa(ki1); kierrokset.getLkm() === 11;
-     * kierrokset.lisaa(ki1); kierrokset.getLkm() === 12;
-     * kierrokset.lisaa(ki1); kierrokset.getLkm() === 13;
-     * kierrokset.lisaa(ki1); kierrokset.getLkm() === 14;
-     * kierrokset.lisaa(ki1); kierrokset.getLkm() === 15;
-     * kierrokset.lisaa(ki1); kierrokset.getLkm() === 16;
-     * kierrokset.lisaa(ki1); kierrokset.getLkm() === 17;
-     * kierrokset.lisaa(ki1); kierrokset.getLkm() === 18;
-     * kierrokset.lisaa(ki1); kierrokset.getLkm() === 19;
-     * kierrokset.lisaa(ki1); kierrokset.getLkm() === 20;
-     * kierrokset.lisaa(ki1);  #THROWS SailoException
-     * </pre>
      */
-    public void lisaa(Kierros kierros) throws SailoException {
-        if (lkm >= alkiot.length) throw new SailoException("Liikaa alkioita");
-        alkiot[lkm] = kierros;
-        lkm++;
+    public void lisaa(Kierros kierros){
+        alkiot.add(kierros);
     }
     
     
@@ -112,30 +61,35 @@ public class Kierrokset {
         Kierros k3 = new Kierros();
         
         k1.rekisteroi();
-        k1.vastaaKierros();
+        k1.vastaaKierros(1);
         
         k2.rekisteroi();
-        k2.vastaaKierros();
+        k2.vastaaKierros(2);
         
         k3.rekisteroi();
-        k3.vastaaKierros();
+        k3.vastaaKierros(1);
         
-        try {
-            kierrokset.lisaa(k1);
-            kierrokset.lisaa(k2);
-            kierrokset.lisaa(k3);
-
-        } catch (SailoException e) {
-            System.err.println(e.getMessage());
-        }   
+//        try {
+//            kierrokset.lisaa(k1);
+//            kierrokset.lisaa(k2);
+//            kierrokset.lisaa(k3);
+//
+//        } catch (SailoException e) {
+//            System.err.println(e.getMessage());
+//        }   
+        
+        var kierrokset2 = kierrokset.annaKierrokset(1);
         
         System.out.println("============= Jäsenet testi =================");
         
+        for (Kierros har : kierrokset2) {
+            System.out.print(har.getPelaajaNro() + " ");
+            har.tulosta(System.out);
         
-        for (int i = 0; i < kierrokset.getLkm(); i++) {
-            Kierros kierros = kierrokset.anna(i);
-            System.out.println("Jäsen indeksi: " + i);
-            kierros.tulosta(System.out);
+//        for (int i = 0; i < kierrokset.getLkm(); i++) {
+//            Kierros kierros = kierrokset.anna(i);
+//            System.out.println("Jäsen indeksi: " + i);
+//            kierros.tulosta(System.out);
         } 
     }
 

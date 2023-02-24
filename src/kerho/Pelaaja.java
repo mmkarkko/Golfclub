@@ -5,6 +5,7 @@ package kerho;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.Random;
 
 import kanta.HetunTarkistus;
 
@@ -19,7 +20,7 @@ import kanta.HetunTarkistus;
  * - Osaa lisätä merkkijonon i:neksi kentäksi  
  * 
  * @author Miia Arkko
- * @version 21.2.2023
+ * @version 24.2.2023
  *
  */
 public class Pelaaja {
@@ -35,8 +36,10 @@ public class Pelaaja {
     private int         osakeNro        = 0;
     private boolean     jasenMaksu      = true;
     private String      pelaajanKerho   = "";
+    private boolean     onkoOsake       = true;
     
     private static int seuraavaPelaajaNro  = 1;
+    private static int seuraavaOsakeNro    = 1;
     
     
     /**
@@ -54,6 +57,17 @@ public class Pelaaja {
      */
     public int getpelaajaNro() {
         return pelaajaNro;
+    }
+    
+    
+    /**
+     * Palauttaa pelaajan osakenumeron
+     * Mikäli pelaajalla ei ole osaketta, palautetaan 0.
+     * @return osakenumero
+     */
+    public int getOsakeNro() {
+
+        return osakeNro;
     }
     
     
@@ -88,6 +102,34 @@ public class Pelaaja {
     
     
     /**
+     * Antaa pelaajalle seuraavan osakenumeron
+     * @return pelaajan osakkeen numero
+     * @example
+     * <pre name="test">
+     *  Pelaaja p1 = new Pelaaja();
+     *  p1.getOsakeNro() === 0;
+     *  p1.rekisteroiOsake();
+     *  Pelaaja p2 = new Pelaaja();
+     *  p2.rekisteroiOsake();
+     *  int n1 = 1;
+     *  int n2 = 2;
+     *  n2 === n1+1;
+     * </pre>
+     */
+    public int rekisteroiOsake() {
+        
+        // TODO: poista randomi, kun toimii
+        Random rd = new Random();
+        onkoOsake     = rd.nextBoolean();
+        if (onkoOsake == false) return 0;
+        
+        osakeNro   = seuraavaOsakeNro;
+        seuraavaOsakeNro++;
+        return osakeNro;
+    }
+    
+    
+    /**
      * Tulostaa Pelaajan tiedot
      * @param out tietovirta, mihin tulostetaan
      */
@@ -98,12 +140,17 @@ public class Pelaaja {
             jasenMaksunTila = "maksamatta";
         }
         
+        String osake = "   Osakkeen numero: " + osakeNro;
+        if (osakeNro == 0) {
+            osake = "   Osakkeen numero: Ei osaketta";
+        }
+        
         out.println(String.format("%03d", pelaajaNro) + "  " + nimi + "  " + hetu);
         out.println("  Tasoitus " + hcp);
         out.println("  Puhelinnumero: " + puhNro);
         out.println("  Sähköposti: " + email);
         out.println("  Osoite: " + katuOs + ",  " + postiOs);
-        out.println("  Golfkerho: " + pelaajanKerho + "  Osakkeen numero " + osakeNro);
+        out.println("  Golfkerho: " + pelaajanKerho + osake);
         out.println("  Jäsenmaksu " + jasenMaksunTila); 
 
     }
@@ -123,6 +170,7 @@ public class Pelaaja {
      * TODO: poista, kun kaikki toimii
      */
     public void vastaaAkuAnkka() {
+
         nimi          = "Pelaaja Petteri" + HetunTarkistus.rand(1,400);
         hetu          = HetunTarkistus.arvoHetu();
         hcp           = 5.4;
@@ -130,9 +178,9 @@ public class Pelaaja {
         email         = "petepelaaja@golffari.fi";
         katuOs        = "Pelimiehenkuja " + HetunTarkistus.rand(1,400);
         postiOs       = "11111 Pelilä";
-        osakeNro      = 1;
         jasenMaksu    = true;
         pelaajanKerho = "Paras Golfkerho";
+
     }
 
     
@@ -145,9 +193,11 @@ public class Pelaaja {
         Pelaaja p2 = new Pelaaja();
         
         p1.rekisteroi();
+        p1.rekisteroiOsake();
         p1.vastaaAkuAnkka();
         
         p2.rekisteroi();
+        p2.rekisteroiOsake();
         p2.vastaaAkuAnkka();
         
         p1.tulosta(System.out);
