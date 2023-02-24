@@ -113,7 +113,7 @@
                      </padding></Label>
                </top>
                <center>
-                  <ScrollPane fx:id="panelPelaaja" fitToWidth="true" minHeight="-Infinity" minWidth="-Infinity" BorderPane.alignment="CENTER">
+                  <ScrollPane fx:id="panelPelaaja" fitToWidth="true" minHeight="-Infinity" minWidth="-Infinity" prefWidth="330.0" BorderPane.alignment="CENTER">
                      <content>
                         <GridPane hgap="10.0" minWidth="-Infinity" prefWidth="250.0">
                           <columnConstraints>

@@ -73,7 +73,7 @@
       </VBox>
    </bottom>
    <left>
-      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="logo" BorderPane.alignment="CENTER">
+      <ImageView fx:id="logoKuva" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="logo" BorderPane.alignment="CENTER">
          <image>
             <Image url="@../../kuvat/logo.png" />
          </image>
