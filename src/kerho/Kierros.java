@@ -5,6 +5,7 @@ package kerho;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.Random;
 
 /**
  * Kierros-luokka
@@ -32,15 +33,6 @@ public class Kierros {
     
     private static int seuraavaKierrosNro = 1;    
     
-  
-    /**
-     * Palautetaan, mille pelaajalle kierros kuuluu
-     * @return pelaajan jäsennumeron
-     */
-    public int getPelaajaNro() {       
-        return pelaajaNro;
-    }
-    
     
     /**
      * Alustetaan kierros.
@@ -60,25 +52,41 @@ public class Kierros {
     
     
     /**
-     * Antaa kierrokselle seuraavan kierrosnumeron
-     * @return palauttaa kierroksen numeron
-     * @example
-     * <pre name="test">
-     *   Kierros k1 = new Kierros();
-     *   k1.getkierrosNro() === 0;
-     *   k1.rekisteroi();
-     *   Kierros k2 = new Kierros();
-     *   k2.rekisteroi();
-     *   int n1 = k1.getkierrosNro();
-     *   int n2 = k2.getkierrosNro();
-     *   n2 === n1+1;
-     * </pre>
+     * Täyttää kierroksen kentät
+     * TODO: poista, kun kaikki toimii
+     * @param nro pelaajan numero
      */
-    public int rekisteroi() {
-        kierrosNro = seuraavaKierrosNro;
-        seuraavaKierrosNro++;
-        return kierrosNro;
+    public void vastaaKierros(int nro) {
+        Random rd = new Random();
+        pelaajaNro      = nro;
+        pvm             = "11.6.2022";
+        lahtoAika       = "12.40";
+        onkoTasoitus    = rd.nextBoolean();
+        pelatutReiat    = (int) (Math.random() * (18 - 9) + 9);
+        pelaajanHcp     = Math.round(Math.random() * (54 - 3) + 3);
+        pelattuKentta   = "Paras Golfkerho";
     }
+    
+    
+    /**
+     * Tulostaa Kierroksen tiedot
+     * @param out tietovirta, mihin tulostetaan
+     */
+    public void tulosta(PrintStream out) {
+        
+        String tasoitusKierros = "Kyllä";
+        if(!onkoTasoitus) {
+            tasoitusKierros = "Ei"; 
+        }
+        out.println("Kierrosnumero:  " + String.format("%03d", kierrosNro));
+        out.println("   Päivämäärä:  " + pvm + ",  Lähtöaika:  " + lahtoAika);
+        out.println("   Pelaajanumero:  " + String.format("%03d", pelaajaNro));
+        out.println("   Pelaajan tasoitus  " + pelaajanHcp);
+        out.println("   Golfkerho:  " + pelattuKentta);
+        out.println("   Pelatut reiät  " + pelatutReiat);
+        out.println("   Onko tasoituskierros: " + tasoitusKierros);      
+    }
+    
     
     
     /**
@@ -91,37 +99,45 @@ public class Kierros {
     
     
     /**
-     * Tulostaa Kierroksen tiedot
-     * @param out tietovirta, mihin tulostetaan
+     * Antaa kierrokselle seuraavan kierrosnumeron
+     * @return palauttaa kierroksen numeron
+     * @example
+     * <pre name="test">
+     *   Kierros k1 = new Kierros();
+     *   k1.getKierrosNro() === 0;
+     *   k1.rekisteroi();
+     *   Kierros k2 = new Kierros();
+     *   k2.rekisteroi();
+     *   int n1 = k1.getKierrosNro();
+     *   int n2 = k2.getKierrosNro();
+     *   n2 === n1+1;
+     * </pre>
      */
-    public void tulosta(PrintStream out) {
-        out.println("Kierrosnumero:  " + String.format("%03d", kierrosNro));
-        out.println("   Päivämäärä:  " + pvm + ",  Lähtöaika:  " + lahtoAika);
-        out.println("   Pelaajanumero:  " + String.format("%03d", pelaajaNro));
-        out.println("   Pelaajan tasoitus  " + pelaajanHcp);
-        out.println("   Golfkerho:  " + pelattuKentta);
-        out.println("   Pelatut reiät  " + pelatutReiat);
-        out.println("   Onko tasoituskierros: " + onkoTasoitus);      
+    public int rekisteroi() {
+        kierrosNro = seuraavaKierrosNro;
+        seuraavaKierrosNro++;
+        return kierrosNro;
     }
     
     
     /**
-     * Täyttää kierroksen kentät
-     * TODO: poista, kun kaikki toimii
-     * @param nro pelaajan numero
+     * Palautetaan kierroksen id
+     * @return kierroksen id
      */
-    public void vastaaKierros(int nro) {
-        pelaajaNro      = nro;
-        pvm             = "11.6.2022";
-        lahtoAika       = "12.40";
-        onkoTasoitus    = true;
-        pelatutReiat    = (int) (Math.random() * (18 - 9) + 9);
-        pelaajanHcp     = Math.round(Math.random() * (54 - 3) + 3);
-        pelattuKentta   = "Paras Golfkerho";
-        //seuraavaPelaajaNro++;
+    public int getKierrosNro() {
+        return kierrosNro;
+    }
+  
+       
+    /**
+     * Palautetaan, mille pelaajalle kierros kuuluu
+     * @return pelaajan jäsennumeron
+     */
+    public int getPelaajaNro() {       
+        return pelaajaNro;
     }
     
-    
+
     /**
      * @param args ei kaytossa
      */
