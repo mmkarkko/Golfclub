@@ -29,17 +29,17 @@ public class Kerho {
      * @param pelaaja lisättävä pelaaja
      * @throws SailoException jos lisääminen ei onnistu
      */
-    public void lisaaPelaaja(Pelaaja pelaaja) throws SailoException {
+    public void lisaa(Pelaaja pelaaja) throws SailoException {
         pelaajat.lisaa(pelaaja);
     }
     
     
     /**
      * Lisätään uusi kierros
-     * @param har lisättävä kierros
+     * @param k1 lisättävä kierros
      */
-    public void lisaaKierros(Kierros har) {
-        kierrokset.lisaa(har);
+    public void lisaa(Kierros k1) {
+        kierrokset.lisaa(k1);
     }
     
     
@@ -55,11 +55,11 @@ public class Kerho {
      * p1.rekisteroi(); p2.rekisteroi(); p3.rekisteroi();
      * int id1 = p1.getpelaajaNro();
      * int id2 = p2.getpelaajaNro();
-     * Kierros k1 = new Kierros(id1); kerho.lisaaKierros(k1);
-     * Kierros k2 = new Kierros(id1); kerho.lisaaKierros(k2);
-     * Kierros k3 = new Kierros(id2); kerho.lisaaKierros(k3);
-     * Kierros k4 = new Kierros(id2); kerho.lisaaKierros(k4);
-     * Kierros k5 = new Kierros(id2); kerho.lisaaKierros(k5);
+     * Kierros k1 = new Kierros(id1); kerho.lisaa(k1);
+     * Kierros k2 = new Kierros(id1); kerho.lisaa(k2);
+     * Kierros k3 = new Kierros(id2); kerho.lisaa(k3);
+     * Kierros k4 = new Kierros(id2); kerho.lisaa(k4);
+     * Kierros k5 = new Kierros(id2); kerho.lisaa(k5);
      * 
      * List<Kierros> loytyneet;
      * loytyneet = kerho.annaKierrokset(p3);
@@ -119,9 +119,9 @@ public class Kerho {
     
         
         try {
-            kerho.lisaaPelaaja(p1);
-            kerho.lisaaPelaaja(p2);
-            kerho.lisaaPelaaja(p3);
+            kerho.lisaa(p1);
+            kerho.lisaa(p2);
+            kerho.lisaa(p3);
         } catch (SailoException e) {
             System.err.println(e.getMessage());
         }

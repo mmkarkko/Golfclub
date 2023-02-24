@@ -245,13 +245,11 @@ public class KerhoGUIController implements Initializable {
     private void uusiPelaaja() {
         Pelaaja uusi = new Pelaaja();
         uusi.rekisteroi();
+        uusi.rekisteroiOsake();
         uusi.vastaaAkuAnkka();
         try {
-            kerho.lisaaPelaaja(uusi);
-        } catch (SailoException e) {
-            
-            
-            
+            kerho.lisaa(uusi);
+        } catch (SailoException e) { 
             Dialogs.showMessageDialog("Ongelmia uuden luomisessa " + e.getMessage());
         }
         hae(uusi.getpelaajaNro());
