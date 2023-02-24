@@ -8,11 +8,13 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
 import kerho.Kerho;
+import kerho.Kierros;
 import kerho.Pelaaja;
 import kerho.SailoException;
 
 import java.io.PrintStream;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import fi.jyu.mit.fxgui.*;
 
@@ -60,7 +62,8 @@ public class KerhoGUIController implements Initializable {
      * @param event tapahtuma
      */
     @FXML public void handleLisaaKierros(ActionEvent event) {
-        ModalController.showModal(MuokkaaKierrosGUIController.class.getResource("MuokkaaKierrosGUIView.fxml"), "Lisää kierros", null, "");
+        uusiKierros();
+        //ModalController.showModal(MuokkaaKierrosGUIController.class.getResource("MuokkaaKierrosGUIView.fxml"), "Lisää kierros", null, "");
     }
 
     
@@ -186,9 +189,15 @@ public class KerhoGUIController implements Initializable {
         Pelaaja pelaajaKohdalla = chooserPelaajat.getSelectedObject();
         
         if (pelaajaKohdalla == null) return;
+        
         areaPelaaja.setText("");
         try (PrintStream os = TextAreaOutputStream.getTextPrintStream(areaPelaaja)) {
+            os.println("-----------------------------------------");
             pelaajaKohdalla.tulosta(os);
+            List<Kierros> kierrokset = kerho.annaKierrokset(pelaajaKohdalla);
+            for (Kierros k : kierrokset)
+                k.tulosta(os);
+            os.println("-----------------------------------------");
         }  
     }
     
@@ -237,6 +246,20 @@ public class KerhoGUIController implements Initializable {
     private void tallenna() {
         Dialogs.showMessageDialog("Tallennetaan! Mutta ei toimi vielä");
     }
+    
+    
+    /**
+     * Lisätään pelaajalle uusi kierros
+     */
+    private void uusiKierros() {
+        Pelaaja pelaajaKohdalla = chooserPelaajat.getSelectedObject();
+        if (pelaajaKohdalla == null) return;
+        Kierros k1 = new Kierros();
+        k1.rekisteroi();
+        k1.vastaaKierros(pelaajaKohdalla.getpelaajaNro()); // TODO: korvaa dialogilla
+        kerho.lisaa(k1);
+        hae(pelaajaKohdalla.getpelaajaNro());
+    }
 
     
     /**
@@ -246,7 +269,7 @@ public class KerhoGUIController implements Initializable {
         Pelaaja uusi = new Pelaaja();
         uusi.rekisteroi();
         uusi.rekisteroiOsake();
-        uusi.vastaaAkuAnkka();
+        uusi.vastaaAkuAnkka(); // TODO: korvaa dialogilla
         try {
             kerho.lisaa(uusi);
         } catch (SailoException e) { 
