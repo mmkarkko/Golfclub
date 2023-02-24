@@ -5,14 +5,13 @@
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="320.0" prefWidth="480.0" stylesheets="@kerho.css" styleClass="vaaleaVihrea" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxKerho.LandingGUIController">
+<BorderPane prefHeight="320.0" prefWidth="480.0" styleClass="vaaleaVihrea" stylesheets="@kerho.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxKerho.LandingGUIController">
    <center>
       <VBox alignment="CENTER" styleClass="vaaleaVihrea" BorderPane.alignment="CENTER">
          <children>
@@ -73,13 +72,6 @@
       </VBox>
    </bottom>
    <left>
-      <ImageView fx:id="logoKuva" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="logo" BorderPane.alignment="CENTER">
-         <image>
-            <Image url="@../../kuvat/logo.png" />
-         </image>
-         <BorderPane.margin>
-            <Insets left="60.0" right="10.0" top="20.0" />
-         </BorderPane.margin>
-      </ImageView>
+      <AnchorPane styleClass="logoKuva" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </left>
 </BorderPane>
