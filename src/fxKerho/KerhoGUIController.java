@@ -192,13 +192,24 @@ public class KerhoGUIController implements Initializable {
         
         areaPelaaja.setText("");
         try (PrintStream os = TextAreaOutputStream.getTextPrintStream(areaPelaaja)) {
-            os.println("-----------------------------------------");
-            pelaajaKohdalla.tulosta(os);
-            List<Kierros> kierrokset = kerho.annaKierrokset(pelaajaKohdalla);
-            for (Kierros k : kierrokset)
-                k.tulosta(os);
-            os.println("-----------------------------------------");
+            tulosta(os, pelaajaKohdalla);
         }  
+    }
+    
+    
+    /**
+     * Tulostaa
+     * @param os tietovirta, johon tulostetaan
+     * @param pelaaja jonka tietoja tulsotetaan
+     */
+    private void tulosta(PrintStream os, final Pelaaja pelaaja) {
+        os.println("-----------------------------------------");
+        pelaaja.tulosta(os);
+        os.println("-----------------------------------------");
+        List<Kierros> kierrokset = kerho.annaKierrokset(pelaaja);
+        for (Kierros k : kierrokset)
+            k.tulosta(os);
+        os.println("-----------------------------------------");
     }
     
     
