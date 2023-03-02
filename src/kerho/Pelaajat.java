@@ -1,5 +1,10 @@
 package kerho;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+
 /**
  * Pelaajat-luokka
  * - Pitää yllä varsinaista pelaajarekisteriä, eli
@@ -9,7 +14,7 @@ package kerho;
  * - Avustajaluokat: pelaaja
  * 
  * @author Miia Arkko
- * @version 24.2.2023
+ * @version 2.3.2023
  *
  */
 public class Pelaajat {
@@ -90,10 +95,32 @@ public class Pelaajat {
     
     
     /**
-     * 
+     * Tallentaa pelaajia tiedostoon
+     * Tiedoston muoto:
+     * <pre>
+     * 1|Pelaaja Petteri|070819-5398|5,4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 1|11111 Pelilä|1|OK|1|
+     * 2|Teetime Teemu|190895-943M |19,3 |111-2221111|tsteetime@golffari.fi|Tiikuja 1|11001 Tiiala||OK|1|
+     * </pre>
+     * @param hakemisto tallennettavan tiedoston hakemisto
+     * @throws SailoException mikäli tallennus epäonnistuu
+     */
+    public void tallenna(String hakemisto) throws SailoException {
+        File ftied = new File(hakemisto + "/pelaajat.dat");
+        try (PrintStream fo = new PrintStream(new FileOutputStream(ftied, false))) {
+            for(int i = 0; i < getLkm(); i++) {
+                Pelaaja pelaaja = anna(i);
+                fo.println(pelaaja.toString());
+            }
+                
+        } catch (FileNotFoundException ex) {
+            throw new SailoException("Tiedosto " + ftied.getAbsolutePath() +  " ei aukea");
+        }
+    }
+    
+    
+    /**
      * @param args ei käytössä
      * @throws SailoException jos liikaa
-     * 
      */
     public static void main(String[] args) throws SailoException {
         Pelaajat pelaajat = new Pelaajat();
@@ -102,13 +129,6 @@ public class Pelaajat {
         Pelaaja p2 = new Pelaaja();
         Pelaaja p3 = new Pelaaja();
         Pelaaja p4 = new Pelaaja();
-        Pelaaja p5 = new Pelaaja();
-        Pelaaja p6 = new Pelaaja();
-        Pelaaja p7 = new Pelaaja();
-        Pelaaja p8 = new Pelaaja();
-        Pelaaja p9 = new Pelaaja();
-        Pelaaja p10 = new Pelaaja();
-        Pelaaja p11 = new Pelaaja();
 
         p1.rekisteroi();
         p1.vastaaAkuAnkka();
@@ -121,34 +141,12 @@ public class Pelaajat {
         
         p4.rekisteroi();
         p4.vastaaAkuAnkka();
-        p5.rekisteroi();
-        p5.vastaaAkuAnkka();
-        p6.rekisteroi();
-        p6.vastaaAkuAnkka();
-        p7.rekisteroi();
-        p7.vastaaAkuAnkka();
-        p8.rekisteroi();
-        p8.vastaaAkuAnkka();
-        p9.rekisteroi();
-        p9.vastaaAkuAnkka();
-        p10.rekisteroi();
-        p10.vastaaAkuAnkka();
-        p11.rekisteroi();
-        p11.vastaaAkuAnkka();
-        
+       
         try {
             pelaajat.lisaa(p1);
             pelaajat.lisaa(p2);
             pelaajat.lisaa(p3);
             pelaajat.lisaa(p4);
-            pelaajat.lisaa(p5);
-            pelaajat.lisaa(p6);
-            pelaajat.lisaa(p7);
-            pelaajat.lisaa(p8);
-            pelaajat.lisaa(p9);
-            pelaajat.lisaa(p10);
-            pelaajat.lisaa(p11);
-            pelaajat.lisaa(p11);
         } catch (SailoException e) {
             System.err.println(e.getMessage());
         } catch (IndexOutOfBoundsException e) {
@@ -158,11 +156,17 @@ public class Pelaajat {
         System.out.println("============= Jäsenet testi =================");
                 
         for (int i = 0; i < pelaajat.getLkm(); i++) {
-            Pelaaja pelaaja = pelaajat.anna(i);
+            Pelaaja p = pelaajat.anna(i);
             System.out.println("Jäsen indeksi: " + i);
-            pelaaja.tulosta(System.out);
+            p.tulosta(System.out);
         } 
-
+        
+        try {
+            pelaajat.tallenna("pelaajat");
+        } catch (SailoException e) {
+            System.err.println(e.getMessage());
+        }
+        
     }
     
 }

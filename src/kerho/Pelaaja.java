@@ -128,6 +128,33 @@ public class Pelaaja {
         return osakeNro;
     }
     
+    /**
+     * Palauttaa jäsenen tiedot merkkijonona jonka voi tallentaa tiedostoon.
+     * @return jäsen tolppaeroteltuna merkkijonona 
+     * @example
+     * <pre name="test">
+     *   Pelaaja pelaaja = new Pelaaja();
+     *   pelaaja.parse("   3  |  Ankka Aku   | 030201-111C");
+     *   pelaaja.toString().startsWith("3|Ankka Aku|030201-111C|") === true; // on enemmäkin kuin 3 kenttää, siksi loppu |
+     * </pre>  
+     */
+    @Override
+    public String toString() {
+        return "" +
+                getpelaajaNro() + "|" +
+                nimi + "|" +
+                hetu + "|" +
+                hcp  + "|" +
+                katuOs + "|" +
+                postiOs + "|" +
+                postiOs + "|" +
+                getOsakeNro() + "|" +
+                puhNro + "|" +
+                jasenMaksu + "|" + 
+                pelaajanKerho + "|" +
+                onkoOsake + "|";
+    }
+
     
     /**
      * Tulostaa Pelaajan tiedot
