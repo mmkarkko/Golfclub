@@ -80,8 +80,7 @@ public class Kierrokset {
      * @throws SailoException jos liikaa
      */
     public static void main(String[] args) throws SailoException {
-        Kierrokset kierrokset = new Kierrokset();
-    
+        Kierrokset kierrokset = new Kierrokset();   
         
         Kierros k1 = new Kierros();
         k1.vastaaKierros(2);
@@ -92,11 +91,24 @@ public class Kierrokset {
         Kierros k4 = new Kierros();
         k4.vastaaKierros(2);
         
+        Kierros k5 = new Kierros();
+        k5.vastaaKierros(2);
+        Kierros k6 = new Kierros();
+        k6.vastaaKierros(1);
+        Kierros k7 = new Kierros();
+        k7.vastaaKierros(2);
+        Kierros k8 = new Kierros();
+        k8.vastaaKierros(2);
+        
         kierrokset.lisaa(k1);
         kierrokset.lisaa(k2);
         kierrokset.lisaa(k3);
-        kierrokset.lisaa(k2);
         kierrokset.lisaa(k4);
+        kierrokset.lisaa(k5);
+        kierrokset.lisaa(k6);
+        kierrokset.lisaa(k7);
+        kierrokset.lisaa(k8);
+
   
         System.out.println("============= Kierrokset testi =================");
         
