@@ -1,9 +1,11 @@
 package kerho;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.util.Scanner;
 
 /**
  * Pelaajat-luokka
@@ -119,16 +121,44 @@ public class Pelaajat {
     
     
     /**
+     * Luetaan pelaajien tiedostosta (kesken)
+     * @param hakemisto tiedoston hakemisto
+     * @throws SailoException jos lukeminen ei onnistu
+     */
+    public void lueTiedostosta(String hakemisto) throws SailoException {
+        String nimi = hakemisto + "/pelaajat.dat";
+        File ftied = new File(nimi);
+        
+        try (Scanner fi = new Scanner(new FileInputStream(ftied))) { // jottaUTF8/ISO-8859 toimii
+            while (fi.hasNext()) {
+                String s = fi.nextLine();
+                if ( s==null || "".equals(s) || s.charAt(0) == ';') continue;
+                Pelaaja pelaaja = new Pelaaja();
+                pelaaja.parse(s);
+                lisaa(pelaaja);
+            }
+        } catch (FileNotFoundException ex) {
+            throw new SailoException("Ei pystytä lukemaan tiedostoa " + nimi);
+        }   
+    }
+    
+    
+    /**
      * @param args ei käytössä
      * @throws SailoException jos liikaa
      */
     public static void main(String[] args) throws SailoException {
         Pelaajat pelaajat = new Pelaajat();
         
+        try {
+            pelaajat.lueTiedostosta("pelaajat");
+        } catch (SailoException ex) {
+            System.err.println(ex.getMessage());
+        }
+        
         Pelaaja p1 = new Pelaaja();
         Pelaaja p2 = new Pelaaja();
-        Pelaaja p3 = new Pelaaja();
-        Pelaaja p4 = new Pelaaja();
+
 
         p1.rekisteroi();
         p1.vastaaAkuAnkka();
@@ -136,17 +166,9 @@ public class Pelaajat {
         p2.rekisteroi();
         p2.vastaaAkuAnkka();
         
-        p3.rekisteroi();
-        p3.vastaaAkuAnkka();
-        
-        p4.rekisteroi();
-        p4.vastaaAkuAnkka();
-       
         try {
             pelaajat.lisaa(p1);
             pelaajat.lisaa(p2);
-            pelaajat.lisaa(p3);
-            pelaajat.lisaa(p4);
         } catch (SailoException e) {
             System.err.println(e.getMessage());
         } catch (IndexOutOfBoundsException e) {

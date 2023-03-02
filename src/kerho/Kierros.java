@@ -7,6 +7,8 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Random;
 
+import fi.jyu.mit.ohj2.Mjonot;
+
 /**
  * Kierros-luokka
  * - Tietää kierroksen kentät (pvm, lahtoaika,
@@ -137,6 +139,69 @@ public class Kierros {
         return pelaajaNro;
     }
     
+    
+    /**
+     * Selvitää harrastuksen tiedot | erotellusta merkkijonosta.
+     * Pitää huolen että seuraavaNro on suurempi kuin tuleva tunnusnro.
+     * @param rivi josta harrastuksen tiedot otetaan
+     * @example
+     * <pre name="test">
+     *   Harrastus harrastus = new Harrastus();
+     *   harrastus.parse("   2   |  10  |   Kalastus  | 1949 | 22 t ");
+     *   harrastus.getJasenNro() === 10;
+     *   harrastus.toString()    === "2|10|Kalastus|1949|22";
+     *   
+     *   harrastus.rekisteroi();
+     *   int n = harrastus.getTunnusNro();
+     *   harrastus.parse(""+(n+20));
+     *   harrastus.rekisteroi();
+     *   harrastus.getTunnusNro() === n+20+1;
+     *   harrastus.toString()     === "" + (n+20+1) + "|10|Kalastus|1949|22";
+     * </pre>
+     */
+    public void parse(String rivi) {
+        StringBuffer sb = new StringBuffer(rivi);
+        setKierrosNro(Mjonot.erota(sb, '|', getKierrosNro()));
+        pelaajaNro = Mjonot.erota(sb, '|', pelaajaNro);
+
+    }
+
+    
+    
+    /**
+     * Asettaa pelaajan pelaajanumeron ja varmistaa, että
+     * seuraava numero on aina suurempi, kuin tähän mennessä suurin.
+     * @param nro asetettava pelaajanumero
+     */
+    private void setKierrosNro(int nro) {
+        kierrosNro = nro;
+        if ( kierrosNro >= seuraavaKierrosNro) seuraavaKierrosNro = kierrosNro +1;
+    }
+
+
+    /**
+     * Palauttaa harrastuksen tiedot merkkijonona jonka voi tallentaa tiedostoon.
+     * @return harrastus tolppaeroteltuna merkkijonona 
+     * @example
+     * <pre name="test">
+     *   Harrastus harrastus = new Harrastus();
+     *   harrastus.parse("   2   |  10  |   Kalastus  | 1949 | 22 t ");
+     *   harrastus.toString()    === "2|10|Kalastus|1949|22";
+     * </pre>
+     */
+    @Override
+    public String toString() {
+        return "" + getKierrosNro() + "|" + 
+                pelaajaNro + "|" + 
+                pvm + "|" + 
+                lahtoAika + "|" + 
+                onkoTasoitus + '|' + 
+                pelatutReiat + '|' + 
+                pelaajanHcp + '|' + 
+                pelattuKentta;
+    }
+
+    
 
     /**
      * @param args ei kaytossa
@@ -150,5 +215,4 @@ public class Kierros {
         //k2.rekisteroi();
         k2.vastaaKierros(2);   
     }
-
 }

@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Random;
 
+import fi.jyu.mit.ohj2.Mjonot;
 import kanta.HetunTarkistus;
 
 /**
@@ -145,14 +146,13 @@ public class Pelaaja {
                 nimi + "|" +
                 hetu + "|" +
                 hcp  + "|" +
+                puhNro + "|" +
+                email +  "|" +
                 katuOs + "|" +
                 postiOs + "|" +
-                postiOs + "|" +
                 getOsakeNro() + "|" +
-                puhNro + "|" +
                 jasenMaksu + "|" + 
-                pelaajanKerho + "|" +
-                onkoOsake + "|";
+                pelaajanKerho + "|";
     }
 
     
@@ -209,6 +209,63 @@ public class Pelaaja {
         pelaajanKerho = "Paras Golfkerho";
 
     }
+    
+    /**
+     * Selvitää jäsenen tiedot | erotellusta merkkijonosta
+     * Pitää huolen että seuraavaNro on suurempi kuin tuleva tunnusNro.
+     * @param rivi josta jäsenen tiedot otetaan
+     * 
+     * @example
+     * <pre name="test">
+     *   Pelaaja pelaaja = new Pelaaja();
+     *   pelaaja.parse("   1  |  Pelaaja Petteri   | 030201-111C");
+     *   pelaaja.getpelaajaNro() === 1;
+     *   pelaaja.toString().startsWith("1|Pelaaja Petteri|030201-111C|") === true; // on enemmäkin kuin 3 kenttää, siksi loppu |
+     *
+     *   pelaaja.rekisteroi();
+     *   int n = pelaaja.getpelaajaNro();
+     *   pelaaja.parse(""+(n+20));       // Otetaan merkkijonosta vain tunnusnumero
+     *   pelaaja.rekisteroi();           // ja tarkistetaan että seuraavalla kertaa tulee yhtä isompi
+     *   pelaaja.getpelaajaNro() === n+20+1;
+     *     
+     * </pre>
+     */
+    public void parse(String rivi) {
+        var sb = new StringBuilder(rivi);
+        setPelaajaNro(Mjonot.erota(sb, '|', getpelaajaNro()));
+        nimi = Mjonot.erota(sb, '|', nimi);
+        hetu = Mjonot.erota(sb, '|', hetu);
+        hcp  = Mjonot.erota(sb, '|', hcp);
+        puhNro = Mjonot.erota(sb, '|', puhNro);
+        email = Mjonot.erota(sb, '|', email);     
+        katuOs = Mjonot.erota(sb, '|', katuOs);
+        postiOs = Mjonot.erota(sb, '|', postiOs);
+        setOsakeNro(Mjonot.erota(sb, '|', getOsakeNro()));
+        //jasenMaksu = Mjonot.erota(sb, '|', jasenMaksu);
+        pelaajanKerho = Mjonot.erota(sb, '|', pelaajanKerho);
+    }
+    
+    
+    /**
+     * Asettaa pelaajan osakenumeron. Varmistaa, ettö
+     * seur. numero on aina suurempi, kuin aiempi suurin
+     * @param nro asetettava osakenumero
+     */
+    private void setOsakeNro(int nro) {
+        osakeNro = nro;
+        if (osakeNro >= seuraavaOsakeNro) seuraavaOsakeNro =osakeNro + 1;
+    }
+    
+    
+    /**
+     * Asettaa pelaajan pelaajanumeron ja varmistaa, että
+     * seuraava numero on aina suurempi, kuin tähän mennessä suurin.
+     * @param nro asetettava pelaajanumero
+     */
+    private void setPelaajaNro(int nro) {
+        pelaajaNro = nro;
+        if ( pelaajaNro >= seuraavaPelaajaNro) seuraavaPelaajaNro = pelaajaNro +1;
+    }
 
     
     /**
@@ -231,5 +288,8 @@ public class Pelaaja {
         p2.tulosta(System.out);
     
     }
+
+
+
 
 }

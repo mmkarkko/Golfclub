@@ -3,6 +3,7 @@
  */
 package kerho;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -15,13 +16,14 @@ import java.util.List;
  *                  Pelaaja
  *                               
  * @author Miia Arkko
- * @version 24.2.2023
+ * @version 2.3.2023
  *
  */
 public class Kerho {
 
     private Pelaajat pelaajat = new Pelaajat();
     private Kierrokset kierrokset = new Kierrokset();
+    private String hakemisto = "kelmit";
     
     
     /**
@@ -98,15 +100,58 @@ public class Kerho {
     
     
     /**
+     * Lukee kerhon tiedot tiedostosta
+     * @param nimi jota käyteään lukemisessa
+     * @throws SailoException jos lukeminen epäonnistuu
+     */
+    public void lueTiedostosta(String nimi) throws SailoException {
+        File dir = new File(nimi);
+        dir.mkdir();
+        pelaajat = new Pelaajat(); // jos luetaan olemassa olevaan niin helpoin tyhjentää näin
+        kierrokset = new Kierrokset();
+
+        hakemisto = nimi;
+        pelaajat.lueTiedostosta(nimi);
+        kierrokset.lueTiedostosta(nimi);
+    }
+
+
+    /**
+     * Tallettaa kerhon tiedot tiedostoon
+     * @throws SailoException jos tallettamisessa ongelmia
+     */
+    public void tallenna() throws SailoException {
+        String virhe = "";
+        try {
+            pelaajat.tallenna(hakemisto);
+        } catch ( SailoException ex ) {
+            virhe = ex.getMessage();
+        }
+
+        try {
+            kierrokset.tallenna(hakemisto);
+        } catch ( SailoException ex ) {
+            virhe += ex.getMessage();
+        }
+        if ( !"".equals(virhe) ) throw new SailoException(virhe);
+    }
+
+   
+    /**
      * @param args ei käytössä
      */ 
     public static void main(String[] args) {
-        
         Kerho kerho = new Kerho();
+        
+        try {
+            kerho.lueTiedostosta("koekelmit");
+        } catch (SailoException ex) {
+            System.out.println(ex.getMessage());
+        }
+
         
         Pelaaja p1 = new Pelaaja();
         Pelaaja p2 = new Pelaaja();
-        Pelaaja p3 = new Pelaaja();
         
         p1.rekisteroi();
         p1.vastaaAkuAnkka();
@@ -114,23 +159,21 @@ public class Kerho {
         p2.rekisteroi();
         p2.vastaaAkuAnkka();
         
-        p3.rekisteroi();
-        p3.vastaaAkuAnkka();
-    
-        
         try {
             kerho.lisaa(p1);
             kerho.lisaa(p2);
-            kerho.lisaa(p3);
+
+            for (int i=0; i<kerho.getPelaajia(); i++) {
+                Pelaaja pelaaja = kerho.annaPelaaja(i);
+                pelaaja.tulosta(System.out);
+            }
+            
+            kerho.tallenna();
         } catch (SailoException e) {
+            // e.printStackTrace();
             System.err.println(e.getMessage());
         }
-                
-        for (int i = 0; i < kerho.getPelaajia(); i++) {
-            Pelaaja pelaaja = kerho.annaPelaaja(i);
-            pelaaja.tulosta(System.out);
-        }
-
     }
-    
 }
+    
+

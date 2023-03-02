@@ -3,9 +3,15 @@
  */
 package kerho;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Kierrokset-luokka
@@ -63,6 +69,63 @@ public class Kierrokset {
         return loydetyt;
         
     }
+    
+    
+    /**
+     * Lukee harrastukset tiedostosta.
+     * @param hakemisto tiedoston nimen alkuosa
+     * @throws SailoException jos lukeminen epäonnistuu
+     * 
+     * @example
+     * <pre name="test">
+     * #THROWS SailoException 
+     * #import java.io.File;
+     *  Harrastukset harrasteet = new Harrastukset();
+     *  Harrastus pitsi21 = new Harrastus(); pitsi21.vastaaPitsinNyplays(2);
+     *  Harrastus pitsi11 = new Harrastus(); pitsi11.vastaaPitsinNyplays(1);
+     *  Harrastus pitsi22 = new Harrastus(); pitsi22.vastaaPitsinNyplays(2); 
+     *  Harrastus pitsi12 = new Harrastus(); pitsi12.vastaaPitsinNyplays(1); 
+     *  Harrastus pitsi23 = new Harrastus(); pitsi23.vastaaPitsinNyplays(2); 
+     *  String tiedNimi = "testikelmit";
+     *  File ftied = new File(tiedNimi + "/harrastukset.dat");
+     *  ftied.delete();
+     *  harrasteet.lueTiedostosta(tiedNimi); #THROWS SailoException
+     *  harrasteet.lisaa(pitsi21);
+     *  harrasteet.lisaa(pitsi11);
+     *  harrasteet.lisaa(pitsi22);
+     *  harrasteet.lisaa(pitsi12);
+     *  harrasteet.lisaa(pitsi23);
+     *  harrasteet.tallenna(tiedNimi);
+     *  harrasteet = new Harrastukset();
+     *  harrasteet.lueTiedostosta(tiedNimi);
+     *  Iterator<Harrastus> i = harrasteet.iterator();
+     *  i.next().toString() === pitsi21.toString();
+     *  i.next().toString() === pitsi11.toString();
+     *  i.next().toString() === pitsi22.toString();
+     *  i.next().toString() === pitsi12.toString();
+     *  i.next().toString() === pitsi23.toString();
+     *  i.hasNext() === false;
+     *  harrasteet.lisaa(pitsi23);
+     *  harrasteet.tallenna(tiedNimi);
+     *  ftied.delete() === true;
+     * </pre>
+     */
+    public void lueTiedostosta(String hakemisto) throws SailoException {
+        String nimi = hakemisto + "/kierrokset.dat";
+        File ftied = new File(nimi);
+        try (Scanner fi = new Scanner(new FileInputStream(ftied))) { // Jotta UTF8/ISO-8859 toimii'
+            while ( fi.hasNext() ) {
+                String s = fi.nextLine().trim();
+                if ( "".equals(s) || s.charAt(0) == ';' ) continue;
+                Kierros kier = new Kierros();
+                kier.parse(s); // voisi olla virhekäsittely
+                lisaa(kier);
+            }
+        } catch ( FileNotFoundException e ) {
+            throw new SailoException("Ei saa luettua tiedostoa " + nimi);
+        }
+    }
+
 
     
     /**
@@ -75,12 +138,42 @@ public class Kierrokset {
     
     
     /**
+     * Tallentaa kierroksia tiedostoon
+     * Tiedoston muoto:
+     * <pre>
+     * 1|Pelaaja Petteri|070819-5398|5,4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 1|11111 Pelilä|1|OK|1|
+     * 2|Teetime Teemu|190895-943M |19,3 |111-2221111|tsteetime@golffari.fi|Tiikuja 1|11001 Tiiala||OK|1|
+     * </pre>
+     * @param hakemisto tallennettavan tiedoston hakemisto
+     * @throws SailoException mikäli tallennus epäonnistuu
+     */
+    public void tallenna(String hakemisto) throws SailoException {
+        File ftied = new File(hakemisto + "/kierrokset.dat");
+        try (PrintStream fo = new PrintStream(new FileOutputStream(ftied, false))) {
+            for(var kier: alkiot)
+                fo.println(kier.toString());        
+        } catch (FileNotFoundException ex) {
+            throw new SailoException("Tiedosto " + ftied.getAbsolutePath() +  " ei aukea");
+        }
+    }
+    
+    
+    
+    
+    
+    /**
      * Testataan
      * @param args ei käytossä
      * @throws SailoException jos liikaa
      */
     public static void main(String[] args) throws SailoException {
         Kierrokset kierrokset = new Kierrokset();   
+        
+        try  {
+            kierrokset.lueTiedostosta("kierrokset");
+        } catch (SailoException ex){
+            System.err.println(ex.getMessage());
+        }
         
         Kierros k1 = new Kierros();
         k1.vastaaKierros(2);
@@ -91,24 +184,10 @@ public class Kierrokset {
         Kierros k4 = new Kierros();
         k4.vastaaKierros(2);
         
-        Kierros k5 = new Kierros();
-        k5.vastaaKierros(2);
-        Kierros k6 = new Kierros();
-        k6.vastaaKierros(1);
-        Kierros k7 = new Kierros();
-        k7.vastaaKierros(2);
-        Kierros k8 = new Kierros();
-        k8.vastaaKierros(2);
-        
         kierrokset.lisaa(k1);
         kierrokset.lisaa(k2);
         kierrokset.lisaa(k3);
         kierrokset.lisaa(k4);
-        kierrokset.lisaa(k5);
-        kierrokset.lisaa(k6);
-        kierrokset.lisaa(k7);
-        kierrokset.lisaa(k8);
-
   
         System.out.println("============= Kierrokset testi =================");
         
@@ -116,6 +195,12 @@ public class Kierrokset {
         for (Kierros k : kierrokset2) {
             System.out.print(k.getPelaajaNro() + " ");
             k.tulosta(System.out);
+        }
+        
+        try {
+            kierrokset.tallenna("kierrokset");
+        } catch (SailoException ex) {
+            ex.printStackTrace();
         }
     }
 }
