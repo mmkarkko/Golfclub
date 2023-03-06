@@ -16,7 +16,7 @@ import java.util.Scanner;
  * - Avustajaluokat: pelaaja
  * 
  * @author Miia Arkko
- * @version 2.3.2023
+ * @version 6.3.2023
  *
  */
 public class Pelaajat {
@@ -159,11 +159,12 @@ public class Pelaajat {
         Pelaaja p1 = new Pelaaja();
         Pelaaja p2 = new Pelaaja();
 
-
         p1.rekisteroi();
+        p1.rekisteroiOsake();
         p1.vastaaAkuAnkka();
         
         p2.rekisteroi();
+        p2.rekisteroiOsake();
         p2.vastaaAkuAnkka();
         
         try {
@@ -179,7 +180,7 @@ public class Pelaajat {
                 
         for (int i = 0; i < pelaajat.getLkm(); i++) {
             Pelaaja p = pelaajat.anna(i);
-            System.out.println("Jäsen indeksi: " + i);
+            System.out.println("Pelaaja indeksi: " + i);
             p.tulosta(System.out);
         } 
         

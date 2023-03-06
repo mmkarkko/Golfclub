@@ -21,7 +21,7 @@ import kanta.HetunTarkistus;
  * - Osaa lisätä merkkijonon i:neksi kentäksi  
  * 
  * @author Miia Arkko
- * @version 24.2.2023
+ * @version 6.3.2023
  *
  */
 public class Pelaaja {
@@ -182,8 +182,7 @@ public class Pelaaja {
      * TODO: poista, kun kaikki toimii
      */
     public void vastaaAkuAnkka() {
-
-        nimi          = "Pelaaja Petteri" + HetunTarkistus.rand(1,400);
+        nimi          = "Pelaaja Petteri";
         hetu          = HetunTarkistus.arvoHetu();
         hcp           = 5.4;
         puhNro        = "000-9999999";

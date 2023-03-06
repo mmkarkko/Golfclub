@@ -23,17 +23,23 @@ import java.util.Scanner;
  * - Osaa etsiä ja lajitella kierroksia
  * - Avustajaluokat: Kierros
  * @author Miia Arkko
- * @version 24.2.2023
+ * @version 6.3.2023
  *
  */
 public class Kierrokset {
     
     private Collection<Kierros> alkiot = new ArrayList<Kierros>();
-
     
     /**
+     * Alustetaan
+     */
+    public Kierrokset() {
+        //
+    }
+  
+    /**
      * Haetaan kaikki pelaajan kierrokset
-     * @param pelaajaNro pelaajan pelaajanumero, johon liittyviä kierroksia haetaan
+     * @param tunnusNro pelaajan pelaajanumero, johon liittyviä kierroksia haetaan
      * @return tietorakenne, jossa viitteet löydettyihin kierroksiin
      * @example
      * <pre name="test">
@@ -62,12 +68,21 @@ public class Kierrokset {
      * loytyneet.get(0) == k3 === true;
      * </pre>
      */
-    public List<Kierros> annaKierrokset(int pelaajaNro) {
+    public List<Kierros> annaKierrokset(int tunnusNro) {
         List<Kierros> loydetyt = new ArrayList<Kierros>();
-        for (Kierros har : alkiot) // iteraattori
-            if (har.getPelaajaNro() == pelaajaNro) loydetyt.add(har);
+        for (Kierros k : alkiot) // iteraattori
+            if (k.getPelaajaNro() == tunnusNro) loydetyt.add(k);
         return loydetyt;
         
+    }
+    
+    
+    /**
+     * Lisää uuden kierroksen tietorakenteeseen.  Ottaa kierroksen omistukseensa.
+     * @param kierros lisättävän kierroksen viite. Huom. tietorakenne muuttuu omistajaksi
+     */
+    public void lisaa(Kierros kierros){
+        alkiot.add(kierros);
     }
     
     
@@ -80,33 +95,33 @@ public class Kierrokset {
      * <pre name="test">
      * #THROWS SailoException 
      * #import java.io.File;
-     *  Harrastukset harrasteet = new Harrastukset();
-     *  Harrastus pitsi21 = new Harrastus(); pitsi21.vastaaPitsinNyplays(2);
-     *  Harrastus pitsi11 = new Harrastus(); pitsi11.vastaaPitsinNyplays(1);
-     *  Harrastus pitsi22 = new Harrastus(); pitsi22.vastaaPitsinNyplays(2); 
-     *  Harrastus pitsi12 = new Harrastus(); pitsi12.vastaaPitsinNyplays(1); 
-     *  Harrastus pitsi23 = new Harrastus(); pitsi23.vastaaPitsinNyplays(2); 
+     *  Kierrokset kierrokset = new Kierrokset();
+     *  Kierros pitsi21 = new Kierros(); pitsi21.vastaaKierros(2);
+     *  Kierros pitsi11 = new Kierros(); pitsi11.vastaaKierros(1);
+     *  Kierros pitsi22 = new Kierros(); pitsi22.vastaaKierros(2); 
+     *  Kierros pitsi12 = new Kierros(); pitsi12.vastaaKierros(1); 
+     *  Kierros pitsi23 = new Kierros(); pitsi23.vastaaKierros(2); 
      *  String tiedNimi = "testikelmit";
-     *  File ftied = new File(tiedNimi + "/harrastukset.dat");
+     *  File ftied = new File(tiedNimi + "/kierrokset.dat");
      *  ftied.delete();
-     *  harrasteet.lueTiedostosta(tiedNimi); #THROWS SailoException
-     *  harrasteet.lisaa(pitsi21);
-     *  harrasteet.lisaa(pitsi11);
-     *  harrasteet.lisaa(pitsi22);
-     *  harrasteet.lisaa(pitsi12);
-     *  harrasteet.lisaa(pitsi23);
-     *  harrasteet.tallenna(tiedNimi);
-     *  harrasteet = new Harrastukset();
-     *  harrasteet.lueTiedostosta(tiedNimi);
-     *  Iterator<Harrastus> i = harrasteet.iterator();
+     *  kierrokset.lueTiedostosta(tiedNimi); #THROWS SailoException
+     *  kierrokset.lisaa(pitsi21);
+     *  kierrokset.lisaa(pitsi11);
+     *  kierrokset.lisaa(pitsi22);
+     *  kierrokset.lisaa(pitsi12);
+     *  kierrokset.lisaa(pitsi23);
+     *  kierrokset.tallenna(tiedNimi);
+     *  kierrokset = new Kierrokset();
+     *  kierrokset.lueTiedostosta(tiedNimi);
+     *  Iterator<Kierros> i = kierrokset.iterator();
      *  i.next().toString() === pitsi21.toString();
      *  i.next().toString() === pitsi11.toString();
      *  i.next().toString() === pitsi22.toString();
      *  i.next().toString() === pitsi12.toString();
      *  i.next().toString() === pitsi23.toString();
      *  i.hasNext() === false;
-     *  harrasteet.lisaa(pitsi23);
-     *  harrasteet.tallenna(tiedNimi);
+     *  kierrokset.lisaa(pitsi23);
+     *  kierrokset.tallenna(tiedNimi);
      *  ftied.delete() === true;
      * </pre>
      */
@@ -124,16 +139,6 @@ public class Kierrokset {
         } catch ( FileNotFoundException e ) {
             throw new SailoException("Ei saa luettua tiedostoa " + nimi);
         }
-    }
-
-
-    
-    /**
-     * Lisää uuden kierroksen tietorakenteeseen.  Ottaa kierroksen omistukseensa.
-     * @param kierros lisättävän kierroksen viite. Huom. tietorakenne muuttuu omistajaksi
-     */
-    public void lisaa(Kierros kierros){
-        alkiot.add(kierros);
     }
     
     
@@ -191,7 +196,7 @@ public class Kierrokset {
   
         System.out.println("============= Kierrokset testi =================");
         
-        var kierrokset2 = kierrokset.annaKierrokset(1);
+        var kierrokset2 = kierrokset.annaKierrokset(2);
         for (Kierros k : kierrokset2) {
             System.out.print(k.getPelaajaNro() + " ");
             k.tulosta(System.out);

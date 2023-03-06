@@ -19,7 +19,7 @@ import fi.jyu.mit.ohj2.Mjonot;
  * - Osaa antaa merkkijonona kentän i tiedot
  * - Osaa laittaa merkkijonon i:neksi kierrokseksi
  * @author Miia Arkko
- * @version 24.2.2023
+ * @version 6.3.2023
  *
  */
 public class Kierros {
@@ -28,10 +28,11 @@ public class Kierros {
     private int pelaajaNro       = 0;
     private String pvm           = "";
     private String lahtoAika     = "";
-    private boolean onkoTasoitus = false;
+    private String onkoTasoitus  = "";
     private int pelatutReiat     = 0;
     private double pelaajanHcp   = 0;
     private String pelattuKentta = "";
+    private boolean tasoitusKierros = false;
     
     private static int seuraavaKierrosNro = 1;    
     
@@ -59,11 +60,10 @@ public class Kierros {
      * @param nro pelaajan numero
      */
     public void vastaaKierros(int nro) {
-        Random rd = new Random();
         pelaajaNro      = nro;
         pvm             = "11.6.2022";
         lahtoAika       = "12.40";
-        onkoTasoitus    = rd.nextBoolean();
+        onkoTasoitus    = "ei";
         pelatutReiat    = (int) (Math.random() * (18 - 9) + 9);
         pelaajanHcp     = Math.round(Math.random() * (54 - 3) + 3);
         pelattuKentta   = "Paras Golfkerho";
@@ -75,22 +75,16 @@ public class Kierros {
      * @param out tietovirta, mihin tulostetaan
      */
     public void tulosta(PrintStream out) {
-        
-        String tasoitusKierros = "Kyllä";
-        if(!onkoTasoitus) {
-            tasoitusKierros = "Ei"; 
-        }
         out.println("Kierrosnumero:  " + String.format("%03d", kierrosNro));
         out.println("   Päivämäärä:  " + pvm + ",  Lähtöaika:  " + lahtoAika);
         out.println("   Pelaajanumero:  " + String.format("%03d", pelaajaNro));
         out.println("   Pelaajan tasoitus  " + pelaajanHcp);
         out.println("   Golfkerho:  " + pelattuKentta);
         out.println("   Pelatut reiät  " + pelatutReiat);
-        out.println("   Onko tasoituskierros: " + tasoitusKierros);      
+        out.println("   Onko tasoituskierros: " + onkoTasoitus);      
     }
     
-    
-    
+        
     /**
      * Tulostetaan kierroksen tiedot
      * @param os tietovirta johon tulostetaan
@@ -161,12 +155,17 @@ public class Kierros {
      */
     public void parse(String rivi) {
         StringBuffer sb = new StringBuffer(rivi);
+        
         setKierrosNro(Mjonot.erota(sb, '|', getKierrosNro()));
         pelaajaNro = Mjonot.erota(sb, '|', pelaajaNro);
-
+        pvm = Mjonot.erota(sb, '|', pvm);
+        lahtoAika = Mjonot.erota(sb, '|', lahtoAika);
+        onkoTasoitus = Mjonot.erota(sb, '|', onkoTasoitus);
+        pelatutReiat = Mjonot.erota(sb, '|', pelatutReiat);
+        pelaajanHcp = Mjonot.erota(sb, '|', pelaajanHcp);
+        pelattuKentta = Mjonot.erota(sb, '|', pelattuKentta);     
     }
 
-    
     
     /**
      * Asettaa pelaajan pelaajanumeron ja varmistaa, että
@@ -184,25 +183,24 @@ public class Kierros {
      * @return harrastus tolppaeroteltuna merkkijonona 
      * @example
      * <pre name="test">
-     *   Harrastus harrastus = new Harrastus();
-     *   harrastus.parse("   2   |  10  |   Kalastus  | 1949 | 22 t ");
-     *   harrastus.toString()    === "2|10|Kalastus|1949|22";
+     *   Kierros kierros = new Kierrokset();
+     *   kierros.parse("   2   |  10  |   Kalastus  | 1949 | 22 t ");
+     *   kierros.toString()    === "2|10|Kalastus|1949|22";
      * </pre>
      */
     @Override
     public String toString() {
         return "" + getKierrosNro() + "|" + 
-                pelaajaNro + "|" + 
-                pvm + "|" + 
-                lahtoAika + "|" + 
-                onkoTasoitus + '|' + 
-                pelatutReiat + '|' + 
-                pelaajanHcp + '|' + 
-                pelattuKentta;
+                    pelaajaNro + "|" + 
+                    pvm + "|" + 
+                    lahtoAika + "|" + 
+                    onkoTasoitus + '|' + 
+                    pelatutReiat + '|' + 
+                    pelaajanHcp + '|' + 
+                    pelattuKentta;
     }
 
     
-
     /**
      * @param args ei kaytossa
      */
@@ -210,9 +208,9 @@ public class Kierros {
         Kierros k1 = new Kierros();
         Kierros k2 = new Kierros();
         
-        //k1.rekisteroi();
+        k1.rekisteroi();
         k1.vastaaKierros(1);
-        //k2.rekisteroi();
+        k2.rekisteroi();
         k2.vastaaKierros(2);   
     }
 }

@@ -16,14 +16,14 @@ import java.util.List;
  *                  Pelaaja
  *                               
  * @author Miia Arkko
- * @version 2.3.2023
+ * @version 6.3.2023
  *
  */
 public class Kerho {
 
     private Pelaajat pelaajat = new Pelaajat();
     private Kierrokset kierrokset = new Kierrokset();
-    private String hakemisto = "kelmit";
+    private String hakemisto = "koekelmit";
     
     
     /**
@@ -38,10 +38,10 @@ public class Kerho {
     
     /**
      * Lisätään uusi kierros
-     * @param k1 lisättävä kierros
+     * @param k lisättävä kierros
      */
-    public void lisaa(Kierros k1) {
-        kierrokset.lisaa(k1);
+    public void lisaa(Kierros k) {
+        kierrokset.lisaa(k);
     }
     
     
@@ -151,11 +151,9 @@ public class Kerho {
  
         Pelaaja p1 = new Pelaaja();
         Pelaaja p2 = new Pelaaja();
-        
         p1.rekisteroi();
         p1.rekisteroiOsake();
-        p1.vastaaAkuAnkka();
-        
+        p1.vastaaAkuAnkka();        
         p2.rekisteroi();
         p2.rekisteroiOsake();
         p2.vastaaAkuAnkka();
