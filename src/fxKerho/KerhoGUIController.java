@@ -40,6 +40,8 @@ public class KerhoGUIController implements Initializable {
     @FXML private ListChooser<Pelaaja> chooserPelaajat;
     @FXML private ScrollPane panelPelaaja;
     
+    @FXML private TextField hakuehto;
+    
     
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
@@ -167,6 +169,7 @@ public class KerhoGUIController implements Initializable {
     
     
     private Kerho kerho;
+    private String kerhonNimi = "Paras Golfkerho";
     private TextArea areaPelaaja = new TextArea(); // TODO: poista lopuksi
     
     
@@ -219,9 +222,9 @@ public class KerhoGUIController implements Initializable {
      * @return false, jos painetaan peruuta
      */
     public boolean avaa() {
-        String uusinimi = LandingGUIController.kysyNimi(null, "Paras golfkerho");
+        String uusinimi = LandingGUIController.kysyNimi(null, kerhonNimi);
         if (uusinimi == null)return false;
-        //lueTiedosto(uusinimi);
+        lueTiedosto(uusinimi);
         return true;
     }
     
@@ -241,6 +244,17 @@ public class KerhoGUIController implements Initializable {
         }
         chooserPelaajat.setSelectedIndex(index); // tästä tulee muutosviesti joka näyttää pelaajan
     }
+    
+    private void lueTiedosto(String nimi) {
+        kerhonNimi = nimi;
+        setTitle("Kerho - " + kerhonNimi);
+        try {
+            kerho.lueTiedostosta(nimi);
+            hae(0);
+        } catch (SailoException e) {
+            Dialogs.showMessageDialog(e.getMessage());
+        }
+    }
 
      
     /**
@@ -253,10 +267,24 @@ public class KerhoGUIController implements Initializable {
     
     
     /**
+     * 
+     * @param title
+     */
+    private void setTitle(String title) {
+        ModalController.getStage(hakuehto).setTitle(title);
+    }
+    
+    
+    /**
      * Tietojen tallennus
      */
     private void tallenna() {
-        Dialogs.showMessageDialog("Tallennetaan! Mutta ei toimi vielä");
+//        Dialogs.showMessageDialog("Tallennetaan! Mutta ei toimi vielä");
+        try {
+            kerho.tallenna();
+        } catch (SailoException e) {
+            Dialogs.showMessageDialog(e.getMessage());
+        }
     }
     
     

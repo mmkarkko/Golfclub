@@ -148,15 +148,16 @@ public class Kerho {
         } catch (SailoException ex) {
             System.out.println(ex.getMessage());
         }
-
-        
+ 
         Pelaaja p1 = new Pelaaja();
         Pelaaja p2 = new Pelaaja();
         
         p1.rekisteroi();
+        p1.rekisteroiOsake();
         p1.vastaaAkuAnkka();
         
         p2.rekisteroi();
+        p2.rekisteroiOsake();
         p2.vastaaAkuAnkka();
         
         try {

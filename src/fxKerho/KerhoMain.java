@@ -1,6 +1,7 @@
 package fxKerho;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 import kerho.Kerho;
 import javafx.scene.Scene;
@@ -39,6 +40,7 @@ public class KerhoMain extends Application {
             });
             
             primaryStage.show();
+            //if(!kerhoCtrl.avaa()) Platform.exit();
         } catch(Exception e) {
             e.printStackTrace();
         }

@@ -35,9 +35,8 @@ public class Pelaaja {
     private String      katuOs          = "";
     private String      postiOs         = "";
     private int         osakeNro        = 0;
-    private boolean     jasenMaksu      = true;
-    private String      pelaajanKerho   = "";
-    private boolean     onkoOsake       = true;
+    private String    jasenMaksu        = "OK";
+    private String      pelaajanKerho   = "Paras Golfkerho";
     
     private static int seuraavaPelaajaNro  = 1;
     private static int seuraavaOsakeNro    = 1;
@@ -67,7 +66,6 @@ public class Pelaaja {
      * @return osakenumero
      */
     public int getOsakeNro() {
-
         return osakeNro;
     }
     
@@ -117,13 +115,12 @@ public class Pelaaja {
      *  n2 === n1+1;
      * </pre>
      */
-    public int rekisteroiOsake() {
-        
-        // TODO: poista randomi, kun toimii
-        Random rd = new Random();
-        onkoOsake     = rd.nextBoolean();
-        if (onkoOsake == false) return 0;
-        
+    public int rekisteroiOsake() {     
+//        // TODO: poista randomi, kun toimii
+//        Random rd = new Random();
+//        onkoOsake     = rd.nextBoolean();
+//        if (onkoOsake == false) return 0;
+//        
         osakeNro   = seuraavaOsakeNro;
         seuraavaOsakeNro++;
         return osakeNro;
@@ -152,7 +149,7 @@ public class Pelaaja {
                 postiOs + "|" +
                 getOsakeNro() + "|" +
                 jasenMaksu + "|" + 
-                pelaajanKerho + "|";
+                pelaajanKerho + "| ";
     }
 
     
@@ -160,26 +157,14 @@ public class Pelaaja {
      * Tulostaa Pelaajan tiedot
      * @param out tietovirta, mihin tulostetaan
      */
-    public void tulosta(PrintStream out) {
-        
-        String jasenMaksunTila = "OK";
-        if (!jasenMaksu) {
-            jasenMaksunTila = "maksamatta";
-        }
-        
-        String osake = "   Osakkeen numero: " + osakeNro;
-        if (osakeNro == 0) {
-            osake = "   Osakkeen numero: Ei osaketta";
-        }
-        
+    public void tulosta(PrintStream out) {     
         out.println(String.format("%03d", pelaajaNro) + "  " + nimi + "  " + hetu);
         out.println("  Tasoitus " + hcp);
         out.println("  Puhelinnumero: " + puhNro);
-        out.println("  Sähköposti: " + email);
+        out.println("  Email: " + email);
         out.println("  Osoite: " + katuOs + ",  " + postiOs);
-        out.println("  Golfkerho: " + pelaajanKerho + osake);
-        out.println("  Jäsenmaksu " + jasenMaksunTila); 
-
+        out.println("  Golfkerho: " + pelaajanKerho + ", Osakenumero: " + osakeNro);
+        out.println("  Jasenmaksu: " + jasenMaksu); 
     }
     
     
@@ -205,9 +190,8 @@ public class Pelaaja {
         email         = "petepelaaja@golffari.fi";
         katuOs        = "Pelimiehenkuja " + HetunTarkistus.rand(1,400);
         postiOs       = "11111 Pelilä";
-        jasenMaksu    = true;
+        jasenMaksu    = "OK";
         pelaajanKerho = "Paras Golfkerho";
-
     }
     
     /**
@@ -232,6 +216,7 @@ public class Pelaaja {
      */
     public void parse(String rivi) {
         var sb = new StringBuilder(rivi);
+        
         setPelaajaNro(Mjonot.erota(sb, '|', getpelaajaNro()));
         nimi = Mjonot.erota(sb, '|', nimi);
         hetu = Mjonot.erota(sb, '|', hetu);
@@ -241,7 +226,8 @@ public class Pelaaja {
         katuOs = Mjonot.erota(sb, '|', katuOs);
         postiOs = Mjonot.erota(sb, '|', postiOs);
         setOsakeNro(Mjonot.erota(sb, '|', getOsakeNro()));
-        //jasenMaksu = Mjonot.erota(sb, '|', jasenMaksu);
+        
+        jasenMaksu = Mjonot.erota(sb, '|', jasenMaksu);
         pelaajanKerho = Mjonot.erota(sb, '|', pelaajanKerho);
     }
     
