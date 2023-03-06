@@ -1,5 +1,6 @@
 package fxKerho;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -40,13 +41,13 @@ public class KerhoGUIController implements Initializable {
     @FXML private ListChooser<Pelaaja> chooserPelaajat;
     @FXML private ScrollPane panelPelaaja;
     
-    @FXML private TextField hakuehto;
+    //@FXML private TextField hakuehto;
     
     
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
         alusta();
-        ModalController.showModal(LandingGUIController.class.getResource("LandingGUIView.fxml"), "Golfkerho", null, "Paras golfkerho");
+//        ModalController.showModal(LandingGUIController.class.getResource("LandingGUIView.fxml"), "Golfkerho", null, "Paras golfkerho");
     }
     
     
@@ -102,7 +103,10 @@ public class KerhoGUIController implements Initializable {
      * @param event tapahtuma
      */
     @FXML void handleLopeta(ActionEvent event) {
-        Dialogs.showMessageDialog("Ei osata lopettaa!");
+        tallenna();
+        Platform.exit();
+        
+        //Dialogs.showMessageDialog("Ei osata lopettaa!");
     }
 
     
@@ -129,7 +133,8 @@ public class KerhoGUIController implements Initializable {
      * @param event tapahtuma
      */
     @FXML void handleTallenna(ActionEvent event) {
-        Dialogs.showMessageDialog("Ei osata vielä tallentaa");
+        //Dialogs.showMessageDialog("Ei osata vielä tallentaa");
+        tallenna();
     }
 
     
@@ -177,12 +182,11 @@ public class KerhoGUIController implements Initializable {
      * Alustetaan
      */
     private void alusta() {
-        chooserPelaajat.clear();
-        areaPelaaja.setFont(new Font("Courier New", 12));
         panelPelaaja.setContent(areaPelaaja);
+        areaPelaaja.setFont(new Font("Courier New", 12)); 
         panelPelaaja.setFitToHeight(true);
-        chooserPelaajat.addSelectionListener(e -> naytaPelaaja());
-        
+        chooserPelaajat.clear();
+        chooserPelaajat.addSelectionListener(e -> naytaPelaaja());      
     }
     
     
@@ -218,7 +222,7 @@ public class KerhoGUIController implements Initializable {
     
     
     /**
-     * Avataan 
+     * Avataan kerho
      * @return false, jos painetaan peruuta
      */
     public boolean avaa() {
@@ -240,14 +244,14 @@ public class KerhoGUIController implements Initializable {
         for (int i = 0; i < kerho.getPelaajia(); i++) {
             Pelaaja pelaaja = kerho.annaPelaaja(i);
             if (pelaaja.getpelaajaNro() == jnro) index = i;
-            chooserPelaajat.add(pelaaja.getNimi(), pelaaja);
+            chooserPelaajat.add("" + pelaaja.getNimi(), pelaaja);
         }
         chooserPelaajat.setSelectedIndex(index); // tästä tulee muutosviesti joka näyttää pelaajan
     }
     
     private void lueTiedosto(String nimi) {
         kerhonNimi = nimi;
-        setTitle("Kerho - " + kerhonNimi);
+        //setTitle("Kerho - " + kerhonNimi);
         try {
             kerho.lueTiedostosta(nimi);
             hae(0);
@@ -266,13 +270,13 @@ public class KerhoGUIController implements Initializable {
     }
     
     
-    /**
-     * 
-     * @param title
-     */
-    private void setTitle(String title) {
-        ModalController.getStage(hakuehto).setTitle(title);
-    }
+//    /**
+//     * 
+//     * @param title
+//     */
+//    private void setTitle(String title) {
+//        ModalController.getStage(hakuehto).setTitle(title);
+//    }
     
     
     /**
@@ -294,10 +298,10 @@ public class KerhoGUIController implements Initializable {
     private void uusiKierros() {
         Pelaaja pelaajaKohdalla = chooserPelaajat.getSelectedObject();
         if (pelaajaKohdalla == null) return;
-        Kierros k1 = new Kierros();
-        k1.rekisteroi();
-        k1.vastaaKierros(pelaajaKohdalla.getpelaajaNro()); // TODO: korvaa dialogilla
-        kerho.lisaa(k1);
+        Kierros k = new Kierros();
+        k.rekisteroi();
+        k.vastaaKierros(pelaajaKohdalla.getpelaajaNro()); // TODO: korvaa dialogilla
+        kerho.lisaa(k);
         hae(pelaajaKohdalla.getpelaajaNro());
     }
 

@@ -1,48 +1,19 @@
-1|Pelaaja Petteri218|270865-397E|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 138|11111 Pelilä|0|true|true| 
-2|Pelaaja Petteri126|030874-1101|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 233|11111 Pelilä|0|true|true| 
-3|Pelaaja Petteri228|240940-307Y|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 37|11111 Pelilä|0|true|true| 
-4|Pelaaja Petteri281|010658-287P|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 111|11111 Pelilä|0|true|true| 
-5|Pelaaja Petteri289|120503-7624|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 389|11111 Pelilä|0|true|true| 
-6|Pelaaja Petteri68|140454-608T|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 279|11111 Pelilä|0|true|true| 
-7|Pelaaja Petteri237|080649-1704|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 215|11111 Pelilä|0|true|true| 
-8|Pelaaja Petteri168|090366-394Y|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 186|11111 Pelilä|0|true|true| 
-9|Pelaaja Petteri301|220990-121K|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 371|11111 Pelilä|0|true|true| 
-10|Pelaaja Petteri113|080589-474E|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 147|11111 Pelilä|0|true|true| 
-11|Pelaaja Petteri301|060592-378U|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 85|11111 Pelilä|0|true|true| 
-12|Pelaaja Petteri75|270461-315J|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 124|11111 Pelilä|0|true|true| 
-13|Pelaaja Petteri51|100238-932X|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 245|11111 Pelilä|0|true|true| 
-14|Pelaaja Petteri356|241101-0496|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 348|11111 Pelilä|0|true|true| 
-15|Pelaaja Petteri244|210875-3942|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 243|11111 Pelilä|0|true|true| 
-16|Pelaaja Petteri394|011040-7186|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 372|11111 Pelilä|0|true|true| 
-17|Pelaaja Petteri84|211097-504W|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 22|11111 Pelilä|0|true|true| 
-18|Pelaaja Petteri338|100817-417R|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 22|11111 Pelilä|0|true|true| 
-19|Pelaaja Petteri64|151058-436S|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 267|11111 Pelilä|0|true|true| 
-20|Pelaaja Petteri337|250763-195A|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 87|11111 Pelilä|0|true|true| 
-21|Pelaaja Petteri75|070644-250S|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 53|11111 Pelilä|0|true|true| 
-22|Pelaaja Petteri151|260654-378R|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 324|11111 Pelilä|0|true|true| 
-23|Pelaaja Petteri148|180843-1223|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 374|11111 Pelilä|0|true|true| 
-24|Pelaaja Petteri227|111016-1781|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 274|11111 Pelilä|0|true|true| 
-25|Pelaaja Petteri140|130412-424C|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 64|11111 Pelilä|0|true|true| 
-26|Pelaaja Petteri346|080832-201B|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 254|11111 Pelilä|0|true|true| 
-27|Pelaaja Petteri324|020819-4472|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 109|11111 Pelilä|1|true|true| 
-28|Pelaaja Petteri202|230680-793W|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 212|11111 Pelilä|2|true|true| 
-29|Pelaaja Petteri268|250767-0367|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 225|11111 Pelilä|3|true|true| 
-30|Pelaaja Petteri186|121192-185A|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 384|11111 Pelilä|4|true|true| 
-31|Pelaaja Petteri212|080662-766P|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 188|11111 Pelilä|5|true|true| 
-32|Pelaaja Petteri203|170115-925F|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 77|11111 Pelilä|6|true|true| 
-33|Pelaaja Petteri304|080348-3143|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 41|11111 Pelilä|7|true|true| 
-34|Pelaaja Petteri80|080736-6535|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 340|11111 Pelilä|8|true|true| 
-35|Pelaaja Petteri278|150370-906C|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 51|11111 Pelilä|9|true|true| 
-36|Pelaaja Petteri92|120595-507M|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 334|11111 Pelilä|10|true|true| 
-37|Pelaaja Petteri186|100876-442S|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 93|11111 Pelilä|11|true|Paras Golfkerho| 
-38|Pelaaja Petteri289|040418-0502|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 119|11111 Pelilä|12|true|Paras Golfkerho| 
-39|Pelaaja Petteri3|191214-8211|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 153|11111 Pelilä|13|OK|Paras Golfkerho| 
-40|Pelaaja Petteri70|160566-0876|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 3|11111 Pelilä|14|OK|Paras Golfkerho| 
-41|Pelaaja Petteri233|230312-651B|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 303|11111 Pelilä|15|OK|Paras Golfkerho| 
-42|Pelaaja Petteri269|160827-159V|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 353|11111 Pelilä|16|OK|Paras Golfkerho| 
-43|Pelaaja Petteri|160545-123X|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 387|11111 Pelilä|17|OK|Paras Golfkerho| 
-44|Pelaaja Petteri|140860-853F|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 96|11111 Pelilä|18|OK|Paras Golfkerho| 
-45|Pelaaja Petteri|200406-675E|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 255|11111 Pelilä|19|OK|Paras Golfkerho| 
-46|Pelaaja Petteri|260729-3783|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 154|11111 Pelilä|20|OK|Paras Golfkerho| 
-47|Pelaaja Petteri|011129-0310|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 251|11111 Pelilä|21|OK|Paras Golfkerho| 
-48|Pelaaja Petteri|270810-565N|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 365|11111 Pelilä|22|OK|Paras Golfkerho| 
+1|Pelaaja Petteri|031061-081B|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 219|11111 Pelilä|1|OK|Paras Golfkerho| 
+2|Pelaaja Petteri|040624-4150|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 358|11111 Pelilä|2|OK|Paras Golfkerho| 
+3|Pelaaja Petteri|211087-735S|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 17|11111 Pelilä|3|OK|Paras Golfkerho| 
+4|Pelaaja Petteri|181177-7972|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 197|11111 Pelilä|4|OK|Paras Golfkerho| 
+1|Pelaaja Petteri|100356-2103|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 13|11111 Pelilä|1|OK|Paras Golfkerho| 
+2|Pelaaja Petteri|080348-452J|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 101|11111 Pelilä|2|OK|Paras Golfkerho| 
+1|Pelaaja Petteri|100356-2103|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 13|11111 Pelilä|1|OK|Paras Golfkerho| 
+2|Pelaaja Petteri|080348-452J|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 101|11111 Pelilä|2|OK|Paras Golfkerho| 
+1|Pelaaja Petteri|100356-2103|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 13|11111 Pelilä|1|OK|Paras Golfkerho| 
+2|Pelaaja Petteri|080348-452J|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 101|11111 Pelilä|2|OK|Paras Golfkerho| 
+1|Pelaaja Petteri|200598-972K|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 399|11111 Pelilä|1|OK|Paras Golfkerho| 
+2|Pelaaja Petteri|111030-4071|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 81|11111 Pelilä|2|OK|Paras Golfkerho| 
+3|Pelaaja Petteri|250948-0690|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 271|11111 Pelilä|3|OK|Paras Golfkerho| 
+4|Pelaaja Petteri|180634-667R|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 240|11111 Pelilä|4|OK|Paras Golfkerho| 
+5|Pelaaja Petteri|160772-693W|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 188|11111 Pelilä|5|OK|Paras Golfkerho| 
+6|Pelaaja Petteri|270915-742F|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 341|11111 Pelilä|6|OK|Paras Golfkerho| 
+7|Pelaaja Petteri|270982-640F|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 42|11111 Pelilä|7|OK|Paras Golfkerho| 
+8|Pelaaja Petteri|140753-9810|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 264|11111 Pelilä|8|OK|Paras Golfkerho| 
+9|Pelaaja Petteri|260202-497X|5.4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 208|11111 Pelilä|9|OK|Paras Golfkerho| 
