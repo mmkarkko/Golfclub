@@ -11,7 +11,7 @@ import javafx.fxml.FXMLLoader;
 /**
  * Pääohjelma Golfkerho-ohjelman käynnistämiseksi
  * @author Miia Arkko
- * @version 24.2.2023
+ * @version 6.3.2023
  *
  */
 public class KerhoMain extends Application {
@@ -27,8 +27,7 @@ public class KerhoMain extends Application {
             scene.getStylesheets().add(getClass().getResource("kerho.css").toExternalForm());
             primaryStage.setScene(scene);
             primaryStage.setTitle("Golfkerho");
-            
-            
+                       
             Kerho kerho = new Kerho();
             kerhoCtrl.setKerho(kerho);
             
@@ -49,7 +48,6 @@ public class KerhoMain extends Application {
     
     /**
      * Käynnistää käyttöliittymän
-     * 
      * @param args Ei kaytossa
      */
     public static void main(String[] args) {

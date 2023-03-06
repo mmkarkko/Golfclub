@@ -54,6 +54,18 @@ public class HetunTarkistus  {
       double n = (yla-ala)*Math.random() + ala;
       return (int)Math.round(n);
     }
+    
+    
+    /**
+     * Arvotaan satunnanen reaaliluku välille ylä-ala
+     * @param yla arvonnan yläraja
+     * @param ala arvonnan alaraja
+     * @return satunnainen luku väliltä ala-ylä
+     */ 
+    public static double randDouble(double yla, double ala) {
+        double n = (yla-ala)*Math.random() + ala;
+        return Math.round(n);
+    }
 
     
     /**

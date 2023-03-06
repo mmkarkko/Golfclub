@@ -32,7 +32,6 @@ public class Kierros {
     private int pelatutReiat     = 0;
     private double pelaajanHcp   = 0;
     private String pelattuKentta = "";
-    private boolean tasoitusKierros = false;
     
     private static int seuraavaKierrosNro = 1;    
     
@@ -212,5 +211,8 @@ public class Kierros {
         k1.vastaaKierros(1);
         k2.rekisteroi();
         k2.vastaaKierros(2);   
+        
+        System.out.println(k1);
+        System.out.println(k2);
     }
 }

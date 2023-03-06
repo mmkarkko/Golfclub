@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Font;
 import kerho.Kerho;
 import kerho.Kierros;
@@ -41,13 +42,24 @@ public class KerhoGUIController implements Initializable {
     @FXML private ListChooser<Pelaaja> chooserPelaajat;
     @FXML private ScrollPane panelPelaaja;
     
-    //@FXML private TextField hakuehto;
+    @FXML private TextField hakuehto;
+    @FXML private ComboBoxChooser<?> cbKentat;
     
     
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
         alusta();
 //        ModalController.showModal(LandingGUIController.class.getResource("LandingGUIView.fxml"), "Golfkerho", null, "Paras golfkerho");
+    }
+    
+    
+
+    /**
+     * Käsitellään hakukenttä
+     * @param event tapahtuma
+     */
+    @FXML void handleHakuehto(KeyEvent event) {
+        //
     }
     
     
@@ -199,7 +211,8 @@ public class KerhoGUIController implements Initializable {
         if (pelaajaKohdalla == null) return;
         
         areaPelaaja.setText("");
-        try (PrintStream os = TextAreaOutputStream.getTextPrintStream(areaPelaaja)) {
+        try (
+                PrintStream os = TextAreaOutputStream.getTextPrintStream(areaPelaaja)) {
             tulosta(os, pelaajaKohdalla);
         }  
     }
@@ -248,6 +261,7 @@ public class KerhoGUIController implements Initializable {
         }
         chooserPelaajat.setSelectedIndex(index); // tästä tulee muutosviesti joka näyttää pelaajan
     }
+    
     
     private void lueTiedosto(String nimi) {
         kerhonNimi = nimi;

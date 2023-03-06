@@ -52,15 +52,15 @@
           </Menu>
           <Menu text="_Muokkaa">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#handleUusiJasen" text="Lisää uusi jäsen">
+              <MenuItem mnemonicParsing="false" onAction="#handleUusiJasen" text="Lisää uusi pelaaja">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
-                  <MenuItem mnemonicParsing="false" onAction="#handleMuokkaaJasen" text="Muokkaa jäsenen tietoja" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleMuokkaaJasen" text="Muokkaa pelaajan tietoja" />
                   <MenuItem mnemonicParsing="false" onAction="#handleLisaaKierros" text="Lisää kierros" />
                   <MenuItem mnemonicParsing="false" onAction="#handlePoistaKierros" text="Poista kierros" />
-                  <MenuItem mnemonicParsing="false" onAction="#handlePoistaJasen" text="Poista jäsen..." />
+                  <MenuItem mnemonicParsing="false" onAction="#handlePoistaJasen" text="Poista pelaaja..." />
             </items>
           </Menu>
           <Menu text="_Apua">
@@ -86,15 +86,15 @@
                   <VBox BorderPane.alignment="CENTER">
                      <children>
                         <Label text="Hakuehto" />
-                        <ComboBoxChooser maxWidth="300.0" rivit="nimi&#10;pelaajanumero&#10;katuosoite&#10;postiosoite&#10;jäsenmaksu&#10;hcp&#10;osakenumero">
+                        <ComboBoxChooser fx:id="cbKentat" maxWidth="300.0">
                            <VBox.margin>
                               <Insets bottom="5.0" />
                            </VBox.margin></ComboBoxChooser>
-                        <TextField>
+                        <TextField fx:id="hakuehto" onKeyReleased="#handleHakuehto">
                            <VBox.margin>
                               <Insets bottom="5.0" />
                            </VBox.margin></TextField>
-                        <Label alignment="CENTER" maxWidth="300.0" text="Jäsenet">
+                        <Label alignment="CENTER" maxWidth="300.0" text="Pelaajat">
                            <padding>
                               <Insets top="5.0" />
                            </padding></Label>
@@ -107,7 +107,7 @@
             </BorderPane>
             <BorderPane>
                <top>
-                  <Label text="Jäsenen tiedot" BorderPane.alignment="CENTER">
+                  <Label text="Pelaajan tiedot" BorderPane.alignment="CENTER">
                      <padding>
                         <Insets top="5.0" />
                      </padding></Label>
@@ -203,7 +203,7 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
                <children>
-                  <Button onAction="#handleUusiJasen" text="_Uusi jäsen">
+                  <Button onAction="#handleUusiJasen" text="_Uusi pelaaja">
                      <tooltip>
                         <Tooltip text="Lisää uusi jäsen" />
                      </tooltip>

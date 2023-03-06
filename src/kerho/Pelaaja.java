@@ -71,6 +71,15 @@ public class Pelaaja {
     
     
     /**
+     * Palauttaa pelaajan tasoituksen
+     * @return tasoitus
+     */
+    public double getTasoitus() {
+        return hcp;
+    }
+    
+    
+    /**
      * Alustetaan jäsenen tiedot tyhjiksi
      */
     public Pelaaja() {
@@ -184,7 +193,7 @@ public class Pelaaja {
     public void vastaaAkuAnkka() {
         nimi          = "Pelaaja Petteri";
         hetu          = HetunTarkistus.arvoHetu();
-        hcp           = 5.4;
+        hcp           = HetunTarkistus.randDouble(4.0, 54.0);
         puhNro        = "000-9999999";
         email         = "petepelaaja@golffari.fi";
         katuOs        = "Pelimiehenkuja " + HetunTarkistus.rand(1,400);
@@ -219,7 +228,7 @@ public class Pelaaja {
         setPelaajaNro(Mjonot.erota(sb, '|', getpelaajaNro()));
         nimi = Mjonot.erota(sb, '|', nimi);
         hetu = Mjonot.erota(sb, '|', hetu);
-        hcp  = Mjonot.erota(sb, '|', hcp);
+        setTasoitus(Mjonot.erota(sb, '|', getTasoitus()));
         puhNro = Mjonot.erota(sb, '|', puhNro);
         email = Mjonot.erota(sb, '|', email);     
         katuOs = Mjonot.erota(sb, '|', katuOs);
@@ -250,6 +259,14 @@ public class Pelaaja {
     private void setPelaajaNro(int nro) {
         pelaajaNro = nro;
         if ( pelaajaNro >= seuraavaPelaajaNro) seuraavaPelaajaNro = pelaajaNro +1;
+    }
+    
+    /**
+     * 
+     * @param nro numero
+     */
+    private void setTasoitus(double nro) {
+        hcp = nro;
     }
 
     
