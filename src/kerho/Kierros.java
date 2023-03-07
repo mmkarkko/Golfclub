@@ -5,8 +5,7 @@ package kerho;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.util.Random;
-
+import java.util.Calendar;
 import fi.jyu.mit.ohj2.Mjonot;
 
 /**
@@ -32,8 +31,13 @@ public class Kierros {
     private int pelatutReiat     = 0;
     private double pelaajanHcp   = 0;
     private String pelattuKentta = "";
+    static Calendar kalenteri    = Calendar.getInstance();
     
     private static int seuraavaKierrosNro = 1;    
+    
+    private int pv=0;
+    private int kk=0;
+    private int vv=0;
     
     
     /**
@@ -54,13 +58,25 @@ public class Kierros {
     
     
     /**
+     * Hakee päivämäärän
+     * @return päivämäärä tänään
+     */
+    public String paivays() {
+        pv = kalenteri.get(Calendar.DATE);
+        kk = (kalenteri.get(Calendar.MONTH)+1);
+        vv = kalenteri.get(Calendar.YEAR);
+        return pv + "." + kk + "." + vv;
+    }
+    
+    
+    /**
      * Täyttää kierroksen kentät
      * TODO: poista, kun kaikki toimii
      * @param nro pelaajan numero
      */
     public void vastaaKierros(int nro) {
         pelaajaNro      = nro;
-        pvm             = "11.6.2022";
+        pvm             = paivays();
         lahtoAika       = "12.40";
         onkoTasoitus    = "ei";
         pelatutReiat    = (int) (Math.random() * (18 - 9) + 9);

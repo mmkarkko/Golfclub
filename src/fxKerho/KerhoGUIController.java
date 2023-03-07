@@ -13,7 +13,6 @@ import kerho.Kierrokset;
 import kerho.Kierros;
 import kerho.Pelaaja;
 import kerho.SailoException;
-
 import java.io.PrintStream;
 import java.net.URL;
 import java.util.List;
