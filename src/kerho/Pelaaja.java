@@ -6,7 +6,6 @@ package kerho;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Random;
-
 import fi.jyu.mit.ohj2.Mjonot;
 import kanta.HetunTarkistus;
 
@@ -37,6 +36,8 @@ public class Pelaaja implements Cloneable {
     private int         osakeNro        = 0;
     private String    jasenMaksu        = "OK";
     private String      pelaajanKerho   = "Paras Golfkerho";
+    
+    private HetunTarkistus hetut = new HetunTarkistus();
     
     private static int seuraavaPelaajaNro  = 1;
     private static int seuraavaOsakeNro    = 1;
@@ -228,13 +229,13 @@ public class Pelaaja implements Cloneable {
         setPelaajaNro(Mjonot.erota(sb, '|', getpelaajaNro()));
         nimi = Mjonot.erota(sb, '|', nimi);
         hetu = Mjonot.erota(sb, '|', hetu);
-        setTasoitus(Mjonot.erota(sb, '|', getTasoitus()));
+        //setTasoitus(Mjonot.erota(sb, '|', getTasoitus()));
+        hcp = Mjonot.erota(sb, '|', hcp);
         puhNro = Mjonot.erota(sb, '|', puhNro);
         email = Mjonot.erota(sb, '|', email);     
         katuOs = Mjonot.erota(sb, '|', katuOs);
         postiOs = Mjonot.erota(sb, '|', postiOs);
         setOsakeNro(Mjonot.erota(sb, '|', getOsakeNro()));
-        
         jasenMaksu = Mjonot.erota(sb, '|', jasenMaksu);
         pelaajanKerho = Mjonot.erota(sb, '|', pelaajanKerho);
     }
@@ -261,13 +262,8 @@ public class Pelaaja implements Cloneable {
         if ( pelaajaNro >= seuraavaPelaajaNro) seuraavaPelaajaNro = pelaajaNro +1;
     }
     
-    /**
-     * 
-     * @param nro numero
-     */
-    private void setTasoitus(double nro) {
-        hcp = nro;
-    }
+    
+
 
     
     /**
@@ -340,6 +336,107 @@ public class Pelaaja implements Cloneable {
         return uusi;
     }
     
+
+    /**
+     * 
+     * @param s pelaajalle asetettava nimi
+     * @return virheilmoitus, null jos ok
+     */
+    public String setNimi(String s) {
+        nimi = s;
+        return null;
+    }
+
+    /**
+     * 
+     * @param s pelaajalle asetettava hetu
+     * @return virheilmoitus. Jos ok, null.
+     */
+    public String setHetu(String s) {
+        String virhe = hetut.tarkista(s);
+        if (s != null) return virhe;
+        hetu = s;
+        return null;
+    }
+    
+    
+    /**
+     * @param s Pelaajalle lisättävä tasoitus
+     * @return virheilmoitus, null jos ok
+     */
+    public String setTasoitus(String s) {
+        hcp = Double.valueOf(s);
+        return null;
+    }
+
+
+    /**
+     * 
+     * @param s pelaajalle asetettava puhelinnumero
+     * @return virheilmoitus, null jos ok
+     */
+    public String setPuh(String s) {
+        puhNro = s;
+        return null;
+    }
+
+
+    /**
+     * 
+     * @param s pelaajalle asetettava sähköpostiosoite
+     * @return virheilmoitus, null jos ok
+     */
+    public String setEmail(String s) {
+        email = s;
+        return null;
+    }
+
+
+    /**
+     * 
+     * @param s pelaajalle laitettava katuosoite
+     * @return virheilmoitus, null jos ok
+     */
+    public String setKatuos(String s) {
+        katuOs = s;
+        return null;
+    }
+
+
+    /**
+     * 
+     * @param s pelaajalle asetettava postiosoite
+     * @return virheilmoitus, null jos ok
+     */
+    public String setPostios(String s) {
+        //Postinumeron tarkistus ei toimi tässä, koska kentässä on myös postitoimipaikka
+        //if (!s.matches("[0-9]*")) return "Postinumero saa sisältää vain numeroita";
+        postiOs = s;
+        return null;
+    }
+
+
+    /**
+     * 
+     * @param s onko pelaajan jäsenmaksu ok
+     * @return virheilmoitus, null, jos ok
+     */
+    public String setJasMaksu(String s) {
+        jasenMaksu = s;
+        return null;
+    }
+
+
+    /**
+     * 
+     * @param s pelaajalle asetetttava kotikenttä
+     * @return virheilmoitus, null jos ok
+     */
+    public String setKentta(String s) {
+        pelaajanKerho = s;
+        return null;
+    }
+    
     
     /**
      * @param args ei käytössä
@@ -358,11 +455,7 @@ public class Pelaaja implements Cloneable {
         p2.vastaaAkuAnkka();
         
         p1.tulosta(System.out);
-        p2.tulosta(System.out);
-    
+        p2.tulosta(System.out);   
     }
-
-
-
 
 }

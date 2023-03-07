@@ -9,6 +9,7 @@ import fi.jyu.mit.fxgui.ModalControllerInterface;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import kerho.Pelaaja;
@@ -32,6 +33,7 @@ public class MuokkaaJasenGUIController implements ModalControllerInterface<Pelaa
     @FXML private TextField editPelaajanNumero;
     @FXML private TextField editPostios;
     @FXML private TextField editPuh;
+    @FXML private Label labelVirhe;
 
     
     @Override
@@ -45,7 +47,8 @@ public class MuokkaaJasenGUIController implements ModalControllerInterface<Pelaa
      * @param event
      */
     @FXML void handleCancel(ActionEvent event) {
-        ModalController.closeStage(editPelaajanNimi);
+        pelaajaKohdalla = null;
+        ModalController.closeStage(labelVirhe);
     }
     
     
@@ -54,11 +57,16 @@ public class MuokkaaJasenGUIController implements ModalControllerInterface<Pelaa
      * @param event
      */
     @FXML void handleOK(ActionEvent event) {
-        Dialogs.showMessageDialog("Ei osata vielä");
+        if (pelaajaKohdalla != null && pelaajaKohdalla.getNimi().trim().equals("")) {
+            naytaVirhe("Nimi ei saa olla tyhjä!");
+            return;
+        }
+        ModalController.closeStage(labelVirhe);
     }
 
    
     //-----------------------------------------------------
+    
     
     private Pelaaja pelaajaKohdalla;
     private TextField edits[];
@@ -73,7 +81,7 @@ public class MuokkaaJasenGUIController implements ModalControllerInterface<Pelaa
     
     @Override
     public Pelaaja getResult() {
-        return pelaajaKohdalla;
+        return null;
     }
 
     
@@ -101,9 +109,47 @@ public class MuokkaaJasenGUIController implements ModalControllerInterface<Pelaa
                                 editOsakeNro, 
                                 editJasMaksu, 
                                 editKotiKentta};
+        int i = 0;
+        for (TextField edit: edits) {
+            final int k = ++i;
+            edit.setOnKeyReleased(e -> kasitteleMuutosPelaajaan(k, (TextField)(e.getSource())));
+        }
     }
     
     
+    /**
+     * Käsitellään pelaajaan tullut muutos
+     * @param k 
+     * @param edit muuttunut kenttä
+     */
+    private void kasitteleMuutosPelaajaan(int k, TextField edit) {
+        if (pelaajaKohdalla == null) return;
+        String s = edit.getText();
+        String virhe = null;
+        switch(k) {
+        case  2: virhe = pelaajaKohdalla.setNimi(s);     break;
+        case  3: virhe = pelaajaKohdalla.setHetu(s);     break;
+        case  4: virhe = pelaajaKohdalla.setTasoitus(s); break;
+        case  5: virhe = pelaajaKohdalla.setPuh(s);      break;
+        case  6: virhe = pelaajaKohdalla.setEmail(s);    break;
+        case  7: virhe = pelaajaKohdalla.setKatuos(s);   break;
+        case  8: virhe = pelaajaKohdalla.setPostios(s);  break;
+        case  9: virhe = pelaajaKohdalla.setJasMaksu(s); break;
+        case 10: virhe = pelaajaKohdalla.setKentta(s);   break;
+        default:
+        }
+        if (virhe == null) {
+            Dialogs.setToolTipText(edit,"");
+            edit.getStyleClass().removeAll("virhe");
+            naytaVirhe(virhe);
+        } else {
+            Dialogs.setToolTipText(edit, virhe);
+            edit.getStyleClass().add(virhe);
+            naytaVirhe(virhe);
+        }
+    }
+
+
     /**
      * Näytetään pelaajan tiedot TextField-komponentteihin
      * @param edits taulukko, jossa tekstikenttiä
@@ -133,6 +179,21 @@ public class MuokkaaJasenGUIController implements ModalControllerInterface<Pelaa
     public void naytaPelaaja(Pelaaja pelaaja) {
         naytaPelaaja(edits, pelaaja);
     }
+    
+    
+    /**
+     * TODO: täytä
+     * @param virhe virhe
+     */
+    public void naytaVirhe(String virhe) {
+        if (virhe == null || virhe.isEmpty()) {
+            labelVirhe.setText("");
+            labelVirhe.getStyleClass().removeAll("virhe");
+            return;
+        }
+        labelVirhe.setText(virhe);
+        labelVirhe.getStyleClass().add("virhe");
+    } 
     
     
     /**

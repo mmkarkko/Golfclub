@@ -378,7 +378,7 @@ public class KerhoGUIController implements Initializable {
         
         uusi.rekisteroi();
         uusi.rekisteroiOsake();
-        //uusi.vastaaAkuAnkka(); // TODO: korvaa dialogilla
+        uusi.vastaaAkuAnkka(); // TODO: korvaa dialogilla
         try {
             kerho.lisaa(uusi);
         } catch (SailoException e) { 
