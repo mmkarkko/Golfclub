@@ -25,6 +25,7 @@ public class Pelaajat {
     
     private int lkm = 0;
     private Pelaaja[] alkiot;
+    private boolean muutettu;
     
     
     /**
@@ -58,8 +59,7 @@ public class Pelaajat {
      * pelaajat.lisaa(aku1); pelaajat.getLkm() === 5;
      * </pre>
      */
-    public void lisaa(Pelaaja pelaaja) throws SailoException {
-        
+    public void lisaa(Pelaaja pelaaja) throws SailoException { 
         if (lkm >= alkiot.length) {
             //throw new SailoException("Liikaa alkioita"); TODO: poista, jos kun valmis
             Pelaaja[] tilap = new Pelaaja[lkm  + 10];
@@ -71,6 +71,25 @@ public class Pelaajat {
         }
         alkiot[lkm] = pelaaja;
         lkm++;
+        muutettu = true; // TODO: tarkista tarvitaanko???!
+    }
+    
+    
+    /**
+     * @param pelaaja ...
+     * TODO: täytä
+     * @throws SailoException jos ei onnistu
+     */
+    public void korvaaTaiLisaa(Pelaaja pelaaja) throws SailoException {
+        int id = pelaaja.getpelaajaNro();
+        for (int i = 0; i < lkm; i++) {
+            if (alkiot[i].getpelaajaNro() == id) {
+                alkiot[i] = pelaaja;
+                muutettu  = true;
+                return;
+            }
+        }
+        lisaa(pelaaja);
     }
     
     

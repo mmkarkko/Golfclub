@@ -85,7 +85,7 @@ public class Kierrokset {
         alkiot.add(kierros);
     }
     
-    
+      
     /**
      * Lukee harrastukset tiedostosta.
      * @param hakemisto tiedoston nimen alkuosa

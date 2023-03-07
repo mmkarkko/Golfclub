@@ -9,7 +9,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import kerho.Kerho;
-import kerho.Kierrokset;
 import kerho.Kierros;
 import kerho.Pelaaja;
 import kerho.SailoException;
@@ -210,11 +209,20 @@ public class KerhoGUIController implements Initializable {
     
     
     /**
-     * Muokataan pelaajan tietoja
+     * Muokataan pelaajan tietoja, kloonilla, jotta voidaan tarvittaessa peruuttaa
      */
     private void muokkaa() {
-        //ModalController.showModal(KerhoGUIController.class.getResource("MuokkaaJasenGUIView.fxml"), "Pelaaja", null, "");
-        MuokkaaJasenGUIController.kysyPelaaja(null, pelaajaKohdalla);
+        if (pelaajaKohdalla == null) return;
+        try {
+            Pelaaja pelaaja = MuokkaaJasenGUIController.kysyPelaaja(null, pelaajaKohdalla.clone());
+            if (pelaaja == null) return;
+            kerho.korvaaTaiLisaa(pelaaja);
+            hae(pelaaja.getpelaajaNro());
+        } catch (CloneNotSupportedException e) {
+            //
+        } catch (SailoException e) {
+            Dialogs.showMessageDialog(e.getMessage());
+        }
     }
         
     
@@ -365,9 +373,12 @@ public class KerhoGUIController implements Initializable {
      */
     private void uusiPelaaja() {
         Pelaaja uusi = new Pelaaja();
+        // kysy tietoja
+        
+        
         uusi.rekisteroi();
         uusi.rekisteroiOsake();
-        uusi.vastaaAkuAnkka(); // TODO: korvaa dialogilla
+        //uusi.vastaaAkuAnkka(); // TODO: korvaa dialogilla
         try {
             kerho.lisaa(uusi);
         } catch (SailoException e) { 

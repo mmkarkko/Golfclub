@@ -21,10 +21,10 @@ import kanta.HetunTarkistus;
  * - Osaa lisätä merkkijonon i:neksi kentäksi  
  * 
  * @author Miia Arkko
- * @version 6.3.2023
+ * @version 7.3.2023
  *
  */
-public class Pelaaja {
+public class Pelaaja implements Cloneable {
     
     private int         pelaajaNro      = 0;
     private String      nimi            = "";
@@ -329,6 +329,17 @@ public class Pelaaja {
     public String getKentta() {
         return pelaajanKerho;
     }
+    
+    
+    /**
+     * Kloonataan pelaaja
+     */
+    @Override
+    public Pelaaja clone() throws CloneNotSupportedException {
+        Pelaaja uusi = (Pelaaja) super.clone();
+        return uusi;
+    }
+    
     
     /**
      * @param args ei käytössä

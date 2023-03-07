@@ -46,6 +46,18 @@ public class Kerho {
     
     
     /**
+     * Korvaa pelaajan tietorakenteessa.
+     * Etsitään samalla pelaajanumerolla oleva pelaaja. Jos ei löydy,
+     * lisätään uutena pelaajana.
+     * @param pelaaja lisättävän pelaajan viite
+     * @throws SailoException poikkeus
+     */
+    public void korvaaTaiLisaa(Pelaaja pelaaja) throws SailoException {
+        pelaajat.korvaaTaiLisaa(pelaaja);
+    }
+    
+    
+    /**
      * Kertoo i:nnen kierroksen
      * @param pelaaja jonka kierroksia haetaan
      * @return tietorakenne, jossa on viitteet löydettyihin kierroksiin
@@ -98,7 +110,7 @@ public class Kerho {
         return pelaajat.anna(i);
     }
     
-    
+  
     /**
      * Lukee kerhon tiedot tiedostosta
      * @param nimi jota käyteään lukemisessa
