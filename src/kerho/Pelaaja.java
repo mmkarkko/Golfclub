@@ -271,6 +271,66 @@ public class Pelaaja {
 
     
     /**
+     * @return pelaajan hetu
+     */
+    public String getHetu() {
+        return hetu;
+    }
+
+
+    /**
+     * 
+     * @return pelaajan puhelinnumero
+     */
+    public String getPuh() {
+        return puhNro;
+    }
+
+
+    /**
+     * @return pelaajan sähköpostiosoite
+     */
+    public String getEmail() {
+        return email;
+    }
+
+
+    /**
+     * 
+     * @return pelaajan katuosoite
+     */
+    public String getKatuos() {
+        return katuOs;
+    }
+
+    
+    /**
+     * 
+     * @return pelaajan postiosoite
+     */
+    public String getPostios() {
+        return postiOs;
+    }
+    
+
+    /**
+     * 
+     * @return pelaajan jasenmaksun tila
+     */
+    public String getJasMaksu() {
+        return jasenMaksu;
+    }
+
+
+    /**
+     * 
+     * @return pelaajan kotikenttä
+     */
+    public String getKentta() {
+        return pelaajanKerho;
+    }
+    
+    /**
      * @param args ei käytössä
      * 
      */

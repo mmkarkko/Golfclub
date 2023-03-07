@@ -4,11 +4,10 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.text.Font;
 import kerho.Kerho;
 import kerho.Kierros;
 import kerho.Pelaaja;
@@ -29,37 +28,38 @@ import fi.jyu.mit.fxgui.*;
  */
 public class KerhoGUIController implements Initializable {
     
-    @FXML private TextField textPelaajaEmail;
-    @FXML private TextField textPelaajaHCP;
-    @FXML private TextField textPelaajaID;
-    @FXML private TextField textPelaajaKatu;
-    @FXML private TextField textPelaajaNimi;
-    @FXML private TextField textPelaajaOsakeNro;
-    @FXML private TextField textPelaajaPono;
-    @FXML private TextField textPelaajaPuh;
-    @FXML private TextField textPelaajanPelaajamaksu;
-    @FXML private TextField textPelaajanKotiKentta;
+    @FXML private TextField editEmail;
+    @FXML private TextField editHcp;
+    @FXML private TextField editHetu;
+    @FXML private TextField editJasMaksu;
+    @FXML private TextField editKatuos;
+    @FXML private TextField editKotiKentta;
+    @FXML private TextField editOsakeNro;
+    @FXML private TextField editPelaajanNimi;
+    @FXML private TextField editPelaajanNumero;
+    @FXML private TextField editPostios;
+    @FXML private TextField editPuh;
+    
     @FXML private ListChooser<Pelaaja> chooserPelaajat;
     @FXML private ScrollPane panelPelaaja;
     
     @FXML private TextField hakuehto;
-    @FXML private ComboBoxChooser<?> cbKentat;
+    @FXML private ComboBoxChooser<String> cbKentat;
+    @FXML private Label labelVirhe;
     
     
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
         alusta();
-//        ModalController.showModal(LandingGUIController.class.getResource("LandingGUIView.fxml"), "Golfkerho", null, "Paras golfkerho");
     }
-    
-    
+     
 
     /**
      * Käsitellään hakukenttä
      * @param event tapahtuma
      */
     @FXML void handleHakuehto(KeyEvent event) {
-        //
+        if (pelaajaKohdalla != null) hae(pelaajaKohdalla.getpelaajaNro());
     }
     
     
@@ -87,7 +87,6 @@ public class KerhoGUIController implements Initializable {
      * @param event tapahtuma
      */
     @FXML public void handlePoistaKierros(ActionEvent event) {
-        //if (onkoTasoitus) ;
         ModalController.showModal(EiVoiPoistaaGUIController.class.getResource("EiVoiPoistaaGUIView.fxml"), "Poista kierros", null, "");
     }
     
@@ -127,7 +126,7 @@ public class KerhoGUIController implements Initializable {
      * @param event tapahtuma
      */
     @FXML void handleMuokkaaJasen(ActionEvent event) {
-        ModalController.showModal(MuokkaaJasenGUIController.class.getResource("MuokkaaJasenGUIView.fxml"), "Jäsen", null, "");
+        muokkaa();
     }
 
     
@@ -145,7 +144,6 @@ public class KerhoGUIController implements Initializable {
      * @param event tapahtuma
      */
     @FXML void handleTallenna(ActionEvent event) {
-        //Dialogs.showMessageDialog("Ei osata vielä tallentaa");
         tallenna();
     }
 
@@ -176,7 +174,6 @@ public class KerhoGUIController implements Initializable {
      */
     @FXML void handleUusiJasen(ActionEvent event) {
         uusiPelaaja();
-        //ModalController.showModal(UusiPelaajaGUIController.class.getResource("UusiPelaajaGUIView.fxml"), "Lisää jäsen", null, "");
     }
     
     
@@ -187,34 +184,48 @@ public class KerhoGUIController implements Initializable {
     
     private Kerho kerho;
     private String kerhonNimi = "Paras Golfkerho";
-    private TextArea areaPelaaja = new TextArea(); // TODO: poista lopuksi
+    private Pelaaja pelaajaKohdalla;
+    private TextField edits[];
     
     
     /**
      * Alustetaan
      */
     private void alusta() {
-        panelPelaaja.setContent(areaPelaaja);
-        areaPelaaja.setFont(new Font("Courier New", 12)); 
-        panelPelaaja.setFitToHeight(true);
         chooserPelaajat.clear();
-        chooserPelaajat.addSelectionListener(e -> naytaPelaaja());      
+        chooserPelaajat.addSelectionListener(e -> naytaPelaaja());
+        
+        edits = new TextField[] {editPelaajanNumero,
+                editPelaajanNimi, 
+                editHetu, 
+                editHcp, 
+                editPuh, 
+                editEmail, 
+                editKatuos, 
+                editPostios, 
+                editOsakeNro, 
+                editJasMaksu, 
+                editKotiKentta};
     }
     
     
     /**
-     * Näyttää pelaajan tiedot
+     * Muokataan pelaajan tietoja
+     */
+    private void muokkaa() {
+        //ModalController.showModal(KerhoGUIController.class.getResource("MuokkaaJasenGUIView.fxml"), "Pelaaja", null, "");
+        MuokkaaJasenGUIController.kysyPelaaja(null, pelaajaKohdalla);
+    }
+        
+    
+    /**
+     * Näyttää listasta valitun pelaajan tiedot tekstikenttiin
      */
     private void naytaPelaaja() {
-        Pelaaja pelaajaKohdalla = chooserPelaajat.getSelectedObject();
+        pelaajaKohdalla = chooserPelaajat.getSelectedObject();
         
         if (pelaajaKohdalla == null) return;
-        
-        areaPelaaja.setText("");
-        try (
-                PrintStream os = TextAreaOutputStream.getTextPrintStream(areaPelaaja)) {
-            tulosta(os, pelaajaKohdalla);
-        }  
+        MuokkaaJasenGUIController.naytaPelaaja(edits, pelaajaKohdalla);
     }
     
     
@@ -284,20 +295,19 @@ public class KerhoGUIController implements Initializable {
     }
     
     
-//    /**
-//     * 
-//     * @param title
-//     */
-//    private void setTitle(String title) {
-//        ModalController.getStage(hakuehto).setTitle(title);
-//    }
+    /**
+     * 
+     * @param title
+     */
+    private void setTitle(String title) {
+        ModalController.getStage(hakuehto).setTitle(title);
+    }
     
     
     /**
      * Tietojen tallennus
      */
     private void tallenna() {
-//        Dialogs.showMessageDialog("Tallennetaan! Mutta ei toimi vielä");
         try {
             kerho.tallenna();
         } catch (SailoException e) {
@@ -310,7 +320,7 @@ public class KerhoGUIController implements Initializable {
      * Lisätään pelaajalle uusi kierros
      */
     private void uusiKierros() {
-        Pelaaja pelaajaKohdalla = chooserPelaajat.getSelectedObject();
+        pelaajaKohdalla = chooserPelaajat.getSelectedObject();
         if (pelaajaKohdalla == null) return;
         Kierros k = new Kierros();
         k.rekisteroi();
