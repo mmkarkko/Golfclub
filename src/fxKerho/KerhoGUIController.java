@@ -9,6 +9,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import kerho.Kerho;
+import kerho.Kierrokset;
 import kerho.Kierros;
 import kerho.Pelaaja;
 import kerho.SailoException;
@@ -23,7 +24,7 @@ import fi.jyu.mit.fxgui.*;
  * Luokka Golfkerhon käyttöliittymien tapahtumien hoitamiseksi
  * 
  * @author Miia Arkko
- * @version 6.3.2023
+ * @version 7.3.2023
  *
  */
 public class KerhoGUIController implements Initializable {
@@ -41,11 +42,11 @@ public class KerhoGUIController implements Initializable {
     @FXML private TextField editPuh;
     
     @FXML private ListChooser<Pelaaja> chooserPelaajat;
-    @FXML private ScrollPane panelPelaaja;
-    
+    @FXML private ScrollPane panelPelaaja;   
     @FXML private TextField hakuehto;
     @FXML private ComboBoxChooser<String> cbKentat;
     @FXML private Label labelVirhe;
+    @FXML private StringGrid<Kierros> tableKierrokset;
     
     
     @Override
@@ -226,6 +227,36 @@ public class KerhoGUIController implements Initializable {
         
         if (pelaajaKohdalla == null) return;
         MuokkaaJasenGUIController.naytaPelaaja(edits, pelaajaKohdalla);
+        naytaKierrokset(pelaajaKohdalla);
+    }
+    
+    
+    /**
+     * Näytetään pelaajan kierrokset
+     * @param pelaaja jonka kierrokset näytetään
+     */
+    private void naytaKierrokset(Pelaaja pelaaja) {
+        tableKierrokset.clear();
+        if(pelaaja == null) return;
+        
+        //try {
+            List<Kierros> kierrokset = kerho.annaKierrokset(pelaaja);
+            if(kierrokset.size() == 0) return;
+            for (Kierros k : kierrokset)
+                naytaKierros(k);
+        //} catch (SailoException e){
+            //naytaVirhe(e.getMessage());
+        //}
+    }
+    
+    
+    /**
+     * 
+     * @param k kierros
+     */
+    private void naytaKierros(Kierros k) {
+        String[] rivi = k.toString().split("\\|"); //TODO: huono tilapäinen ratkaisu
+        tableKierrokset.add(k, rivi[2], rivi[3], rivi[4], rivi[5], rivi[6], rivi[7]); //TODO: KORJATTAVA
     }
     
     
