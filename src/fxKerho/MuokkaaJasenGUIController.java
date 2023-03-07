@@ -36,8 +36,7 @@ public class MuokkaaJasenGUIController implements ModalControllerInterface<Pelaa
     
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        alusta();
-        
+        alusta();       
     }
     
     
@@ -49,6 +48,7 @@ public class MuokkaaJasenGUIController implements ModalControllerInterface<Pelaa
         ModalController.closeStage(editPelaajanNimi);
     }
     
+    
     /**
      * Käsitellään ok-painikkeen painaminen
      * @param event
@@ -56,8 +56,6 @@ public class MuokkaaJasenGUIController implements ModalControllerInterface<Pelaa
     @FXML void handleOK(ActionEvent event) {
         Dialogs.showMessageDialog("Ei osata vielä");
     }
-
-
 
    
     //-----------------------------------------------------
@@ -104,7 +102,6 @@ public class MuokkaaJasenGUIController implements ModalControllerInterface<Pelaa
                                 editJasMaksu, 
                                 editKotiKentta};
     }
-
     
     
     /**
@@ -126,6 +123,15 @@ public class MuokkaaJasenGUIController implements ModalControllerInterface<Pelaa
         edits[8].setText(Integer.toString(pelaaja.getOsakeNro()));
         edits[9].setText(pelaaja.getJasMaksu());
         edits[10].setText(pelaaja.getKentta());       
+    }
+    
+    
+    /**
+     * Näytetään pelaajan tiedot textfield-komponentteihin
+     * @param pelaaja jonka tiedot näytetään
+     */
+    public void naytaPelaaja(Pelaaja pelaaja) {
+        naytaPelaaja(edits, pelaaja);
     }
     
     
