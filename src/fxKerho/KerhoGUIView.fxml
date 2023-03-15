@@ -86,9 +86,9 @@
                      </BorderPane.margin></ListChooser>
                </center>
                <top>
-                  <VBox BorderPane.alignment="CENTER">
+                  <VBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
                      <children>
-                        <Label text="Hakuehto" />
+                        <Label alignment="CENTER" text="Hakuehto" />
                         <ComboBoxChooser fx:id="cbKentat" maxWidth="300.0">
                            <VBox.margin>
                               <Insets bottom="5.0" />
