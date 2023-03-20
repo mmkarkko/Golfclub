@@ -3,9 +3,12 @@
  */
 package kerho;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Random;
+import java.util.regex.Pattern;
+
 import fi.jyu.mit.ohj2.Mjonot;
 import kanta.HetunTarkistus;
 
@@ -262,10 +265,7 @@ public class Pelaaja implements Cloneable {
         if ( pelaajaNro >= seuraavaPelaajaNro) seuraavaPelaajaNro = pelaajaNro +1;
     }
     
-    
-
-
-    
+ 
     /**
      * @return pelaajan hetu
      */
@@ -328,7 +328,18 @@ public class Pelaaja implements Cloneable {
     
     
     /**
-     * Kloonataan pelaaja
+     * Kloonataan pelaaja tietoineen
+     * @example
+     * <pre name="test">
+     * #THROWS CloneNotSupportedException 
+     *   Pelaaja pelaaja = new Pelaaja();
+     *   pelaaja.parse("   3  |  Ankka Aku   | 123");
+     *   Pelaaja kopio = pelaaja.clone();
+     *   kopio.toString() === pelaaja.toString();
+     *   pelaaja.parse("   4  |  Ankka Tupu   | 123");
+     *   kopio.toString().equals(pelaaja.toString()) === false;
+     * </pre>
+
      */
     @Override
     public Pelaaja clone() throws CloneNotSupportedException {
@@ -389,6 +400,8 @@ public class Pelaaja implements Cloneable {
      * @return virheilmoitus, null jos ok
      */
     public String setEmail(String s) {
+//        String virhe = tarkistaEmail(s);
+//        if (s != null) return virhe;
         email = s;
         return null;
     }
