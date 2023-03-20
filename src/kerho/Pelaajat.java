@@ -17,7 +17,7 @@ import java.util.Scanner;
  * - Avustajaluokat: pelaaja
  * 
  * @author Miia Arkko
- * @version 6.3.2023
+ * @version 20.3.2023
  *
  */
 public class Pelaajat {

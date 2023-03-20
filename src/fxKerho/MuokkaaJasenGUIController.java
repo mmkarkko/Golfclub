@@ -17,7 +17,7 @@ import kerho.Pelaaja;
 /**
  * Kysytään jäsenen tiedot luomalla sille uusi dialogi
  * @author Miia Arkko
- * @version 7.3.2023
+ * @version 20.3.2023
  *
  */
 public class MuokkaaJasenGUIController implements ModalControllerInterface<Pelaaja>, Initializable {
