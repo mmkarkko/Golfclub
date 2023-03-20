@@ -22,7 +22,7 @@ public class EmailTarkistus {
     
     /**
      * Tarkistaa sähköpostin oikeellisuuden
-     * @param osoite joka tarkistetaan
+     * @param email joka tarkistetaan
      * @return palauttaa virheilmoituksen. Null, jos virhettä ei löydy
      * @example
      * <pre name="test">
@@ -34,37 +34,46 @@ public class EmailTarkistus {
      *  tarkistaOsoite("1ossa_@osoite.")    === "Virheellinen sähköpostiosoite";
      *  tarkistaOsoite("12_jee@jee.com")    === null;
      *  tarkistaOsoite("oso@ite@jee.fi")    === "Virheellinen sähköpostiosoite";
+     *  tarkistaOsoite("oho@23.fi")         === "Virheellinen sähköpostiosoite";
+     *  tarkistaOsoite("")                  === "Liian lyhyt sähköpostiosoite";
+     *  tarkistaOsoite("o.fa_jo34@gmail.di")=== null
+     *  tarkistaOsoite("osoite@_gmail.di")  === "Virheellinen sähköpostiosoite";
+     *  tarkistaOsoite("oma osoite@ossa.fi")=== "Virheellinen sähköpostiosoite";
+     *  tarkistaOsoite("etu_suku@osote .fi")=== "Virheellinen sähköpostiosoite";
+     *  tarkistaOsoite("2095@sapo.fi")      === null;
+     *  tarkistaOsoite("oho!o@sapo.fi")     === "Virheellinen sähköpostiosoite";
      * </pre>
      */
-    public static String tarkistaOsoite(String osoite) {
+    public static String tarkistaOsoite(String email) {
+        if (email == null) return "Virheellinen sähköpostiosoite";
         
-       // String alkuosa  = "";
+        String osoite = email.toLowerCase();
+        
+        String alkuosa  = "";
         String loppuosa = "";
         
         char miuku = '@';
         int pituus = osoite.length();
         int laskuri = 0;
         int loppuosanPituus = -1;
-        //int alkuosanPituus = 0;
         int indeksi;
-        //int miukuPaikka = 0;
 
         if (pituus < 8) return "Liian lyhyt sähköpostiosoite";
         if (osoite.charAt(0) == miuku) return "Virheellinen sähköpostiosoite";
         
         for (indeksi =0; indeksi < osoite.length(); indeksi++) {
-            
+            if (osoite.charAt(indeksi) == ' ') return "Virheellinen sähköpostiosoite";
             if (osoite.charAt(indeksi) == miuku) {
-
-                //miukuPaikka = indeksi;
                 laskuri++;
             }
-            //if (laskuri < 1) alkuosa += osoite.charAt(indeksi);
+            if (laskuri < 1) alkuosa += osoite.charAt(indeksi);
             if (laskuri >= 1) {
                 loppuosanPituus++;
-                loppuosa += osoite.charAt(indeksi);
+                if (osoite.charAt(indeksi) != miuku) loppuosa += osoite.charAt(indeksi);
+                
             }
         }
+        
         if (laskuri  < 1)  return  "Osoitteen täytyy sisältää @-merkki";
         if (laskuri  > 1)  return "Virheellinen sähköpostiosoite";
         if (loppuosanPituus <= 4) return "Virheellinen sähköpostiosoite";
@@ -79,35 +88,26 @@ public class EmailTarkistus {
         }
         
         if ( laskuri > 1 ) return "Virheellinen sähköpostiosoite";
-        if (pisteenPaikka < 3) return "Virheellinen sähköpostiosoite";
-        
-//        laskuri = 0;
-//        int pisteenPaikka = miukuPaikka;
-//        for (int i = miukuPaikka; i < osoite.length(); i++) {
-//            if (osoite.charAt(i) == '.') {
-//                pisteenPaikka++;
-//                laskuri++;
-//            }
-//            
-//        }
-//        
-//        if (pisteenPaikka <=  miukuPaikka + 2) return "Virheellinen sähköpostiosoite";
-//        if (pisteenPaikka <= osoite.length()-2) return "Virheellinen sähköpostiosoite";
-//        if (laskuri > 1) return "Virheellinen sähköpostiosoite";
-        
+        if (pisteenPaikka < 3) return "Virheellinen sähköpostiosoite"; 
         if (loppuosa.length() - pisteenPaikka < 2 ) return "Virheellinen sähköpostiosoite";
+
+        for (int i = 0; i < loppuosa.length(); i++) {
+            if (i == pisteenPaikka) break;
+            if (!Character.isAlphabetic(loppuosa.charAt(i))) return "Virheellinen sähköpostiosoite";
+        }
         
-        //System.out.println(alkuosa); 
+        String merkit = "._-";
+        for (int i = 0; i < alkuosa.length(); i++) {
+            char merkki = alkuosa.charAt(i);
+            //if ( (!(merkki >= 'a') && !(merkki <= 'z')) || !((merkki >= '0') && !(merkki <= '9')) || !(merkit.contains(Character.toString(merkki)))) {
+            if (!Character.isAlphabetic(alkuosa.charAt(i)) && (!Character.isDigit(alkuosa.charAt(i)))&& !(merkit.contains(Character.toString(merkki))))
+                return "Virheellinen sähköpostiosoite";
+            }
+        
         
         return null;
     }
 
-    
-    
-    
-    
-    
-    
     
     /**
      * Pääohjelma sähköpostiosoitteen validiuden testaamiseksi
@@ -120,24 +120,27 @@ public class EmailTarkistus {
         String sapo3 = "@gmail.com";
         String sapo4  = "uusi_osoite@";
         String sapo5 = "1ossa_@osoite.";
+        String sapo6 = "hieno.osoite@osoite_k.fi";
         String virhe;
         
         virhe = tarkistaOsoite(sapo); 
-        System.out.println("Osoite oli: " + sapo + ", virhe oli: " + virhe);
+        System.out.println("Osoite oli: " + sapo + ",  virhe oli: " + virhe);
         
         virhe = tarkistaOsoite(sapo2);
-        System.out.println("Osoite oli: " + sapo2 + ", virhe oli: " + virhe);
+        System.out.println("Osoite oli: " + sapo2 + ",  virhe oli: " + virhe);
         
         virhe = tarkistaOsoite(sapo3);
-        System.out.println("Osoite oli: " + sapo3 + ", virhe oli: " + virhe);
+        System.out.println("Osoite oli: " + sapo3 + ",  virhe oli: " + virhe);
         
         virhe = tarkistaOsoite(sapo4);
-        System.out.println("Osoite oli: " + sapo4 + ", virhe oli: " + virhe);
+        System.out.println("Osoite oli: " + sapo4 + ",  virhe oli: " + virhe);
         
         
         virhe = tarkistaOsoite(sapo5);
-        System.out.println("Osoite oli: " + sapo5 + ", virhe oli: " + virhe);
+        System.out.println("Osoite oli: " + sapo5 + ",  virhe oli: " + virhe);
         
+        virhe = tarkistaOsoite(sapo6);
+        System.out.println("Osoite oli: " + sapo6 + ",  virhe oli: " + virhe);
     }
 
 }
