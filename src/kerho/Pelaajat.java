@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -60,18 +61,24 @@ public class Pelaajat {
      * </pre>
      */
     public void lisaa(Pelaaja pelaaja) throws SailoException { 
-        if (lkm >= alkiot.length) {
-            //throw new SailoException("Liikaa alkioita"); TODO: poista, jos kun valmis
-            Pelaaja[] tilap = new Pelaaja[lkm  + 10];
-            
-            for (int i = 0; i < alkiot.length; i++) {
-                tilap[i] = alkiot[i];
-            }           
-            alkiot = tilap;          
-        }
+//        if (lkm >= alkiot.length) {
+//            //throw new SailoException("Liikaa alkioita"); TODO: poista, jos kun valmis
+//            Pelaaja[] tilap = new Pelaaja[lkm  + 10];
+//            
+//            for (int i = 0; i < alkiot.length; i++) {
+//                tilap[i] = alkiot[i];
+//            }           
+//            alkiot = tilap;          
+//        }
+//        alkiot[lkm] = pelaaja;
+//        lkm++;
+//        muutettu = true; // TODO: tarkista tarvitaanko???!
+        
+        if (lkm >= alkiot.length) alkiot = Arrays.copyOf(alkiot, lkm+20); 
         alkiot[lkm] = pelaaja;
         lkm++;
-        muutettu = true; // TODO: tarkista tarvitaanko???!
+
+
     }
     
     
