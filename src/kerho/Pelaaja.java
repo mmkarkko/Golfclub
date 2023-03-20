@@ -338,7 +338,7 @@ public class Pelaaja implements Cloneable {
     
 
     /**
-     * 
+     * Asettaa pelaajalle nimen
      * @param s pelaajalle asetettava nimi
      * @return virheilmoitus, null jos ok
      */
@@ -347,8 +347,9 @@ public class Pelaaja implements Cloneable {
         return null;
     }
 
+    
     /**
-     * 
+     * Asettaa pelaajalle henkilötunnuksen
      * @param s pelaajalle asetettava hetu
      * @return virheilmoitus. Jos ok, null.
      */
@@ -361,6 +362,7 @@ public class Pelaaja implements Cloneable {
     
     
     /**
+     * Asettaa pelaajalle tasoituksen
      * @param s Pelaajalle lisättävä tasoitus
      * @return virheilmoitus, null jos ok
      */
@@ -371,7 +373,7 @@ public class Pelaaja implements Cloneable {
 
 
     /**
-     * 
+     * Asettaa pelaajalle puhelinnumeron
      * @param s pelaajalle asetettava puhelinnumero
      * @return virheilmoitus, null jos ok
      */
@@ -382,7 +384,7 @@ public class Pelaaja implements Cloneable {
 
 
     /**
-     * 
+     * Asettaa pelaajalle sähköpostiosoitteen
      * @param s pelaajalle asetettava sähköpostiosoite
      * @return virheilmoitus, null jos ok
      */
@@ -393,7 +395,7 @@ public class Pelaaja implements Cloneable {
 
 
     /**
-     * 
+     * Asettaa pelaajalle katuosoitteen
      * @param s pelaajalle laitettava katuosoite
      * @return virheilmoitus, null jos ok
      */
@@ -404,7 +406,7 @@ public class Pelaaja implements Cloneable {
 
 
     /**
-     * 
+     * Asettaa pelaajalle postiosoitteen
      * @param s pelaajalle asetettava postiosoite
      * @return virheilmoitus, null jos ok
      */
@@ -417,7 +419,7 @@ public class Pelaaja implements Cloneable {
 
 
     /**
-     * 
+     * Asettaa pelaajan jäsenmaksun tilan
      * @param s onko pelaajan jäsenmaksu ok
      * @return virheilmoitus, null, jos ok
      */
@@ -428,7 +430,7 @@ public class Pelaaja implements Cloneable {
 
 
     /**
-     * 
+     * Asettaa pelaajalle kotikentän
      * @param s pelaajalle asetetttava kotikenttä
      * @return virheilmoitus, null jos ok
      */

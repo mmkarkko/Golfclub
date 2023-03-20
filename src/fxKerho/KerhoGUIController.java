@@ -258,12 +258,12 @@ public class KerhoGUIController implements Initializable {
     
     
     /**
-     * 
+     * Näyttää pelaajan kierrokset
      * @param k kierros
      */
-    private void naytaKierros(Kierros k) {
-        String[] rivi = k.toString().split("\\|"); //TODO: huono tilapäinen ratkaisu
-        tableKierrokset.add(k, rivi[2], rivi[3], rivi[4], rivi[5], rivi[6], rivi[7]); //TODO: KORJATTAVA
+    private void naytaKierros(Kierros kierros) {
+        String[] rivi = kierros.toString().split("\\|"); //TODO: huono tilapäinen ratkaisu
+        tableKierrokset.add(kierros, rivi[2], rivi[3], rivi[4], rivi[5], rivi[6], rivi[7]); //TODO: KORJATTAVA
     }
     
     
