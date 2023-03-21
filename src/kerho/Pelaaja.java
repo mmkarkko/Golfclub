@@ -364,7 +364,7 @@ public class Pelaaja implements Cloneable {
      */
     public String setHetu(String s) {
         String virhe = hetut.tarkista(s);
-        if (s != null) return virhe;
+        if (virhe != null) return virhe;
         hetu = s;
         return null;
     }
