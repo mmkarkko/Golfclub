@@ -34,7 +34,7 @@ public class MuokkaaJasenGUIController implements ModalControllerInterface<Pelaa
     @FXML private TextField editPostios;
     @FXML private TextField editPuh;
     @FXML private Label labelVirhe;
-
+    
     
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
