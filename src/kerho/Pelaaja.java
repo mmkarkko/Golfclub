@@ -10,6 +10,7 @@ import java.util.Random;
 import java.util.regex.Pattern;
 
 import fi.jyu.mit.ohj2.Mjonot;
+import kanta.EmailTarkistus;
 import kanta.HetunTarkistus;
 
 /**
@@ -400,8 +401,8 @@ public class Pelaaja implements Cloneable {
      * @return virheilmoitus, null jos ok
      */
     public String setEmail(String s) {
-//        String virhe = tarkistaEmail(s);
-//        if (s != null) return virhe;
+        String virhe = EmailTarkistus.tarkistaOsoite(s);
+        if (s != null) return virhe;
         email = s;
         return null;
     }

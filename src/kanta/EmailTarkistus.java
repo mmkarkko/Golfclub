@@ -3,12 +3,6 @@
  */
 package kanta;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-
 /**
  * Luokka sähköpostiosoitteen oikeellisuuden tarkistamiseksi
  * @author Miia Arkko
@@ -16,9 +10,6 @@ import java.util.regex.Pattern;
  *
  */
 public class EmailTarkistus {
-    
-    //private static final String TARKISTUSMERKIT = "";
-    
     
     /**
      * Tarkistaa sähköpostin oikeellisuuden
@@ -102,9 +93,7 @@ public class EmailTarkistus {
             //if ( (!(merkki >= 'a') && !(merkki <= 'z')) || !((merkki >= '0') && !(merkki <= '9')) || !(merkit.contains(Character.toString(merkki)))) {
             if (!Character.isAlphabetic(alkuosa.charAt(i)) && (!Character.isDigit(alkuosa.charAt(i)))&& !(merkit.contains(Character.toString(merkki))))
                 return "Virheellinen sähköpostiosoite";
-            }
-        
-        
+            }       
         return null;
     }
 
