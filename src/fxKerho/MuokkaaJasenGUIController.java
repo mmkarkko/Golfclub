@@ -125,19 +125,8 @@ public class MuokkaaJasenGUIController implements ModalControllerInterface<Pelaa
     private void kasitteleMuutosPelaajaan(int k, TextField edit) {
         if (pelaajaKohdalla == null) return;
         String s = edit.getText();
-        String virhe = null;
-        switch(k) {
-            case  2: virhe = pelaajaKohdalla.setNimi(s);     break;
-            case  3: virhe = pelaajaKohdalla.setHetu(s);     break;
-            case  4: virhe = pelaajaKohdalla.setTasoitus(s); break;
-            case  5: virhe = pelaajaKohdalla.setPuh(s);      break;
-            case  6: virhe = pelaajaKohdalla.setEmail(s);    break;
-            case  7: virhe = pelaajaKohdalla.setKatuos(s);   break;
-            case  8: virhe = pelaajaKohdalla.setPostios(s);  break;
-            case  9: virhe = pelaajaKohdalla.setJasMaksu(s); break;
-            case 10: virhe = pelaajaKohdalla.setKentta(s);   break;
-            default:
-        }
+        String virhe = pelaajaKohdalla.aseta(k, s);
+
         if (virhe == null) {
             Dialogs.setToolTipText(edit,"");
             edit.getStyleClass().removeAll("virhe");

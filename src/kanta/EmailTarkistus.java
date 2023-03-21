@@ -35,7 +35,7 @@ public class EmailTarkistus {
      *  tarkistaOsoite("oho!o@sapo.fi")     === "Virheellinen sähköpostiosoite";
      * </pre>
      */
-    public static String tarkistaOsoite(String email) {
+    public String tarkistaOsoite(String email) {
         if (email == null) return "Virheellinen sähköpostiosoite";
         
         String osoite = email.toLowerCase();
@@ -103,33 +103,7 @@ public class EmailTarkistus {
      * @param args ei käytössä
      */
     public static void main(String[] args) {
-        
-        String sapo  = "osoite@sapo.fi";
-        String sapo2 = "osoite%sapo.fi";
-        String sapo3 = "@gmail.com";
-        String sapo4  = "uusi_osoite@";
-        String sapo5 = "1ossa_@osoite.";
-        String sapo6 = "hieno.osoite@osoite_k.fi";
-        String virhe;
-        
-        virhe = tarkistaOsoite(sapo); 
-        System.out.println("Osoite oli: " + sapo + ",  virhe oli: " + virhe);
-        
-        virhe = tarkistaOsoite(sapo2);
-        System.out.println("Osoite oli: " + sapo2 + ",  virhe oli: " + virhe);
-        
-        virhe = tarkistaOsoite(sapo3);
-        System.out.println("Osoite oli: " + sapo3 + ",  virhe oli: " + virhe);
-        
-        virhe = tarkistaOsoite(sapo4);
-        System.out.println("Osoite oli: " + sapo4 + ",  virhe oli: " + virhe);
-        
-        
-        virhe = tarkistaOsoite(sapo5);
-        System.out.println("Osoite oli: " + sapo5 + ",  virhe oli: " + virhe);
-        
-        virhe = tarkistaOsoite(sapo6);
-        System.out.println("Osoite oli: " + sapo6 + ",  virhe oli: " + virhe);
+        //
     }
 
 }

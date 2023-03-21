@@ -35,9 +35,12 @@ public class Kierros {
     
     private static int seuraavaKierrosNro = 1;    
     
-    private int pv=0;
-    private int kk=0;
-    private int vv=0;
+    private int pv = 0;
+    private int kk = 0;
+    private int vv = 0;
+    
+    private int tunnit = 0;
+    private int minuutit = 0;
     
     
     /**
@@ -70,6 +73,17 @@ public class Kierros {
     
     
     /**
+     * Hakee kellonajan
+     * @return kellonaika tällä hetkellä
+     */
+    public String kellonaika() {
+        tunnit = kalenteri.get(Calendar.HOUR_OF_DAY);
+        minuutit = kalenteri.get(Calendar.MINUTE);
+        return tunnit + ":" + minuutit;
+    }
+    
+    
+    /**
      * Täyttää kierroksen kentät
      * TODO: poista, kun kaikki toimii
      * @param nro pelaajan numero
@@ -77,14 +91,15 @@ public class Kierros {
     public void vastaaKierros(int nro) {
         pelaajaNro      = nro;
         pvm             = paivays();
-        lahtoAika       = "12.40";
+        lahtoAika       = kellonaika();
         onkoTasoitus    = "ei";
         pelatutReiat    = (int) (Math.random() * (18 - 9) + 9);
         pelaajanHcp     = Math.round(Math.random() * (54 - 3) + 3);
+        //pelaajanHcp     = Pelaaja.getTasoitus();
         pelattuKentta   = "Paras Golfkerho";
     }
-    
-    
+
+
     /**
      * Tulostaa Kierroksen tiedot
      * @param out tietovirta, mihin tulostetaan

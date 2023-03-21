@@ -37,8 +37,7 @@ public class Pelaaja implements Cloneable {
     private int         osakeNro        = 0;
     private String    jasenMaksu        = "OK";
     private String      pelaajanKerho   = "Paras Golfkerho";
-    
-    private HetunTarkistus hetut = new HetunTarkistus();
+
     
     private static int seuraavaPelaajaNro  = 1;
     private static int seuraavaOsakeNro    = 1;
@@ -204,6 +203,7 @@ public class Pelaaja implements Cloneable {
         pelaajanKerho = "Paras Golfkerho";
     }
     
+    
     /**
      * Selvitää jäsenen tiedot | erotellusta merkkijonosta
      * Pitää huolen että seuraavaNro on suurempi kuin tuleva tunnusNro.
@@ -345,111 +345,82 @@ public class Pelaaja implements Cloneable {
         return uusi;
     }
     
-
-    /**
-     * Asettaa pelaajalle nimen
-     * @param s pelaajalle asetettava nimi
-     * @return virheilmoitus, null jos ok
-     */
-    public String setNimi(String s) {
-        nimi = s;
-        return null;
-    }
-
     
+
     /**
-     * Asettaa pelaajalle henkilötunnuksen
-     * @param s pelaajalle asetettava hetu
-     * @return virheilmoitus. Jos ok, null.
+     * Asettaa k:n kentän arvoksi parametrina tuodun merkkijonon arvon
+     * @param k kuinka monennen kentän arvo asetetaan
+     * @param jono jonoa joka asetetaan kentän arvoksi
+     * @return null jos asettaminen onnistuu, muuten vastaava virheilmoitus.
+     * @example
+     * <pre name="test">
+     *   Jasen jasen = new Jasen();
+     *   jasen.aseta(1,"Ankka Aku") === null;
+     *   jasen.aseta(2,"kissa") =R= "Hetu liian lyhyt"
+     *   jasen.aseta(2,"030201-1111") === "Tarkistusmerkin kuuluisi olla C"; 
+     *   jasen.aseta(2,"030201-111C") === null; 
+     *   jasen.aseta(9,"kissa") === "Liittymisvuosi väärin jono = \"kissa\"";
+     *   jasen.aseta(9,"1940") === null;
+     * </pre>
      */
-    public String setHetu(String s) {
-        String virhe = hetut.tarkista(s);
-        if (virhe != null) return virhe;
-        hetu = s;
-        return null;
+    public String aseta(int k, String jono) {
+        String tjono = jono.trim();
+        StringBuffer sb = new StringBuffer(tjono);
+        switch ( k ) {
+            case 1:
+                setPelaajaNro(Mjonot.erota(sb, '§', getpelaajaNro()));
+                return null;
+            case 2:
+                nimi = tjono;
+                return null;
+            case 3:
+                HetunTarkistus heTu = new HetunTarkistus();
+                String virhe = heTu.tarkista(tjono);
+                if ( virhe != null ) return virhe;
+                hetu = tjono;
+                return null;
+            case 4:
+                hcp = Double.parseDouble(tjono);
+                return null;
+            case 5:
+                puhNro = tjono;
+                return null;
+            case 6:
+                EmailTarkistus emaili = new EmailTarkistus();
+                String virhe2 = emaili.tarkistaOsoite(tjono);
+                if (virhe2 != null) return virhe2;
+                email = tjono;
+                return null;
+            case 7:
+                katuOs = tjono;
+                return null;
+            case 8:
+                postiOs = tjono;
+                return null;
+            case 9:
+                osakeNro = Integer.parseInt(tjono);
+                return null;
+            case 10:
+                jasenMaksu = tjono;
+                return null;
+            case 11:
+                pelaajanKerho = tjono;
+                return null;
+            default:
+                return "Ääliö";
+        }
     }
+ 
     
-    
-    /**
-     * Asettaa pelaajalle tasoituksen
-     * @param s Pelaajalle lisättävä tasoitus
-     * @return virheilmoitus, null jos ok
-     */
-    public String setTasoitus(String s) {
-        hcp = Double.valueOf(s);
-        return null;
-    }
+//    /**
+//     * Asettaa pelaajalle tasoituksen
+//     * @param s Pelaajalle lisättävä tasoitus
+//     * @return virheilmoitus, null jos ok
+//     */
+//    public String setTasoitus(String s) {
+//        hcp = Double.valueOf(s);
+//        return null;
 
-
-    /**
-     * Asettaa pelaajalle puhelinnumeron
-     * @param s pelaajalle asetettava puhelinnumero
-     * @return virheilmoitus, null jos ok
-     */
-    public String setPuh(String s) {
-        puhNro = s;
-        return null;
-    }
-
-
-    /**
-     * Asettaa pelaajalle sähköpostiosoitteen
-     * @param s pelaajalle asetettava sähköpostiosoite
-     * @return virheilmoitus, null jos ok
-     */
-    public String setEmail(String s) {
-        String virhe = EmailTarkistus.tarkistaOsoite(s);
-        if (s != null) return virhe;
-        email = s;
-        return null;
-    }
-
-
-    /**
-     * Asettaa pelaajalle katuosoitteen
-     * @param s pelaajalle laitettava katuosoite
-     * @return virheilmoitus, null jos ok
-     */
-    public String setKatuos(String s) {
-        katuOs = s;
-        return null;
-    }
-
-
-    /**
-     * Asettaa pelaajalle postiosoitteen
-     * @param s pelaajalle asetettava postiosoite
-     * @return virheilmoitus, null jos ok
-     */
-    public String setPostios(String s) {
-        //Postinumeron tarkistus ei toimi tässä, koska kentässä on myös postitoimipaikka
-        //if (!s.matches("[0-9]*")) return "Postinumero saa sisältää vain numeroita";
-        postiOs = s;
-        return null;
-    }
-
-
-    /**
-     * Asettaa pelaajan jäsenmaksun tilan
-     * @param s onko pelaajan jäsenmaksu ok
-     * @return virheilmoitus, null, jos ok
-     */
-    public String setJasMaksu(String s) {
-        jasenMaksu = s;
-        return null;
-    }
-
-
-    /**
-     * Asettaa pelaajalle kotikentän
-     * @param s pelaajalle asetetttava kotikenttä
-     * @return virheilmoitus, null jos ok
-     */
-    public String setKentta(String s) {
-        pelaajanKerho = s;
-        return null;
-    }
-    
     
     /**
      * @param args ei käytössä
