@@ -102,7 +102,7 @@ public class EmailTarkistus {
      * Pääohjelma sähköpostiosoitteen validiuden testaamiseksi
      * @param args ei käytössä
      */
-    public static void main(String[] args) {
+    public void main(String[] args) {
         //
     }
 

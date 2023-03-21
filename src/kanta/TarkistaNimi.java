@@ -11,7 +11,6 @@ package kanta;
  */
 public class TarkistaNimi {
 
-
     /**
      * Tarkistaa nimen kirjoitusmuodon oikeellisuuden
      * @param nimi joka tarkistetaan
@@ -19,16 +18,21 @@ public class TarkistaNimi {
      * @example
      * <pre name="test">
      *  tarkistaNimi("Bridges Sam")          === null;
-     *  tarkistaNimi("BridgesSam")           === "Syötä sekä suku-, että etunimi";
+     *  tarkistaNimi("BridgesSam")           === "Virheellinen nimi";
      *  tarkistaNimi("bridges sam")          === null;
      *  tarkistaNimi("aa pp")                === "Virheellinen nimi";
      *  tarkistaNimi("Huuppa   Alli")        === "Poista ylimääräiset välilyönnit";
      *  tarkistaNimi("Mäki-Aho Pölhö-Kustaa")=== null;
+     *  tarkistaNimi("Mällinen ")            === "Virheellinen etunimi";
+     *  tarkistaNimi("Lörppö Li")            === null
+     *  tarkistaNimi("Aho T")                === "Virheellinen etunimi";
+     *  tarkistaNimi("N Torspo")             === "Virheellinen sukunimi";
      * </pre>
      */
-    public static String tarkistaNimi(String nimi) {
+    public String tarkistaNimi(String nimi) {
         if (nimi == null) return "Virheellinen nimi";
-        if (nimi.length() < 7) return "Virheellinen nimi";
+        if (nimi.length() == 0) return "Nimikenttä ei voi olla tyhjä";
+        if (nimi.length() < 5) return "Virheellinen nimi";
         
         StringBuilder sukunimi = new StringBuilder();
         StringBuilder etunimi  = new StringBuilder();
@@ -40,16 +44,20 @@ public class TarkistaNimi {
         for (int i = 0; i < nimi.length(); i++) {
             if (nimi.charAt(i) == ' ') valit++;
             if (valit <  1) sukunimi.append(nimi.charAt(i));
-            if (valit == 1) { 
+            if (valit >= 1) { 
                 if (nimi.charAt(i) == ' ') continue;
                 etunimi.append(nimi.charAt(i));
             }
            
         }
+        if (valit == 0) return "Virheellinen nimi";
         
         kokonimi.append(sukunimi);
         kokonimi.append(etunimi);
-
+        
+        if (sukunimi.length() < 2 && etunimi.length() > 2) return "Virheellinen sukunimi";
+        if (etunimi.length()  < 2 && sukunimi.length()> 2) return "Virheellinen etunimi";
+        if (kokonimi.length() < 5) return "Virheellinen nimi";
         if (valit > 1) return "Poista ylimääräiset välilyönnit";
         if (valit < 1) return "Syötä sekä suku-, että etunimi";
         for (int i = 0; i < kokonimi.length(); i++) {
@@ -62,9 +70,8 @@ public class TarkistaNimi {
     /**
      * @param args ei käytössä
      */
-    public static void main(String[] args) {
+    public void main(String[] args) {
         //
-   
     }
 
 }

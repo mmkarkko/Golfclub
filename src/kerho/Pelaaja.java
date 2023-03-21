@@ -8,6 +8,7 @@ import java.io.PrintStream;
 import fi.jyu.mit.ohj2.Mjonot;
 import kanta.EmailTarkistus;
 import kanta.HetunTarkistus;
+import kanta.TarkistaNimi;
 
 /**
  * Pelaaja-luokka
@@ -371,6 +372,9 @@ public class Pelaaja implements Cloneable {
                 setPelaajaNro(Mjonot.erota(sb, '§', getpelaajaNro()));
                 return null;
             case 2:
+                TarkistaNimi name = new TarkistaNimi();
+                String virhe2 = name.tarkistaNimi(tjono);
+                if (virhe2 != null) return virhe2; 
                 nimi = tjono;
                 return null;
             case 3:
@@ -387,8 +391,8 @@ public class Pelaaja implements Cloneable {
                 return null;
             case 6:
                 EmailTarkistus emaili = new EmailTarkistus();
-                String virhe2 = emaili.tarkistaOsoite(tjono);
-                if (virhe2 != null) return virhe2;
+                String virhe3 = emaili.tarkistaOsoite(tjono);
+                if (virhe3 != null) return virhe3;
                 email = tjono;
                 return null;
             case 7:
