@@ -33,75 +33,29 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Nimi">
-                     <GridPane.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label text="Pelaajanumero" GridPane.rowIndex="2">
-                     <GridPane.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label text="Katuosoite" GridPane.rowIndex="6">
-                     <GridPane.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <TextField fx:id="editPelaajanNimi" GridPane.columnIndex="1">
-                     <GridPane.margin>
-                        <Insets />
-                     </GridPane.margin>
-                  </TextField>
-                  <TextField fx:id="editPelaajanNumero" styleClass="virheellinenSyote" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <TextField fx:id="editKatuos" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                  <TextField fx:id="editPostios" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                  <TextField fx:id="editJasMaksu" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                  <Label text="Postiosoite" GridPane.rowIndex="7">
-                     <GridPane.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label text="Jäsenmaksu" GridPane.rowIndex="9">
-                     <GridPane.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label text="Osakkeen numero" GridPane.rowIndex="8">
-                     <GridPane.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                     </GridPane.margin></Label>
-                  <Label text="HCP" GridPane.rowIndex="3">
-                     <GridPane.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <TextField fx:id="editOsakeNro" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                  <TextField fx:id="editHcp" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Label text="Puhelinnumero" GridPane.rowIndex="4">
-                     <GridPane.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <TextField fx:id="editPuh" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <TextField fx:id="editEmail" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <Label text="Sähköposti" GridPane.rowIndex="5">
-                     <GridPane.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label text="Kotikenttä" GridPane.rowIndex="10">
-                     <GridPane.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <TextField fx:id="editKotiKentta" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-                  <Label text="Henkilötunnus" GridPane.rowIndex="1">
-                     <GridPane.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <TextField fx:id="editHetu" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+               	  <Label text="Pelaajanumero" GridPane.rowIndex="1">  <GridPane.margin><Insets bottom="8.0" left="8.0" right="8.0" top="8.0" /></GridPane.margin></Label>
+                  <Label text="Nimi" GridPane.rowIndex ="2"> 		  <GridPane.margin><Insets bottom="8.0" left="8.0" right="8.0" top="8.0" /></GridPane.margin></Label> 
+                  <Label text="Henkilötunnus" GridPane.rowIndex="3">  <GridPane.margin> <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" /></GridPane.margin></Label>
+                  <Label text="HCP" GridPane.rowIndex="4">			  <GridPane.margin><Insets bottom="8.0" left="8.0" right="8.0" top="8.0" /></GridPane.margin></Label>
+                  <Label text="Puhelinnumero" GridPane.rowIndex="5">  <GridPane.margin><Insets bottom="8.0" left="8.0" right="8.0" top="8.0" /></GridPane.margin></Label>
+                  <Label text="Sähköposti" GridPane.rowIndex="6">	  <GridPane.margin><Insets bottom="8.0" left="8.0" right="8.0" top="8.0" /></GridPane.margin></Label>
+                  <Label text="Katuosoite" GridPane.rowIndex="7">	  <GridPane.margin><Insets bottom="8.0" left="8.0" right="8.0" top="8.0" /></GridPane.margin></Label>     
+                  <Label text="Postiosoite" GridPane.rowIndex="8">	  <GridPane.margin><Insets bottom="8.0" left="8.0" right="8.0" top="8.0" /></GridPane.margin></Label>
+                  <Label text="Osakkeen numero" GridPane.rowIndex="9"><GridPane.margin><Insets bottom="8.0" left="8.0" right="8.0" top="8.0" /></GridPane.margin></Label>
+                  <Label text="Jäsenmaksu" GridPane.rowIndex="10">	  <GridPane.margin><Insets bottom="8.0" left="8.0" right="8.0" top="8.0" /></GridPane.margin></Label>
+                  <Label text="Kotikenttä" GridPane.rowIndex="11">	  <GridPane.margin><Insets bottom="8.0" left="8.0" right="8.0" top="8.0" /></GridPane.margin></Label>
+                  
+                  <TextField fx:id="editPelaajanNumero" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="editPelaajanNimi" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                  <TextField fx:id="editHetu" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField fx:id="editHcp" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <TextField fx:id="editPuh" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <TextField fx:id="editEmail" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <TextField fx:id="editKatuos" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <TextField fx:id="editPostios" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                  <TextField fx:id="editOsakeNro" GridPane.columnIndex="1" GridPane.rowIndex="9" />                  
+                  <TextField fx:id="editJasMaksu" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                  <TextField fx:id="editKotiKentta" GridPane.columnIndex="1" GridPane.rowIndex="11" />
                </children>
                <BorderPane.margin>
                   <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
