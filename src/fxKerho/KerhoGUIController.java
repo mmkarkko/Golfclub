@@ -218,7 +218,7 @@ public class KerhoGUIController implements Initializable {
             if (pelaaja == null) return;
             kerho.korvaaTaiLisaa(pelaaja);
             hae(pelaaja.getpelaajaNro());
-        } catch (CloneNotSupportedException e) {
+            } catch (CloneNotSupportedException e) {
             //
         } catch (SailoException e) {
             Dialogs.showMessageDialog(e.getMessage());

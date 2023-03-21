@@ -3,12 +3,8 @@
  */
 package kerho;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.util.Random;
-import java.util.regex.Pattern;
-
 import fi.jyu.mit.ohj2.Mjonot;
 import kanta.EmailTarkistus;
 import kanta.HetunTarkistus;
@@ -25,6 +21,7 @@ import kanta.HetunTarkistus;
  * 
  * @author Miia Arkko
  * @version 7.3.2023
+ * @version 21.3.2023 sähköpostiosoitteen validointi toimii
  *
  */
 public class Pelaaja implements Cloneable {

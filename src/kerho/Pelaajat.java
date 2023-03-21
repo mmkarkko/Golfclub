@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -25,15 +27,15 @@ public class Pelaajat {
     private static final int MAX_PELAAJIA = 10;
     
     private int lkm = 0;
-    private Pelaaja[] alkiot;
-    private boolean muutettu;
+    private Pelaaja[] alkiot = new Pelaaja[MAX_PELAAJIA];
+    private boolean muutettu = false;
     
     
     /**
      * Luodaan alustava taulukko
      */
     public Pelaajat() {
-        alkiot = new Pelaaja[MAX_PELAAJIA];
+        
     }
     
     
@@ -60,32 +62,41 @@ public class Pelaajat {
      * pelaajat.lisaa(aku1); pelaajat.getLkm() === 5;
      * </pre>
      */
-    public void lisaa(Pelaaja pelaaja) throws SailoException { 
-//        if (lkm >= alkiot.length) {
-//            //throw new SailoException("Liikaa alkioita"); TODO: poista, jos kun valmis
-//            Pelaaja[] tilap = new Pelaaja[lkm  + 10];
-//            
-//            for (int i = 0; i < alkiot.length; i++) {
-//                tilap[i] = alkiot[i];
-//            }           
-//            alkiot = tilap;          
-//        }
-//        alkiot[lkm] = pelaaja;
-//        lkm++;
-//        muutettu = true; // TODO: tarkista tarvitaanko???!
-        
+    public void lisaa(Pelaaja pelaaja) throws SailoException {         
         if (lkm >= alkiot.length) alkiot = Arrays.copyOf(alkiot, lkm+20); 
         alkiot[lkm] = pelaaja;
         lkm++;
-
+        muutettu = true;
 
     }
     
     
     /**
+     * 
      * @param pelaaja ...
      * TODO: täytä
      * @throws SailoException jos ei onnistu
+     * <pre name="test">
+     *  #import java.util.Iterator;
+     *  #THROWS SailoException,CloneNotSupportedException
+     *  #PACKAGEIMPORT
+     *  Pelaajat pelaajat = new Pelaajat();
+     *  Pelaaja aku1 = new Pelaaja(), aku2 = new Pelaaja();
+     *  aku1.rekisteroi(); aku2.rekisteroi();
+     *  pelaajat.getLkm() === 0;
+     *  pelaajat.korvaaTaiLisaa(aku1); pelaajat.getLkm() === 1;
+     *  pelaajat.korvaaTaiLisaa(aku2); pelaajat.getLkm() === 2;
+     *  Pelaaja aku3 = aku1.clone();
+     *  aku3.setPostios("00130 Kylä");
+     *  Iterator<Pelaaja> it = pelaajat.iterator();
+     *  it.next() == aku1 === true;
+     *  pelaajat.korvaaTaiLisaa(aku3); pelaajat.getLkm() === 2;
+     *  it = pelaajat.iterator();
+     *  Pelaaja j0 = it.next();
+     *  j0 === aku3;
+     *  j0 == aku3 === true;
+     *  j0 == aku1 === false;
+     * </pre>
      */
     public void korvaaTaiLisaa(Pelaaja pelaaja) throws SailoException {
         int id = pelaaja.getpelaajaNro();
@@ -133,13 +144,14 @@ public class Pelaajat {
      * @throws SailoException mikäli tallennus epäonnistuu
      */
     public void tallenna(String hakemisto) throws SailoException {
-        File ftied = new File(hakemisto + "/pelaajat.dat");
+        if (!muutettu) return;
+        
+        File ftied = new File(hakemisto + "/pelaajat.dat");      
         try (PrintStream fo = new PrintStream(new FileOutputStream(ftied, false))) {
             for(int i = 0; i < getLkm(); i++) {
                 Pelaaja pelaaja = anna(i);
                 fo.println(pelaaja.toString());
-            }
-                
+            }               
         } catch (FileNotFoundException ex) {
             throw new SailoException("Tiedosto " + ftied.getAbsolutePath() +  " ei aukea");
         }
@@ -165,8 +177,91 @@ public class Pelaajat {
             }
         } catch (FileNotFoundException ex) {
             throw new SailoException("Ei pystytä lukemaan tiedostoa " + nimi);
-        }   
+        }
+        muutettu = false;
     }
+    
+    
+    /**
+     * Luokka j�senten iteroimiseksi.
+     * @example
+     * <pre name="test">
+     * #THROWS SailoException 
+     * #PACKAGEIMPORT
+     * #import java.util.*;
+     * 
+     * Pelaajat pelaajat = new Pelaajat();
+     * Pelaaja aku1 = new Pelaaja(), aku2 = new Pelaaja();
+     * aku1.rekisteroi(); aku2.rekisteroi();
+     *
+     * pelaajat.lisaa(aku1); 
+     * pelaajat.lisaa(aku2); 
+     * pelaajat.lisaa(aku1); 
+     * 
+     * StringBuffer ids = new StringBuffer(30);
+     * for (Pelaaja pelaaja:pelaajat)   // Kokeillaan for-silmukan toimintaa
+     *   ids.append(" "+pelaaja.getpelaajaNro());           
+     * 
+     * String tulos = " " + aku1.getpelaajaNro() + " " + aku2.getpelaajaNro() + " " + aku1.getpelaajaNro();
+     * 
+     * ids.toString() === tulos; 
+     * 
+     * ids = new StringBuffer(30);
+     * for (Iterator<Pelaaja>  i=pelaajat.iterator(); i.hasNext(); ) { // ja iteraattorin toimintaa
+     *   Pelaaja pelaaja = i.next();
+     *   ids.append(" "+pelaaja.getpelaajaNro());           
+     * }
+     * 
+     * ids.toString() === tulos;
+     * 
+     * Iterator<Pelaaja>  i=pelaajat.iterator();
+     * i.next() == aku1  === true;
+     * i.next() == aku2  === true;
+     * i.next() == aku1  === true;
+     * 
+     * i.next();  #THROWS NoSuchElementException
+     *  
+     * </pre>
+     */
+    public class PelaajatIterator implements Iterator<Pelaaja> {
+        private int kohdalla = 0;
+
+
+        /**
+         * Onko olemassa viel� seuraavaa j�sent�
+         * @see java.util.Iterator#hasNext()
+         * @return true jos on viel� j�seni�
+         */
+        @Override
+        public boolean hasNext() {
+            return kohdalla < getLkm();
+        }
+
+
+        /**
+         * Annetaan seuraava j�sen
+         * @return seuraava j�sen
+         * @throws NoSuchElementException jos seuraava alkiota ei en�� ole
+         * @see java.util.Iterator#next()
+         */
+        @Override
+        public Pelaaja next() throws NoSuchElementException {
+            if ( !hasNext() ) throw new NoSuchElementException("Ei oo");
+            return anna(kohdalla++);
+        }
+
+
+        /**
+         * Tuhoamista ei ole toteutettu
+         * @throws UnsupportedOperationException aina
+         * @see java.util.Iterator#remove()
+         */
+        @Override
+        public void remove() throws UnsupportedOperationException {
+            throw new UnsupportedOperationException("Me ei poisteta");
+        }
+    }
+
     
     
     /**
