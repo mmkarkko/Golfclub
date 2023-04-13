@@ -47,7 +47,7 @@ public class Pelaaja implements Cloneable, Tietue {
     
     
     /**
-     * @return montako kenttaa
+     * @return montako kenttaa lomakkeessa on
      */
     @Override
     public int getKenttia() {
@@ -57,6 +57,7 @@ public class Pelaaja implements Cloneable, Tietue {
     
     /**
      * Eka kenttä joka on mielekäs kysyttäväksi
+     * 1, koska käyttäjältä ei kysytä pelaajan numeroa
      * @return ekan kentän indeksi
      */
     @Override
@@ -73,17 +74,17 @@ public class Pelaaja implements Cloneable, Tietue {
     @Override
     public String getKysymys(int k) {
         switch ( k ) {
-            case 0: return "pelaajanumero";
-            case 1: return "nimi";
-            case 2: return "hetu";
-            case 3: return "tasoitus";
-            case 4: return "puhelinnumero";
-            case 5: return "sähköpostiosoite";
-            case 6: return "katuosoite";
-            case 7: return "postiosoite";
-            case 8: return "osakenumero";
-            case 9: return "jäsenmaksu";
-            case 10: return "pelaajankerho";
+            case 0: return "Pelaajanumero";
+            case 1: return "Nimi";
+            case 2: return "Hetu";
+            case 3: return "Tasoitus";
+            case 4: return "Puhelinnumero";
+            case 5: return "Sähköpostiosoite";
+            case 6: return "Katuosoite";
+            case 7: return "Postiosoite";
+            case 8: return "Osakenumero";
+            case 9: return "Jäsenmaksu";
+            case 10: return "Pelaajan kerho";
         default: return "Vittu";
         }
     }

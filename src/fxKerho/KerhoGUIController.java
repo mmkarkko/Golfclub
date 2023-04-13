@@ -156,6 +156,7 @@ public class KerhoGUIController implements Initializable {
     private TextField edits[];
     private int kentta = 0;
     private static Kierros apukierros = new Kierros();
+    private static Pelaaja apupelaaja = new Pelaaja();
     
     
     /**
@@ -164,9 +165,15 @@ public class KerhoGUIController implements Initializable {
      * Alustetaan myös pelaajalistan kuuntelija 
      */
     protected void alusta() {
-        panelPelaaja.setFitToHeight(true);       
-       
+        panelPelaaja.setFitToHeight(true);            
         chooserPelaajat.clear();
+        
+        cbKentat.clear();
+        for (int k  = apupelaaja.ekaKentta(); k < apupelaaja.getKenttia(); k++) {
+            cbKentat.add(apupelaaja.getKysymys(k));
+        }
+        cbKentat.setSelectedIndex(0); // valitaan oletuksena nimi hakuehdoksi
+        
         chooserPelaajat.addSelectionListener(e -> naytaPelaaja());
         
         edits = TietueGUIController.luoKentat(gridPelaaja, new Pelaaja());      

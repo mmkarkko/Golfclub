@@ -72,6 +72,8 @@ public class Kierros implements Cloneable, Tietue{
 
 
     /**
+     * Eka kenttä joka on mielekäs kysyttäväksi
+     * 2, koska käyttäjältä ei kysytä pelaajan numeroa eikä kierroksen numeroa --> tulevat automaattisesti
      * @return ensimmäinen käyttäjän syötettävän kentän indeksi
      */
     @Override
