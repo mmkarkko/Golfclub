@@ -10,6 +10,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -381,6 +383,8 @@ public class Pelaajat implements Iterable<Pelaaja> {
     }
 
 
+
+
     /** 
      * Palauttaa "taulukossa" hakuehtoon vastaavien pelaajien viitteet 
      * @param ehto mitä etsitään
@@ -388,7 +392,7 @@ public class Pelaajat implements Iterable<Pelaaja> {
      * @return löytyneet
      */ 
     public Collection<Pelaaja> etsi(String ehto, int k) { 
-        Collection<Pelaaja> loytyneet = new ArrayList<Pelaaja>(); 
+        ArrayList<Pelaaja> loytyneet = new ArrayList<Pelaaja>(); 
         int hk = k;
         if (hk < 0) hk = 1;
         for (int i = 0; i < getLkm(); i++) { 
@@ -397,6 +401,7 @@ public class Pelaajat implements Iterable<Pelaaja> {
             if (WildChars.onkoSamat(sisalto, ehto))
                 loytyneet.add(pelaaja);
         } 
+        Collections.sort(loytyneet, new Pelaaja.Vertailija());
         return loytyneet; 
     }
        

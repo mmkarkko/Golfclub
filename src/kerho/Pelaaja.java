@@ -4,6 +4,8 @@
 package kerho;
 
 import java.io.*;
+import java.util.Comparator;
+
 import fi.jyu.mit.ohj2.Mjonot;
 import kanta.EmailTarkistus;
 import kanta.HetunTarkistus;
@@ -45,6 +47,21 @@ public class Pelaaja implements Cloneable, Tietue {
     private static int seuraavaPelaajaNro  = 1;
     private static int seuraavaOsakeNro    = 1;
     
+    /**
+     * Luokka joka osaa verrata kahta pelaajaa
+     * @author Miia Arkko
+     * @version 13.4.2023
+     *
+     */
+    public static class Vertailija implements Comparator<Pelaaja> {
+
+        @Override
+        public int compare(Pelaaja p1, Pelaaja p2) {
+            // TODO Auto-generated method stub
+            return p1.getNimi().compareTo(p2.getNimi());
+        }
+        //
+    }
     
     /**
      * @return montako kenttaa lomakkeessa on

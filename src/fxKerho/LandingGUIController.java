@@ -1,6 +1,5 @@
 package fxKerho;
 
-import javafx.event.ActionEvent;
 import fi.jyu.mit.fxgui.ModalController;
 import fi.jyu.mit.fxgui.ModalControllerInterface;
 import javafx.fxml.FXML;
