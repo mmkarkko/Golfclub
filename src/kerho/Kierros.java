@@ -102,7 +102,7 @@ public class Kierros implements Cloneable, Tietue{
             case 6:
                 return "pelaajan tasoitus";
             case 7:
-                return "kenttäId";
+                return "kenttä";
             default:
                 return "???";
         }
@@ -113,39 +113,30 @@ public class Kierros implements Cloneable, Tietue{
      * @param k Minkä kentän sisältö halutaan
      * @return valitun kentän sisältö
      * @example
-     * TODO: korjaa testit
      * <pre name="test">
-     *   Harrastus har = new Harrastus();
-     *   har.parse("   2   |  10  |   Kalastus  | 1949 | 22 t ");
-     *   har.anna(0) === "2";   
-     *   har.anna(1) === "10";   
-     *   har.anna(2) === "Kalastus";   
-     *   har.anna(3) === "1949";   
-     *   har.anna(4) === "22";   
-     *   
+     *   Kierros k = new Kierros();
+     *   k.parse("   1   |   2   |  13.4.2023  |   12.20  | ei | 18   |   Paras Golfkerho ");
+     *   k.anna(0) === "1";   
+     *   k.anna(1) === "2";   
+     *   k.anna(2) === "13.4.2023";   
+     *   k.anna(3) === "12.20";   
+     *   k.anna(4) === "ei";
+     *   k.anna(5) === "18";
+     *   k.anna(6) === "Paras Golfkerho";    
      * </pre>
      */
     @Override
     public String anna(int k) {
         switch (k) {
-            case 0:
-                return "" + kierrosNro;
-            case 1:
-                return "" + pelaajaNro;
-            case 2:
-                return pvm;
-            case 3:
-                return lahtoAika;
-            case 4:
-                return "" + onkoTasoitus;
-            case 5:
-                return "" + pelatutReiat;
-            case 6:
-                return "" + pelaajanHcp;
-            case 7:
-                return "" + pelattuKentta;
-            default:
-                return "???";
+            case 0: return "" + kierrosNro;
+            case 1: return "" + pelaajaNro;
+            case 2: return "" + pvm;
+            case 3: return "" + lahtoAika;
+            case 4: return "" + onkoTasoitus;
+            case 5: return "" + pelatutReiat;
+            case 6: return "" + pelaajanHcp;
+            case 7: return "" + pelattuKentta;
+        default: return "???";
         }
     }
 
@@ -219,7 +210,6 @@ public class Kierros implements Cloneable, Tietue{
     public Kierros clone() throws CloneNotSupportedException { 
         return (Kierros)super.clone();
     }
-
 
     
     /**
@@ -334,6 +324,7 @@ public class Kierros implements Cloneable, Tietue{
     /**
      * Selvitää harrastuksen tiedot | erotellusta merkkijonosta.
      * Pitää huolen että seuraavaNro on suurempi kuin tuleva tunnusnro.
+     * TODO: korjaa testit
      * @param rivi josta harrastuksen tiedot otetaan
      * @example
      * <pre name="test">
@@ -353,16 +344,7 @@ public class Kierros implements Cloneable, Tietue{
     public void parse(String rivi) {
         StringBuffer sb = new StringBuffer(rivi);
         for (int k = 1; k < getKenttia(); k++)
-            aseta(k, Mjonot.erota(sb, '|'));
-
-//        setKierrosNro(Mjonot.erota(sb, '|', getKierrosNro()));
-//        pelaajaNro = Mjonot.erota(sb, '|', pelaajaNro);
-//        pvm = Mjonot.erota(sb, '|', pvm);
-//        lahtoAika = Mjonot.erota(sb, '|', lahtoAika);
-//        onkoTasoitus = Mjonot.erota(sb, '|', onkoTasoitus);
-//        pelatutReiat = Mjonot.erota(sb, '|', pelatutReiat);
-//        pelaajanHcp = Mjonot.erota(sb, '|', pelaajanHcp);
-//        pelattuKentta = Mjonot.erota(sb, '|', pelattuKentta);     
+            aseta(k, Mjonot.erota(sb, '|')); 
     }
 
 
@@ -418,6 +400,5 @@ public class Kierros implements Cloneable, Tietue{
         Kierros k = new Kierros();
         k.vastaaKierros(2);
         k.tulosta(System.out);
-
     }
 }
