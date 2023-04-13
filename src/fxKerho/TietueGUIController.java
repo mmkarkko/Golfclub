@@ -177,7 +177,7 @@ public class TietueGUIController<TYPE extends Tietue> implements ModalController
   
     
     /**
-     * Luodaan jäsenen kysymisdialogi ja palautetaan sama tietue muutettuna tai null
+     * Luodaan pelaajan kysymisdialogi ja palautetaan sama tietue muutettuna tai null
      * TODO: korjattava toimimaan
      * @param modalityStage mille ollaan modaalisia, null = sovellukselle
      * @param oletus mitä dataan näytetään oletuksena
@@ -187,7 +187,7 @@ public class TietueGUIController<TYPE extends Tietue> implements ModalController
     public static<TYPE extends Tietue> TYPE kysyTietue(Stage modalityStage, TYPE oletus, int kentta) {
         return ModalController.<TYPE, TietueGUIController<TYPE>>showModal(
                 TietueGUIController.class.getResource("TietueGUIView.fxml"),
-                "Kerho",
+                "Paras Golfkerho",
                 modalityStage, oletus,
                 ctrl -> ctrl.setKentta(kentta) 
                 );

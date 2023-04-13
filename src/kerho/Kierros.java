@@ -76,7 +76,7 @@ public class Kierros implements Cloneable, Tietue{
      */
     @Override
     public int ekaKentta() {
-        return 0;
+        return 2;
     }
     
     
