@@ -55,10 +55,20 @@ public class Pelaaja implements Cloneable, Tietue {
      */
     public static class Vertailija implements Comparator<Pelaaja> {
 
+        private int k;
+                
+        /**
+         * @param k kenttä, minkä mukaan vertaillaan
+         */
+        public Vertailija(int k) {
+            this.k = k;
+        }
+        
+        
         @Override
         public int compare(Pelaaja p1, Pelaaja p2) {
             // TODO Auto-generated method stub
-            return p1.getNimi().compareTo(p2.getNimi());
+            return p1.anna(k).compareTo(p2.anna(k));
         }
         //
     }

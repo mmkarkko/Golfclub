@@ -401,7 +401,7 @@ public class Pelaajat implements Iterable<Pelaaja> {
             if (WildChars.onkoSamat(sisalto, ehto))
                 loytyneet.add(pelaaja);
         } 
-        Collections.sort(loytyneet, new Pelaaja.Vertailija());
+        Collections.sort(loytyneet, new Pelaaja.Vertailija(k));
         return loytyneet; 
     }
        
