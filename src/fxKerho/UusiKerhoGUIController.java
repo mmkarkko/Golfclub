@@ -3,7 +3,6 @@ package fxKerho;
 import fi.jyu.mit.fxgui.Dialogs;
 import fi.jyu.mit.fxgui.ModalController;
 import fi.jyu.mit.fxgui.ModalControllerInterface;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 /**
@@ -26,17 +25,16 @@ public class UusiKerhoGUIController implements ModalControllerInterface<String> 
 
     /**
      * Tapahtumakäsittelijä peruuta-painikkeen painamiselle
-     * @param event
+
      */
-    @FXML void handleCancel(ActionEvent event) {
+    @FXML void handleCancel() {
         ModalController.closeStage(textKerhonNimi);
     }
 
     /**
      * Käsittelijä kun painetaan ok-näppäintä
-     * @param event
      */
-    @FXML void handleTallennaKerho(ActionEvent event) {
+    @FXML void handleTallennaKerho() {
         Dialogs.showMessageDialog("Ei osata vielä tallentaa uutta kerhoa");
     }
 

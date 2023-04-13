@@ -25,16 +25,6 @@ public class Kerho {
     private Pelaajat pelaajat = new Pelaajat();
     private Kierrokset kierrokset = new Kierrokset();
     //private String hakemisto = "koekelmit";
-    
-    
-    /**
-     * Poistaa jäsenistöstä ja harrasteista ne joilla on nro. Kesken.
-     * @param nro viitenumero, jonka mukaan poistetaan
-     * @return montako jäsentä poistettiin
-     */
-    public int poista(@SuppressWarnings("unused") int nro) {
-        return 0;
-    }
 
     
     /**
@@ -72,7 +62,7 @@ public class Kerho {
         pelaajat.korvaaTaiLisaa(pelaaja);
     }
     
-    
+   
     /**
      * Lisätään uusi kierros
      * @param k lisättävä kierros
@@ -103,8 +93,41 @@ public class Kerho {
      */ 
     public Collection<Pelaaja> etsi(String ehto, int k) { 
         return pelaajat.etsi(ehto, k); 
-    } 
-
+    }
+    
+    
+    /**
+     * Poistaa pelaajista ja kierroksista pelaajan tiedot
+     * @param pelaaja joka poistetaan
+     * @return montako pelaajaa poistettiin
+     * @example
+     * <pre name="test">
+     *  #THROWS Exception
+     *  alusta();
+     *  kerho.etsi("*",0).size() === 2;
+     *  kerho.annaKierrokset(p1).size() === 2;
+     *  kerho.poista(p1) === 1;
+     *  kerho.etsi("*",0).size() === 1;
+     *  kerho.annaKierrokset(p1).size() === 0;
+     *  kerhi.annaKierrokset(p2).size() === 3;
+     * </pre>
+     */
+    public int poista(Pelaaja pelaaja) {
+        if (pelaaja == null) return 0;
+        int ret = pelaajat.poista(pelaaja.getpelaajaNro());
+        kierrokset.poistaPelaajanKierrokset(pelaaja.getpelaajaNro());
+        return ret;
+    }
+    
+    
+    /**
+     * Poistaa tämän kierroksen
+     * @param kierros poistettva kierros
+     * TODO: lisää testis https://www.mit.jyu.fi/demowww/ohj2/ht19/vesal/vaihe8.1/
+     */
+    public void poistaKierros(Kierros kierros) {
+        kierrokset.poista(kierros);
+    }
     
     
     /**

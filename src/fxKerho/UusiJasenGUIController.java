@@ -3,7 +3,6 @@ package fxKerho;
 import fi.jyu.mit.fxgui.Dialogs;
 import fi.jyu.mit.fxgui.ModalController;
 import fi.jyu.mit.fxgui.ModalControllerInterface;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
@@ -18,17 +17,17 @@ public class UusiJasenGUIController implements ModalControllerInterface<String> 
     
     /**
      * Käsitellään peruuta-painikkeen painaminen
-     * @param event
+
      */
-    @FXML void handleCancel(ActionEvent event) {
+    @FXML void handleCancel() {
         ModalController.closeStage(textPelaajanNimi);
     }
     
     /**
      * Käsitellään ok-painikkeen painaminen
-     * @param event
+
      */
-    @FXML void handleOK(ActionEvent event) {
+    @FXML void handleOK() {
         Dialogs.showMessageDialog("Ei osata vielä");
     }
 

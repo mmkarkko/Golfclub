@@ -8,7 +8,6 @@ import java.io.PrintStream;
 import java.util.Calendar;
 import fi.jyu.mit.ohj2.Mjonot;
 import kanta.Tietue;
-import static kanta.HetunTarkistus.rand;
 
 /**
  * Kierros-luokka

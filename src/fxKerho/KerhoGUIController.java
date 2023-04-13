@@ -89,7 +89,7 @@ public class KerhoGUIController implements Initializable {
 
     
     @FXML private void handlePoistaKierros() {
-        Dialogs.showMessageDialog("Ei osata vielä poistaa");
+        poistaKierros();
     }
     
     
@@ -105,6 +105,7 @@ public class KerhoGUIController implements Initializable {
     
     @FXML private void handleLopeta() {
         tallenna();
+        //TODO: tässä pitää käyttäjältä varmistaa, saako sulkea
         Platform.exit();
     }
     
@@ -120,7 +121,7 @@ public class KerhoGUIController implements Initializable {
 
 
     @FXML private void handlePoistaJasen() {
-        Dialogs.showMessageDialog("Ei osata vielä poistaa");
+        poistaPelaaja();
     }
 
 
@@ -134,7 +135,7 @@ public class KerhoGUIController implements Initializable {
     }
 
 
-    @FXML void handleTulosta() { //TODO: katso vesan gitistä koodista tämän teko
+    @FXML void handleTulosta() {
         //ModalController.showModal(TulostusGUIController.class.getResource("TulostusGUIView.fxml"), "Tulosta", null, "");
         TulostusGUIController tulostusCtrl = TulostusGUIController.tulosta(null);
         tulostaValitut(tulostusCtrl.getTextArea());
@@ -271,6 +272,7 @@ public class KerhoGUIController implements Initializable {
      */
     public boolean voikoSulkea() {
         tallenna();
+        // TODO: pitää tarkistaa tämäkin, onko yhteydessä toiseen lopeta
         return true;
     }
     
@@ -333,23 +335,59 @@ public class KerhoGUIController implements Initializable {
      * Muokataan pelaajan tietoja, kloonilla, jotta voidaan tarvittaessa peruuttaa
      */
     private void muokkaa(int k) {
-        Pelaaja jasen = chooserPelaajat.getSelectedObject(); 
-        if (jasen == null) return;
+        Pelaaja pelaaja = chooserPelaajat.getSelectedObject(); 
+        if (pelaaja == null) return;
         try {
-            jasen = jasen.clone();
+            pelaaja = pelaaja.clone();
         } catch (CloneNotSupportedException e) {
             // Ei voi tapahtua
         }
-        jasen = TietueGUIController.kysyTietue(null, jasen, k);
-        if (jasen == null) return;
+        pelaaja = TietueGUIController.kysyTietue(null, pelaaja, k);
+        if (pelaaja == null) return;
         try {
-            kerho.korvaaTaiLisaa(jasen);
+            kerho.korvaaTaiLisaa(pelaaja);
         } catch (SailoException e) {
             // TODO: näytä dialogi virheestä
         }
-        hae(jasen.getpelaajaNro());
-
+        hae(pelaaja.getpelaajaNro());
     }
+    
+    
+    private void poistaPelaaja() {
+        Pelaaja pelaaja = chooserPelaajat.getSelectedObject(); 
+        if (pelaaja == null) return;
+
+        if (!Dialogs.showQuestionDialog("Poisto", "Haluatko varmasti poistaa pelaajan " + pelaaja.getNimi() + "?", "Kyllä", "Ei"))
+            return;
+        
+        kerho.poista(pelaaja);
+        int index = chooserPelaajat.getSelectedIndex();
+        hae(0);
+        chooserPelaajat.setSelectedIndex(index);
+    }
+    
+    /**
+     * Poistetaan kierrostaulukosta valittuna oleva kierros
+     */
+    private void poistaKierros() {
+        Pelaaja pelaajaKohdalla = chooserPelaajat.getSelectedObject(); 
+        
+        int rivi = tableKierrokset.getRowNr();
+        if (rivi < 0) return;
+        Kierros kierros = tableKierrokset.getObject();
+        if (kierros == null) return;
+        
+        if (!Dialogs.showQuestionDialog("Poisto", "Haluatko varmasti poistaa kierroksen?", "Kyllä", "Ei"))
+            return;
+        
+        kerho.poistaKierros(kierros);
+        naytaKierrokset(pelaajaKohdalla);
+        int kierroksia = tableKierrokset.getItems().size();
+        if (rivi >= kierroksia) rivi = kierroksia -1;
+        tableKierrokset.getFocusModel().focus(rivi);
+        tableKierrokset.getSelectionModel().select(rivi);
+    }
+    
     
     
     /**

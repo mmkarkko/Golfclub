@@ -2,7 +2,6 @@ package fxKerho;
 
 import fi.jyu.mit.fxgui.ModalController;
 import fi.jyu.mit.fxgui.ModalControllerInterface;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
@@ -18,9 +17,8 @@ public class EiVoiPoistaaGUIController implements ModalControllerInterface<Strin
     
     /**
      * Käsittelee mitä tapahtuu, kun painetaan ok-painiketta
-     * @param event tapahtuma
      */
-    @FXML void handleOK(ActionEvent event) {
+    @FXML void handleOK() {
         ModalController.closeStage(textButton);
     }
     @Override

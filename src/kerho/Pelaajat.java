@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -116,6 +115,36 @@ public class Pelaajat implements Iterable<Pelaaja> {
             }
         }
         lisaa(pelaaja);
+    }
+    
+    
+    /**
+     * Poistaa pelaajan, jolla on valittu pelaajanumero
+     * @param id poistettavan pelaajan pelaajaID
+     * @return 1 jos jotakin poistettiin, 0 jos ei löydy
+     */
+    public int poista(int id) {
+        int ind = etsiId(id);
+        if (ind < 0) return 0;
+        lkm--;
+        for (int i = ind; i < lkm; i++) 
+            alkiot[i] = alkiot[i+1];
+        alkiot[lkm] = null;
+        muutettu = true;
+        return 1;
+            
+    }
+    
+    
+    /**
+     * Etsii pelaajan id:n perusteella
+     * @param id pelaajaID, jonka mukaan etsitään
+     * @return löytyneen pelaajan inteksi tai -1 jos ei löydy
+     */
+    public int etsiId(int id) {
+        for(int i = 0; i < lkm; i++)
+            if (id == alkiot[i].getpelaajaNro()) return i;
+        return -1;
     }
     
     
