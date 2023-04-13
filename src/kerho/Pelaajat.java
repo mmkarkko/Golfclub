@@ -13,6 +13,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import fi.jyu.mit.ohj2.WildChars;
+
 /**
  * Pelaajat-luokka
  * - Pitää yllä varsinaista pelaajarekisteriä, eli
@@ -381,27 +383,19 @@ public class Pelaajat implements Iterable<Pelaaja> {
 
     /** 
      * Palauttaa "taulukossa" hakuehtoon vastaavien pelaajien viitteet 
-     * @param hakuehto hakuehto 
-     * @param k etsittävän kentän indeksi  
-     * @return tietorakenteen löytyneistä pelaajista 
-     * @example 
-     * <pre name="test"> 
-     * #THROWS SailoException  
-     *   Pelaajat pelaajat = new Pelaajat(); 
-     *   Pelaaja p1 = new Pelaaja(); p1.parse("1|Ankka Aku|030201-115H|Paratiisitie 13|"); 
-     *   Pelaaja p2 = new Pelaaja(); p2.parse("2|Ankka Tupu||030552-123B|"); 
-     *   Pelaaja p3 = new Pelaaja(); p3.parse("3|Susi Sepe|121237-121V||131313|Perämetsä"); 
-     *   Pelaaja p4 = new Pelaaja(); p4.parse("4|Ankka Iines|030245-115V|Ankkakuja 9"); 
-     *   Pelaaja p5 = new Pelaaja(); p5.parse("5|Ankka Roope|091007-408U|Ankkakuja 12"); 
-     *   pelaajat.lisaa(p1); pelaajat.lisaa(p2); pelaajat.lisaa(p3); pelaajat.lisaa(p4); pelaajat.lisaa(p5);
-     *   // TODO: toistaiseksi palauttaa kaikki pelaajat 
-     * </pre> 
+     * @param ehto mitä etsitään
+     * @param k kentän indeksi jonka mukaan etsitään
+     * @return löytyneet
      */ 
-    @SuppressWarnings("unused")
-    public Collection<Pelaaja> etsi(String hakuehto, int k) { 
+    public Collection<Pelaaja> etsi(String ehto, int k) { 
         Collection<Pelaaja> loytyneet = new ArrayList<Pelaaja>(); 
-        for (Pelaaja p : this) { 
-            loytyneet.add(p);  
+        int hk = k;
+        if (hk < 0) hk = 1;
+        for (int i = 0; i < getLkm(); i++) { 
+            Pelaaja pelaaja = anna(i);
+            String sisalto = pelaaja.anna(hk);
+            if (WildChars.onkoSamat(sisalto, ehto))
+                loytyneet.add(pelaaja);
         } 
         return loytyneet; 
     }

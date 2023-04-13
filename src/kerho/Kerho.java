@@ -96,14 +96,13 @@ public class Kerho {
 
     
     /** 
-     * Palauttaa "taulukossa" hakuehtoon vastaavien pelaajien viitteet 
-     * @param hakuehto hakuehto  
-     * @param k etsittävän kentän indeksi  
-     * @return tietorakenteen löytyneistä pelaajista 
-     * @throws SailoException Jos jotakin menee väärin
+     * Palauttaal istan pelaajista jotkva vastaavat hakuehtoon 
+     * @param ehto hakuehto   
+     * @param k kentän indeksi jonka mukaan etsitään
+     * @return löytyneet pelaajat
      */ 
-    public Collection<Pelaaja> etsi(String hakuehto, int k) throws SailoException { 
-        return pelaajat.etsi(hakuehto, k); 
+    public Collection<Pelaaja> etsi(String ehto, int k) { 
+        return pelaajat.etsi(ehto, k); 
     } 
 
     

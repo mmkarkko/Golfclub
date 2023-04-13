@@ -367,45 +367,22 @@ public class KerhoGUIController implements Initializable {
             if (kohdalla != null) jnro = kohdalla.getpelaajaNro();
         }
         
-        chooserPelaajat.clear();
+        int k = cbKentat.getSelectionModel().getSelectedIndex() + apupelaaja.ekaKentta();
         
+        chooserPelaajat.clear();  
         String ehto = hakuehto.getText(); 
+        if (ehto.indexOf('*') < 0) ehto = "*" + ehto + "*";
+        
+        Collection<Pelaaja> pelaajat = kerho.etsi(ehto, k);
         
         int index = 0;
         int ci = 0;
-        for (int i = 0; i < kerho.getPelaajia(); i++) {
-            Pelaaja pelaaja = kerho.annaPelaaja(i);
-            if (!pelaaja.getNimi().contains(ehto)) continue;
-            
+        for (Pelaaja pelaaja: pelaajat) {
             if (pelaaja.getpelaajaNro() == jnro) index = ci;
-            chooserPelaajat.add(""+pelaaja.getNimi(), pelaaja);
+            chooserPelaajat.add("" + pelaaja.getNimi(), pelaaja);
             ci++;
         }
         chooserPelaajat.setSelectedIndex(index);
-        
-//        int k = cbKentat.getSelectionModel().getSelectedIndex();
-//        String ehto = hakuehto.getText(); 
-//        if (k > 0 || ehto.length() > 0)
-//            naytaVirhe(String.format("Ei osata hakea kenttä: %d, ehto: %s", k, ehto));
-//        else
-//            naytaVirhe(null);
-//        
-//        chooserPelaajat.clear();
-//
-//        int index = 0;
-//        Collection<Pelaaja> pelaajat;
-//        try {
-//            pelaajat = kerho.etsi(ehto, k);
-//            int i = 0;
-//            for (Pelaaja pelaaja:pelaajat) {
-//                if (pelaaja.getpelaajaNro() == jnro) index = i;
-//                chooserPelaajat.add(pelaaja.getNimi(), pelaaja);
-//                i++;
-//            }
-//        } catch (SailoException ex) {
-//            Dialogs.showMessageDialog("Jäsenen hakemisessa ongelmia! " + ex.getMessage());
-//        }
-//        chooserPelaajat.setSelectedIndex(index); // tästä tulee muutosviesti joka näyttää jäsenen
     }
         
     
@@ -500,8 +477,6 @@ public class KerhoGUIController implements Initializable {
                 tulosta(os, pelaaja);
                 os.println("\n\n");
             }
-        } catch (SailoException ex) { 
-            Dialogs.showMessageDialog("Jäsenen hakemisessa ongelmia! " + ex.getMessage()); 
         }
     }
 }
