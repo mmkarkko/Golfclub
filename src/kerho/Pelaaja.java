@@ -62,7 +62,7 @@ public class Pelaaja implements Cloneable, Tietue {
      */
     @Override
     public int ekaKentta() {
-        return 1;
+        return 0;
     }
     
     

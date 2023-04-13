@@ -72,9 +72,6 @@ public class KerhoGUIController implements Initializable {
      
 
     @FXML private void handleHakuehto() {
-        Pelaaja valittuPelaaja = chooserPelaajat.getSelectedObject();
-        if (valittuPelaaja != null)
-            hae(valittuPelaaja.getpelaajaNro());
         hae(0);
     }
     
@@ -360,33 +357,55 @@ public class KerhoGUIController implements Initializable {
     
     /**
      * Haetaan pelaajat uudelleen
-     * @param jnro mikä pelaaja valitaan aktiiviseksi
+     * @param jnr mikä pelaaja valitaan aktiiviseksi, jos 0 niin aktivoidaan nykyinen pelaaja
      */
-    protected void hae(int jnro) {
-        int k = cbKentat.getSelectionModel().getSelectedIndex();
-        String ehto = hakuehto.getText(); 
-        if (k > 0 || ehto.length() > 0)
-            naytaVirhe(String.format("Ei osata hakea kenttä: %d, ehto: %s", k, ehto));
-        else
-            naytaVirhe(null);
+    private void hae(final int jnr) {
+        int jnro = jnr;
+        
+        if (jnro == 0) {
+            Pelaaja kohdalla = chooserPelaajat.getSelectedObject();
+            if (kohdalla != null) jnro = kohdalla.getpelaajaNro();
+        }
         
         chooserPelaajat.clear();
-
+        
+        String ehto = hakuehto.getText(); 
+        
         int index = 0;
-        Collection<Pelaaja> pelaajat;
-        try {
-            pelaajat = kerho.etsi(ehto, k);
-            int i = 0;
-            for (Pelaaja pelaaja:pelaajat) {
-                if (pelaaja.getpelaajaNro() == jnro) index = i;
-                chooserPelaajat.add(pelaaja.getNimi(), pelaaja);
-                i++;
-            }
-        } catch (SailoException ex) {
-            Dialogs.showMessageDialog("Jäsenen hakemisessa ongelmia! " + ex.getMessage());
+        int ci = 0;
+        for (int i = 0; i < kerho.getPelaajia(); i++) {
+            Pelaaja pelaaja = kerho.annaPelaaja(i);
+            if (!pelaaja.getNimi().contains(ehto)) continue;
+            
+            if (pelaaja.getpelaajaNro() == jnro) index = ci;
+            chooserPelaajat.add(""+pelaaja.getNimi(), pelaaja);
+            ci++;
         }
-        chooserPelaajat.setSelectedIndex(index); // tästä tulee muutosviesti joka näyttää jäsenen
-
+        chooserPelaajat.setSelectedIndex(index);
+        
+//        int k = cbKentat.getSelectionModel().getSelectedIndex();
+//        String ehto = hakuehto.getText(); 
+//        if (k > 0 || ehto.length() > 0)
+//            naytaVirhe(String.format("Ei osata hakea kenttä: %d, ehto: %s", k, ehto));
+//        else
+//            naytaVirhe(null);
+//        
+//        chooserPelaajat.clear();
+//
+//        int index = 0;
+//        Collection<Pelaaja> pelaajat;
+//        try {
+//            pelaajat = kerho.etsi(ehto, k);
+//            int i = 0;
+//            for (Pelaaja pelaaja:pelaajat) {
+//                if (pelaaja.getpelaajaNro() == jnro) index = i;
+//                chooserPelaajat.add(pelaaja.getNimi(), pelaaja);
+//                i++;
+//            }
+//        } catch (SailoException ex) {
+//            Dialogs.showMessageDialog("Jäsenen hakemisessa ongelmia! " + ex.getMessage());
+//        }
+//        chooserPelaajat.setSelectedIndex(index); // tästä tulee muutosviesti joka näyttää jäsenen
     }
         
     
