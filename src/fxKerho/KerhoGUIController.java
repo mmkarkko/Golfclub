@@ -94,7 +94,7 @@ public class KerhoGUIController implements Initializable {
 
     
     @FXML private void handlePoistaKierros() {
-        ModalController.showModal(EiVoiPoistaaGUIController.class.getResource("EiVoiPoistaaGUIView.fxml"), "Poista kierros", null, "");
+        Dialogs.showMessageDialog("Ei osata vielä poistaa");
     }
     
     
@@ -140,9 +140,9 @@ public class KerhoGUIController implements Initializable {
 
 
     @FXML void handleTulosta() { //TODO: katso vesan gitistä koodista tämän teko
-        ModalController.showModal(TulostusGUIController.class.getResource("TulostusGUIView.fxml"), "Tulosta", null, "");
-        //TulostusController tulostusCtrl = TulostusController.tulosta(null);
-        //tulostaValitut(tulostusCtrl.getTextArea());
+        //ModalController.showModal(TulostusGUIController.class.getResource("TulostusGUIView.fxml"), "Tulosta", null, "");
+        TulostusGUIController tulostusCtrl = TulostusGUIController.tulosta(null);
+        tulostaValitut(tulostusCtrl.getTextArea());
     }
 
     
