@@ -392,6 +392,7 @@ public class KerhoGUIController implements Initializable {
         uusi = TietueGUIController.kysyTietue(null, uusi, uusi.ekaKentta()); 
         if (uusi == null) return;
         uusi.rekisteroi();
+        uusi.rekisteroiOsake();
         try {
             kerho.lisaa(uusi);
         } catch (SailoException e) {
