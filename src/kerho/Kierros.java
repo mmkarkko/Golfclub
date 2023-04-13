@@ -76,7 +76,7 @@ public class Kierros implements Cloneable, Tietue{
      */
     @Override
     public int ekaKentta() {
-        return 1;
+        return 0;
     }
     
     
@@ -343,7 +343,7 @@ public class Kierros implements Cloneable, Tietue{
      */
     public void parse(String rivi) {
         StringBuffer sb = new StringBuffer(rivi);
-        for (int k = 1; k < getKenttia(); k++)
+        for (int k = 0; k < getKenttia(); k++)
             aseta(k, Mjonot.erota(sb, '|')); 
     }
 
@@ -362,21 +362,12 @@ public class Kierros implements Cloneable, Tietue{
     public String toString() {
         StringBuffer sb = new StringBuffer("");
         String erotin = "";
-        for (int k = 1; k < getKenttia(); k++) {
+        for (int k = 0; k < getKenttia(); k++) {
             sb.append(erotin);
             sb.append(anna(k));
             erotin = "|";
         }
         return sb.toString();
-
-//        return "" + getKierrosNro() + "|" + 
-//                    pelaajaNro + "|" + 
-//                    pvm + "|" + 
-//                    lahtoAika + "|" + 
-//                    onkoTasoitus + '|' + 
-//                    pelatutReiat + '|' + 
-//                    pelaajanHcp + '|' + 
-//                    pelattuKentta;
     }
        
 
