@@ -75,6 +75,7 @@ public class KerhoGUIController implements Initializable {
         Pelaaja valittuPelaaja = chooserPelaajat.getSelectedObject();
         if (valittuPelaaja != null)
             hae(valittuPelaaja.getpelaajaNro());
+        hae(0);
     }
     
 
@@ -358,7 +359,7 @@ public class KerhoGUIController implements Initializable {
         int k = cbKentat.getSelectionModel().getSelectedIndex();
         String ehto = hakuehto.getText(); 
         if (k > 0 || ehto.length() > 0)
-            naytaVirhe(String.format("Ei osata hakea (kenttä: %d, ehto: %s)", k, ehto));
+            naytaVirhe(String.format("Ei osata hakea kenttä: %d, ehto: %s", k, ehto));
         else
             naytaVirhe(null);
         

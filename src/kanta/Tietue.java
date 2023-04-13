@@ -26,7 +26,7 @@ public interface Tietue {
      * @return ensimmäinen käyttäjän syötettävän kentän indeksi
      * @example
      * <pre name="test">
-     *   Harrastus har = new Harrastus();
+     *   Kierros har = new Kierros();
      *   har.ekaKentta() === 2;
      * </pre>
      */

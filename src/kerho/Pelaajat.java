@@ -36,7 +36,7 @@ public class Pelaajat implements Iterable<Pelaaja> {
 
     
     /**
-     * Luodaan alustava taulukko
+     * Oletusmuodostaja
      */
     public Pelaajat() {
         
