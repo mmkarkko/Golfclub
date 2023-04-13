@@ -154,6 +154,29 @@ public class Pelaaja implements Cloneable, Tietue {
         default: return "Äääliö";
         }
     }
+    
+    
+    /**
+     * 
+     * @param k kenttä
+     * @return kentän sisältö merkkijonona
+     */
+    public String getAvain(int k) {
+        switch ( k ) {
+            case 0: return "" + pelaajaNro;
+            case 1: return "" + nimi.toUpperCase();
+            case 2: return "" + hetu;
+            case 3: return "" + hcp;
+            case 4: return "" + puhNro;
+            case 5: return "" + email;
+            case 6: return "" + katuOs.toUpperCase();
+            case 7: return "" + postiOs.toLowerCase();
+            case 8: return "" + osakeNro;
+            case 9: return "" + jasenMaksu;
+            case 10: return ""+ pelaajanKerho.toUpperCase();
+        default: return "Äääliö";
+        }
+    }
 
     
     private HetunTarkistus hetut = new HetunTarkistus();
