@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane stylesheets="@kerho.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxKerho.MuokkaaJasenGUIController">
+<BorderPane stylesheets="@kerho.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxKerho.TietueGUIController">
    <top>
       <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <center>
-            <GridPane fx:id="gridPelaaja" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="300.0" BorderPane.alignment="CENTER">
+            <GridPane fx:id="gridTietue" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="300.0" BorderPane.alignment="CENTER">
               <columnConstraints>
                 <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="90.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="150.0" />
@@ -36,7 +38,7 @@
                <children>
                	  <Label text="Pelaajanumero" GridPane.rowIndex="1">  <GridPane.margin><Insets bottom="8.0" left="8.0" right="8.0" top="8.0" /></GridPane.margin></Label>
                   <Label text="Nimi" GridPane.rowIndex="2"> 		  <GridPane.margin><Insets bottom="8.0" left="8.0" right="8.0" top="8.0" /></GridPane.margin></Label> 
-                  <Label text="Henkilötunnus" GridPane.rowIndex="3">  <GridPane.margin> <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" /></GridPane.margin></Label>
+                  <Label text="Henkilötunnus" GridPane.rowIndex="3">  <GridPane.margin><Insets bottom="8.0" left="8.0" right="8.0" top="8.0" /></GridPane.margin></Label>
                   <Label text="HCP" GridPane.rowIndex="4">			  <GridPane.margin><Insets bottom="8.0" left="8.0" right="8.0" top="8.0" /></GridPane.margin></Label>
                   <Label text="Puhelinnumero" GridPane.rowIndex="5">  <GridPane.margin><Insets bottom="8.0" left="8.0" right="8.0" top="8.0" /></GridPane.margin></Label>
                   <Label text="Sähköposti" GridPane.rowIndex="6">	  <GridPane.margin><Insets bottom="8.0" left="8.0" right="8.0" top="8.0" /></GridPane.margin></Label>
@@ -46,17 +48,17 @@
                   <Label text="Jäsenmaksu" GridPane.rowIndex="10">	  <GridPane.margin><Insets bottom="8.0" left="8.0" right="8.0" top="8.0" /></GridPane.margin></Label>
                   <Label text="Kotikenttä" GridPane.rowIndex="11">	  <GridPane.margin><Insets bottom="8.0" left="8.0" right="8.0" top="8.0" /></GridPane.margin></Label>
                   
-                  <TextField fx:id="editPelaajanNumero" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextField fx:id="editPelaajanNimi" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <TextField fx:id="editHetu" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <TextField fx:id="editHcp" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <TextField fx:id="editPuh" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <TextField fx:id="editEmail" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                  <TextField fx:id="editKatuos" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                  <TextField fx:id="editPostios" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                  <TextField fx:id="editOsakeNro" GridPane.columnIndex="1" GridPane.rowIndex="9" />                  
-                  <TextField fx:id="editJasMaksu" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-                  <TextField fx:id="editKotiKentta" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                  <TextField text="editPelaajanNumero" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField text="editPelaajanNimi" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField text="editHetu" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField text="editHcp" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <TextField text="editPuh" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <TextField text="editEmail" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <TextField text="editKatuos" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <TextField text="editPostios" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                  <TextField text="editOsakeNro" GridPane.columnIndex="1" GridPane.rowIndex="9" />                  
+                  <TextField text="editJasMaksu" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                  <TextField text="editKotiKentta" GridPane.columnIndex="1" GridPane.rowIndex="11" />
                </children>
                <BorderPane.margin>
                   <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
@@ -74,7 +76,7 @@
    <bottom>
       <ButtonBar prefHeight="50.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <buttons>
-          <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOK" text="OK" />
+          <Button defaultButton="true" mnemonicParsing="false"  onAction="#handleOK" text="OK" />
             <Button cancelButton="true" mnemonicParsing="false" onAction="#handleCancel" text="Peruuta" />
         </buttons>
          <BorderPane.margin>

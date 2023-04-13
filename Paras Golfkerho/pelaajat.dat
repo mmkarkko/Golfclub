@@ -1,30 +1,14 @@
-1|Golffari Konrad|120914-7338|16.9|010-1111111|golffari_konrad@golffari.fi|Pelimiehenkuja 5a 6|01010 Kylä|1|OK|Paras Golfkerho| 
-2|Pelaaja Piia|020259-2462|7.0|000-9999999|pinja_pelaaja@golffari.fi|Pelimiehenkuja 207|11111 Pelilä|2|OK|Paras Golfkerho| 
-3|Pelaaja Petteri|200672-297W|6.0|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 72|11111 Pelilä|3|OK|Paras Golfkerho| 
-4|Pelaaja Paula|190218-681F|17.0|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 344|11111 Pelilä|4|OK|Paras Golfkerho| 
-5|Pelaaja Petteri|140944-3896|11.0|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 150|11111 Pelilä|5|OK|Paras Golfkerho| 
-6|Pelaaja Pasi|270509-584L|39.0|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 258|11111 Pelilä|6|6|OK| 
-7|Mulligan Marjo|210495-908K|25.0|000-9999999|marjo_mulligan@golffari.fi|Mullikankuja 1|11111 Pelilä|7|OK|Paras Golfkerho| 
-8|Pelaaja Petteri|131267-283F|14.0|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 166|11111 Pelilä|8|OK|Paras Golfkerho| 
-9|Pelaaja Petteri|031132-490V|9.0|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 279|11111 Pelilä|9|OK|Paras Golfkerho| 
-10|Pelaaja Petteri|260544-7124|33.0|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 186|11111 Pelilä|10|OK|Paras Golfkerho| 
-11|Golfaaja Kaarina|150358-784B|7.0|000-9999999|kaarinag@golffari.fi|Tiikuja 15B|11111 Pelilä|11|OK|Paras Golfkerho| 
-12|Pelaaja Petteri|081263-039B|7.0|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 338|11111 Pelilä|12|OK|Paras Golfkerho| 
-13|Pelaaja Petteri|060125-1875|47.0|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 236|11111 Pelilä|13|OK|Paras Golfkerho| 
-14|Pelaaja Petteri|200251-827B|4.0|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 337|11111 Pelilä|14|OK|Paras Golfkerho| 
-15|Pelaaja Petteri|210526-7117|50.0|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 17|11111 Pelilä|15|OK|Paras Golfkerho| 
-16|Pelaaja Petteri|180978-816A|40.0|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 153|11111 Pelilä|16|OK|Paras Golfkerho| 
-17|Pelaaja Petteri|021289-046D|44.0|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 368|11111 Pelilä|17|OK|Paras Golfkerho| 
-18|Pelaaja Petteri|200136-7462|32.0|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 359|11111 Pelilä|18|OK|Paras Golfkerho| 
-19|Pelaaja Petteri|200997-883N|35.0|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 210|11111 Pelilä|19|OK|Paras Golfkerho| 
-20|Pelaaja Petteri|200547-854L|40.0|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 276|11111 Pelilä|20|OK|Paras Golfkerho| 
-21|Pelaaja Petteri|190426-478L|53.0|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 186|11111 Pelilä|21|OK|Paras Golfkerho| 
-22|Pelaaja Paavo|240371-964A|38.0|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 168|11111 Pelilä|22|OK|Paras Golfkerho| 
-23|Pelaaja Petteri|221232-490X|32.0|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 198|11111 Pelilä|23|OK|Paras Golfkerho| 
-24|Pelaaja Petteri|160872-297X|33.0|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 206|11111 Pelilä|24|OK|Paras Golfkerho| 
-25|Tiiaaja Tiina|130984-888Y|5.0|000-9999999|tiiaaja.tiina@golffari.fi|Tiikuja 1|22222 Tiiala|25|OK|Paras Golfkerho| 
-26|Mulligan Mikko|231002-629P|45.1|000-9999999|golfaaja12@golffari.fi|Viheriö 18|11111 Pelilä|26|OK|Paras Golfkerho| 
-27|Pelaaja Petteri|161072-892R|16.0|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 327|11111 Pelilä|27|OK|Paras Golfkerho| 
-28|Ping Pietari|050724-425S|43.5|000-9999999|pietari_ping@golffari.fi|Mailakukuja 425 G|22222 Pelikylä|28|OK|Paras Golfkerho| 
-29|Pelaaja Petteri|190251-740W|52.0|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 143|11111 Pelilä|29|OK|Paras Golfkerho| 
-30|Golfer Gertrude|220958-8284|28.5|000-9999999|gertrude.golfer@golfer.fi|Golfaajankuja 6|11111 Pelilä|30|OK|Paras Golfkerho| 
+pelaajat
+30
+1|Pelaaja Pasi|011284-109H|12.0|444-4444444|pasipelaa@golfaaja.fi|Pelitie 1|10101 Pelikylä|0|OK|Paras Golfkerho
+2|Tiiaaja Tiina|120490-3361|15.0|999-222222|tiina.tiiaaja@golffari.fi|Kuja 6|01010 Jokukylä|0|OK|Paras Golfkerho
+3|Golffari Konrad|200970-983X|18.9|111-111111|konrad.golffari@maili.fi|Golffarikuja 18|11111 Golffarikylä|0|OK|Paras Golfkerho
+4|Tiiaaja Tauno|121190-887E|20.8|||||0|OK|Paras Golfkerho
+5|Mulligan Mikko|080274-809Y|17.2|000-333333|mikkomullikka@maili.fi|Osoite 2a 2|11111 Golffarikylä|0|OK|Paras Golfkerho
+6|Ping Pinja|190784-2023|37.0|222-222222|ping_pinja@osoite.fi|Tiitie 19|11111 Tii|0|OK|Paras Golfkerho
+7|Wilson Wilson|310594-2091|25.6|333-2222222|wilson@mailiosoite.fi|Golfaajankuja 6|00000 Golffarila|0|OK|Paras Golfkerho
+8|Wilson Raija|150193-894A|19.9|000-222222|r-wilson@mailiosoite.fi|Golfaajankuja 6|00000 Golffarila|0|OK|Paras Golfkerho
+9|Pelaaja Paula|010401A5008|21.9|111-2222222|paulapelaaja01@golfaajanosoite.fi|Golfaajankuja 60|00000 Golffarila|0|OK|Paras Golfkerho
+10|Griini Kalle|010380-129V|8.0|111-3333333|kallegriini@ossa.fi|Griinikuja 18|22222 Greeniville|0|OK|Paras Golfkerho
+11|Tiiaaja Taru|090585-234A|5.9|333-2222222|tarutiiaaja@ossa.fi|Viheriö 12|11114 Kylä|0|OK|Paras Golfkerho
+12|Pelaaja Petrtus|220589-109P|11.0|000-1234567|petruspelaaja@osoite.com|Viheriönlaita 9 a 5|01010 Viheriö|0|OK|Paras Golfkerho

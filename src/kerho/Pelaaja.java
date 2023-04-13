@@ -3,12 +3,14 @@
  */
 package kerho;
 
-import java.io.OutputStream;
-import java.io.PrintStream;
+import java.io.*;
 import fi.jyu.mit.ohj2.Mjonot;
 import kanta.EmailTarkistus;
 import kanta.HetunTarkistus;
 import kanta.TarkistaNimi;
+import kanta.Tietue;
+
+import static kanta.HetunTarkistus.*;
 
 /**
  * Pelaaja-luokka
@@ -25,7 +27,7 @@ import kanta.TarkistaNimi;
  * @version 21.3.2023 sähköpostiosoitteen validointi toimii
  *
  */
-public class Pelaaja implements Cloneable {
+public class Pelaaja implements Cloneable, Tietue {
     
     private int         pelaajaNro      = 0;
     private String      nimi            = "";
@@ -45,8 +47,57 @@ public class Pelaaja implements Cloneable {
     
     
     /**
+     * @return montako kenttaa
+     */
+    @Override
+    public int getKenttia() {
+        return 11;
+    }
+
+    
+    /**
+     * Eka kenttä joka on mielekäs kysyttäväksi
+     * @return ekan kentän indeksi
+     */
+    @Override
+    public int ekaKentta() {
+        return 0;
+    }
+    
+    
+    /**
+     * Palauttaa k:tta pelaajan kenttää vastaavan kysymyksen
+     * @param k kuinka monennen kentän kysymys palautetaan (0-alkuinen)
+     * @return k:netta kenttää vastaava kysymys
+     */
+    @Override
+    public String getKysymys(int k) {
+        switch ( k ) {
+            case 0: return "pelaajanumero";
+            case 1: return "nimi";
+            case 2: return "hetu";
+            case 3: return "tasoitus";
+            case 4: return "puhelinnumero";
+            case 5: return "sähköpostiosoite";
+            case 6: return "katuosoite";
+            case 7: return "postiosoite";
+            case 8: return "osakenumero";
+            case 9: return "jäsenmaksu";
+            case 10: return "pelaajankerho";
+        default: return "Vittu";
+        }
+    }
+
+  
+    /**
      * Hakee pelaajan nimen
      * @return palauttaa nimen
+     * @example
+     * <pre name="test">
+     *   Pelaaja aku = new Pelaaja();
+     *   aku.vastaaAkuAnkka();
+     *   aku.getNimi() =R= "Ankka Aku .*";
+     * </pre>
      */
     public String getNimi() {
         return nimi;
@@ -54,38 +105,151 @@ public class Pelaaja implements Cloneable {
     
     
     /**
-     * Palauttaa pelaajan jäsennumeron
-     * @return pelaajan jäsennumero
+     * Antaa k:n kentän sisällön merkkijonona
+     * @param k monenenko kentän sisältö palautetaan
+     * @return kentän sisältö merkkijonona
      */
-    public int getpelaajaNro() {
-        return pelaajaNro;
+    @Override
+    public String anna(int k) {
+        switch ( k ) {
+            case 0: return "" + pelaajaNro;
+            case 1: return "" + nimi;
+            case 2: return "" + hetu;
+            case 3: return "" + hcp;
+            case 4: return "" + puhNro;
+            case 5: return "" + email;
+            case 6: return "" + katuOs;
+            case 7: return "" + postiOs;
+            case 8: return "" + osakeNro;
+            case 9: return "" + jasenMaksu;
+            case 10: return "" + pelaajanKerho;
+        default: return "Äääliö";
+        }
+    }
+
+    
+    private HetunTarkistus hetut = new HetunTarkistus();
+    
+    
+    /**
+     * Asettaa k:n kentän arvoksi parametrina tuodun merkkijonon arvon
+     * @param k kuinka monennen kentän arvo asetetaan
+     * @param jono joka asetetaan kentän arvoksi
+     * @return null jos asettaminen onnistuu, muuten vastaava virheilmoitus.
+     * TODO: muokkaa testit
+     * @example
+     * <pre name="test">
+     *   Pelaaja pelaaja = new Pelaaja();
+     *   pelaaja.aseta(1,"Ankka Aku") === null;
+     *   pelaaja.aseta(2,"kissa") =R= "Hetu liian lyhyt"
+     *   pelaaja.aseta(2,"030201-1111") === "Tarkistusmerkin kuuluisi olla C"; 
+     *   pelaaja.aseta(2,"030201-111C") === null; 
+     *   pelaaja.aseta(9,"kissa") === "Liittymisvuosi väärin jono = \"kissa\"";
+     *   pelaaja.aseta(9,"1940") === null;
+     * </pre>
+     */
+    @Override
+    public String aseta(int k, String jono) {
+        String tjono = jono.trim();
+        StringBuffer sb = new StringBuffer(tjono);
+        switch ( k ) {
+            case 0:
+                setPelaajaNro(Mjonot.erota(sb, '§', getpelaajaNro()));
+                return null;
+            case 1:
+                TarkistaNimi name = new TarkistaNimi();
+                String virhe2 = name.tarkistaNimi(tjono);
+                if (virhe2 != null) return virhe2; 
+                nimi = tjono;
+                return null;
+            case 2:
+                String virhe = hetut.tarkista(tjono);
+                if ( virhe != null ) return virhe;
+                hetu = tjono;
+                return null;
+            case 3:
+                hcp = Double.parseDouble(tjono);
+                return null;
+            case 4:
+                puhNro = tjono;
+                return null;
+            case 5:
+                EmailTarkistus emaili = new EmailTarkistus();
+                String virhe3 = emaili.tarkistaOsoite(tjono);
+                if (virhe3 != null) return virhe3;
+                email = tjono;
+                return null;
+            case 6:
+                katuOs = tjono;
+                return null;
+            case 7:
+                postiOs = tjono;
+                return null;
+            case 8:
+                setOsakeNro(Mjonot.erota(sb, '$', getOsakeNro()));
+                return null;
+            case 9:
+                jasenMaksu = tjono;
+                return null;
+            case 10:
+                pelaajanKerho = tjono;
+                return null;
+            default:
+                return "Ääliö";
+        }
     }
     
     
     /**
-     * Palauttaa pelaajan osakenumeron
-     * Mikäli pelaajalla ei ole osaketta, palautetaan 0.
-     * @return osakenumero
+     * Apumetodi, jolla saadaan täytettyä testiarvot pelaajalle
+     * TODO: poista, kun kaikki toimii
+     * @param apuhetu hetu joka pelaajalle annetaan
      */
-    public int getOsakeNro() {
-        return osakeNro;
+    public void vastaaAkuAnkka(String apuhetu) {
+        nimi          = "Pelaaja Petteri";
+        hetu          = apuhetu;
+        hcp           = HetunTarkistus.randDouble(4.0, 54.0);
+        puhNro        = "000-9999999";
+        email         = "petepelaaja@golffari.fi";
+        katuOs        = "Pelimiehenkuja " + HetunTarkistus.rand(1,400);
+        postiOs       = "11111 Pelilä";
+        jasenMaksu    = "OK";
+        pelaajanKerho = "Paras Golfkerho";
     }
     
     
     /**
-     * Palauttaa pelaajan tasoituksen
-     * @return tasoitus
+     * Apumetodi, jolla saadaan täytettyä testiarvot pelaajalle.
+     * Henkilötunnus arvotaan, jotta kahdella pelaajalla ei olisi
+     * samoja tietoja.
      */
-    public double getTasoitus() {
-        return hcp;
+    public void vastaaAkuAnkka() {
+        String apuhetu = arvoHetu();
+        vastaaAkuAnkka(apuhetu);
+    }
+       
+ 
+    /**
+     * Tulostaa Pelaajan tiedot
+     * @param out tietovirta, mihin tulostetaan
+     */
+    public void tulosta(PrintStream out) {     
+        out.println(String.format("%03d", pelaajaNro) + "  " + nimi + "  " + hetu);
+        out.println("  Tasoitus " + hcp);
+        out.println("  Puhelinnumero: " + puhNro);
+        out.println("  Email: " + email);
+        out.println("  Osoite: " + katuOs + ",  " + postiOs);
+        out.println("  Golfkerho: " + pelaajanKerho + ", Osakenumero: " + osakeNro);
+        out.println("  Jasenmaksu: " + jasenMaksu); 
     }
     
     
     /**
-     * Alustetaan jäsenen tiedot tyhjiksi
+     * Tulostetaan henkilön tiedot
+     * @param os tietovirta johon tulostetaan
      */
-    public Pelaaja() {
-        
+    public void tulosta(OutputStream os) {
+        tulosta(new PrintStream(os));
     }
     
     
@@ -108,6 +272,26 @@ public class Pelaaja implements Cloneable {
         pelaajaNro = seuraavaPelaajaNro;
         seuraavaPelaajaNro++;
         return pelaajaNro;
+    }
+    
+    
+    /**
+     * Palauttaa pelaajan jäsennumeron
+     * @return pelaajan jäsennumero
+     */
+    public int getpelaajaNro() {
+        return pelaajaNro;
+    }
+    
+    
+    /**
+     * Asettaa pelaajan pelaajanumeron ja varmistaa, että
+     * seuraava numero on aina suurempi, kuin tähän mennessä suurin.
+     * @param nro asetettava pelaajanumero
+     */
+    private void setPelaajaNro(int nro) {
+        pelaajaNro = nro;
+        if ( pelaajaNro >= seuraavaPelaajaNro) seuraavaPelaajaNro = pelaajaNro +1;
     }
     
     
@@ -137,6 +321,30 @@ public class Pelaaja implements Cloneable {
         return osakeNro;
     }
     
+    
+    /**
+     * Palauttaa pelaajan osakenumeron
+     * Mikäli pelaajalla ei ole osaketta, palautetaan 0.
+     * @return osakenumero
+     */
+    public int getOsakeNro() {
+        return osakeNro;
+    }
+    
+    
+    /**
+     * Asettaa pelaajan osakenumeron. Varmistaa, että
+     * seur. numero on aina suurempi, kuin aiempi suurin
+     * @param nro asetettava osakenumero
+     */
+    private void setOsakeNro(int nro) {
+        osakeNro = nro;
+        if (osakeNro >= seuraavaOsakeNro) seuraavaOsakeNro =osakeNro + 1;
+    }
+    
+
+    
+    
     /**
      * Palauttaa jäsenen tiedot merkkijonona jonka voi tallentaa tiedostoon.
      * @return jäsen tolppaeroteltuna merkkijonona 
@@ -149,59 +357,14 @@ public class Pelaaja implements Cloneable {
      */
     @Override
     public String toString() {
-        return "" +
-                getpelaajaNro() + "|" +
-                nimi + "|" +
-                hetu + "|" +
-                hcp  + "|" +
-                puhNro + "|" +
-                email +  "|" +
-                katuOs + "|" +
-                postiOs + "|" +
-                getOsakeNro() + "|" +
-                jasenMaksu + "|" + 
-                pelaajanKerho + "| ";
-    }
-
-    
-    /**
-     * Tulostaa Pelaajan tiedot
-     * @param out tietovirta, mihin tulostetaan
-     */
-    public void tulosta(PrintStream out) {     
-        out.println(String.format("%03d", pelaajaNro) + "  " + nimi + "  " + hetu);
-        out.println("  Tasoitus " + hcp);
-        out.println("  Puhelinnumero: " + puhNro);
-        out.println("  Email: " + email);
-        out.println("  Osoite: " + katuOs + ",  " + postiOs);
-        out.println("  Golfkerho: " + pelaajanKerho + ", Osakenumero: " + osakeNro);
-        out.println("  Jasenmaksu: " + jasenMaksu); 
-    }
-    
-    
-    /**
-     * Tulostetaan henkilön tiedot
-     * @param os tietovirta johon tulostetaan
-     */
-    public void tulosta(OutputStream os) {
-        tulosta(new PrintStream(os));
-    }
-    
-    
-    /**
-     * Apumetodi, jolla saadaan täytettyä testiarvot pelaajalle
-     * TODO: poista, kun kaikki toimii
-     */
-    public void vastaaAkuAnkka() {
-        nimi          = "Pelaaja Petteri";
-        hetu          = HetunTarkistus.arvoHetu();
-        hcp           = HetunTarkistus.randDouble(4.0, 54.0);
-        puhNro        = "000-9999999";
-        email         = "petepelaaja@golffari.fi";
-        katuOs        = "Pelimiehenkuja " + HetunTarkistus.rand(1,400);
-        postiOs       = "11111 Pelilä";
-        jasenMaksu    = "OK";
-        pelaajanKerho = "Paras Golfkerho";
+        StringBuffer sb = new StringBuffer("");
+        String erotin = "";
+        for (int k = 0; k < getKenttia(); k++) {
+            sb.append(erotin);
+            sb.append(anna(k));
+            erotin = "|";
+        }
+        return sb.toString();
     }
     
     
@@ -226,103 +389,50 @@ public class Pelaaja implements Cloneable {
      * </pre>
      */
     public void parse(String rivi) {
-        var sb = new StringBuilder(rivi);
-        
-        setPelaajaNro(Mjonot.erota(sb, '|', getpelaajaNro()));
-        nimi = Mjonot.erota(sb, '|', nimi);
-        hetu = Mjonot.erota(sb, '|', hetu);
-        //setTasoitus(Mjonot.erota(sb, '|', getTasoitus()));
-        hcp = Mjonot.erota(sb, '|', hcp);
-        puhNro = Mjonot.erota(sb, '|', puhNro);
-        email = Mjonot.erota(sb, '|', email);     
-        katuOs = Mjonot.erota(sb, '|', katuOs);
-        postiOs = Mjonot.erota(sb, '|', postiOs);
-        setOsakeNro(Mjonot.erota(sb, '|', getOsakeNro()));
-        jasenMaksu = Mjonot.erota(sb, '|', jasenMaksu);
-        pelaajanKerho = Mjonot.erota(sb, '|', pelaajanKerho);
+        StringBuffer sb = new StringBuffer(rivi);
+        for (int k = 0; k < getKenttia(); k++)
+            aseta(k, Mjonot.erota(sb, '|'));
     }
     
     
     /**
-     * Asettaa pelaajan osakenumeron. Varmistaa, ettö
-     * seur. numero on aina suurempi, kuin aiempi suurin
-     * @param nro asetettava osakenumero
+     * Tutkii onko pelaajan tiedot samat kuin parametrina tuodun pelaajan tiedot
+     * @param pelaaja johon verrataan
+     * @return true jos kaikki tiedot samat, false muuten
+     * TODO: korjaa testit
+     * @example
+     * <pre name="test">
+     *   Jasen jasen1 = new Jasen();
+     *   jasen1.parse("   3  |  Ankka Aku   | 030201-111C");
+     *   Jasen jasen2 = new Jasen();
+     *   jasen2.parse("   3  |  Ankka Aku   | 030201-111C");
+     *   Jasen jasen3 = new Jasen();
+     *   jasen3.parse("   3  |  Ankka Aku   | 030201-115H");
+     *   
+     *   jasen1.equals(jasen2) === true;
+     *   jasen2.equals(jasen1) === true;
+     *   jasen1.equals(jasen3) === false;
+     *   jasen3.equals(jasen2) === false;
+     * </pre>
      */
-    private void setOsakeNro(int nro) {
-        osakeNro = nro;
-        if (osakeNro >= seuraavaOsakeNro) seuraavaOsakeNro =osakeNro + 1;
+    public boolean equals(Pelaaja pelaaja) {
+        if ( pelaaja == null ) return false;
+        for (int k = 0; k < getKenttia(); k++)
+            if ( !anna(k).equals(pelaaja.anna(k)) ) return false;
+        return true;
     }
     
     
-    /**
-     * Asettaa pelaajan pelaajanumeron ja varmistaa, että
-     * seuraava numero on aina suurempi, kuin tähän mennessä suurin.
-     * @param nro asetettava pelaajanumero
-     */
-    private void setPelaajaNro(int nro) {
-        pelaajaNro = nro;
-        if ( pelaajaNro >= seuraavaPelaajaNro) seuraavaPelaajaNro = pelaajaNro +1;
-    }
-    
- 
-    /**
-     * @return pelaajan hetu
-     */
-    public String getHetu() {
-        return hetu;
-    }
-
-
-    /**
-     * 
-     * @return pelaajan puhelinnumero
-     */
-    public String getPuh() {
-        return puhNro;
-    }
-
-
-    /**
-     * @return pelaajan sähköpostiosoite
-     */
-    public String getEmail() {
-        return email;
-    }
-
-
-    /**
-     * 
-     * @return pelaajan katuosoite
-     */
-    public String getKatuos() {
-        return katuOs;
+    @Override
+    public boolean equals(Object pelaaja) {
+        if ( pelaaja instanceof Pelaaja ) return equals((Pelaaja)pelaaja);
+        return false;
     }
 
     
-    /**
-     * 
-     * @return pelaajan postiosoite
-     */
-    public String getPostios() {
-        return postiOs;
-    }
-    
-
-    /**
-     * 
-     * @return pelaajan jasenmaksun tila
-     */
-    public String getJasMaksu() {
-        return jasenMaksu;
-    }
-
-
-    /**
-     * 
-     * @return pelaajan kotikenttä
-     */
-    public String getKentta() {
-        return pelaajanKerho;
+    @Override
+    public int hashCode() {
+        return pelaajaNro;
     }
     
     
@@ -338,84 +448,80 @@ public class Pelaaja implements Cloneable {
      *   pelaaja.parse("   4  |  Ankka Tupu   | 123");
      *   kopio.toString().equals(pelaaja.toString()) === false;
      * </pre>
-
      */
     @Override
     public Pelaaja clone() throws CloneNotSupportedException {
         Pelaaja uusi = (Pelaaja) super.clone();
         return uusi;
     }
-    
-    
-
-    /**
-     * Asettaa k:n kentän arvoksi parametrina tuodun merkkijonon arvon
-     * @param k kuinka monennen kentän arvo asetetaan
-     * @param jono jonoa joka asetetaan kentän arvoksi
-     * @return null jos asettaminen onnistuu, muuten vastaava virheilmoitus.
-     * @example
-     * <pre name="test">
-     *   Jasen jasen = new Jasen();
-     *   jasen.aseta(1,"Ankka Aku") === null;
-     *   jasen.aseta(2,"kissa") =R= "Hetu liian lyhyt"
-     *   jasen.aseta(2,"030201-1111") === "Tarkistusmerkin kuuluisi olla C"; 
-     *   jasen.aseta(2,"030201-111C") === null; 
-     *   jasen.aseta(9,"kissa") === "Liittymisvuosi väärin jono = \"kissa\"";
-     *   jasen.aseta(9,"1940") === null;
-     * </pre>
-     */
-    public String aseta(int k, String jono) {
-        String tjono = jono.trim();
-        StringBuffer sb = new StringBuffer(tjono);
-        switch ( k ) {
-            case 1:
-                setPelaajaNro(Mjonot.erota(sb, '§', getpelaajaNro()));
-                return null;
-            case 2:
-                TarkistaNimi name = new TarkistaNimi();
-                String virhe2 = name.tarkistaNimi(tjono);
-                if (virhe2 != null) return virhe2; 
-                nimi = tjono;
-                return null;
-            case 3:
-                HetunTarkistus heTu = new HetunTarkistus();
-                String virhe = heTu.tarkista(tjono);
-                if ( virhe != null ) return virhe;
-                hetu = tjono;
-                return null;
-            case 4:
-                hcp = Double.parseDouble(tjono);
-                return null;
-            case 5:
-                puhNro = tjono;
-                return null;
-            case 6:
-                EmailTarkistus emaili = new EmailTarkistus();
-                String virhe3 = emaili.tarkistaOsoite(tjono);
-                if (virhe3 != null) return virhe3;
-                email = tjono;
-                return null;
-            case 7:
-                katuOs = tjono;
-                return null;
-            case 8:
-                postiOs = tjono;
-                return null;
-            case 9:
-                osakeNro = Integer.parseInt(tjono);
-                return null;
-            case 10:
-                jasenMaksu = tjono;
-                return null;
-            case 11:
-                pelaajanKerho = tjono;
-                return null;
-            default:
-                return "Ääliö";
-        }
-    }
  
     
+//    /**
+//     * @return pelaajan hetu
+//     */
+//    public String getHetu() {
+//        return hetu;
+//    }
+//
+//
+//    /**
+//     * 
+//     * @return pelaajan puhelinnumero
+//     */
+//    public String getPuh() {
+//        return puhNro;
+//    }
+//    /**
+//     * @return pelaajan sähköpostiosoite
+//     */
+//    public String getEmail() {
+//        return email;
+//    }
+//    
+//    
+//  /**
+//   * Palauttaa pelaajan tasoituksen
+//   * @return tasoitus
+//   */
+//  public double getTasoitus() {
+//      return hcp;
+//  }    
+//
+//
+//    /**
+//     * 
+//     * @return pelaajan katuosoite
+//     */
+//    public String getKatuos() {
+//        return katuOs;
+//    }
+//
+//    
+//    /**
+//     * 
+//     * @return pelaajan postiosoite
+//     */
+//    public String getPostios() {
+//        return postiOs;
+//    }
+//    
+//
+//    /**
+//     * 
+//     * @return pelaajan jasenmaksun tila
+//     */
+//    public String getJasMaksu() {
+//        return jasenMaksu;
+//    }
+
+
+    /**
+     * 
+     * @return pelaajan kotikenttä
+     */
+    public String getKentta() {
+        return pelaajanKerho;
+    }    
 //    /**
 //     * Asettaa pelaajalle tasoituksen
 //     * @param s Pelaajalle lisättävä tasoitus
@@ -427,8 +533,8 @@ public class Pelaaja implements Cloneable {
 
     
     /**
+     * Testiohjelma pelaajalle
      * @param args ei käytössä
-     * 
      */
     public static void main(String[] args) {
         Pelaaja p1 = new Pelaaja();

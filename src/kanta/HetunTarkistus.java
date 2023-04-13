@@ -110,8 +110,7 @@ public class HetunTarkistus implements Tarkistaja {
         return null;
     }
 
-    
-   
+       
     /**
      * Arvotaan satunnainen kokonaisluku välille [ala,yla]
      * @param ala arvonnan alaraja

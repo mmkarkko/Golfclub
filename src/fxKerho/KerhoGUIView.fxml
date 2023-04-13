@@ -22,7 +22,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane minHeight="-Infinity" prefHeight="450.0" styleClass="kerho/vaaleaVihrea" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxKerho.KerhoGUIController">
+<BorderPane minHeight="-Infinity" prefHeight="470.0" prefWidth="900.0" styleClass="kerho/vaaleaVihrea" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxKerho.KerhoGUIController">
    <top>
       <MenuBar styleClass="vaaleaVihrea" BorderPane.alignment="CENTER">
         <menus>
@@ -89,7 +89,7 @@
                   <VBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
                      <children>
                         <Label alignment="CENTER" text="Hakuehto" />
-                        <ComboBoxChooser fx:id="cbKentat" maxWidth="300.0">
+                        <ComboBoxChooser fx:id="cbKentat" maxWidth="300.0" onAction="#handleHakuehto" rivit="pelaajaID&#10;nimi&#10;hetu&#10;hcp&#10;puhelinnumero&#10;email&#10;katuosoite&#10;postiosoite&#10;osakenumero&#10;jasenmaksu&#10;kerho&#10;">
                            <VBox.margin>
                               <Insets bottom="5.0" />
                            </VBox.margin></ComboBoxChooser>
@@ -118,7 +118,7 @@
                <center>
                   <ScrollPane fx:id="panelPelaaja" fitToWidth="true" minHeight="-Infinity" minWidth="-Infinity" prefWidth="330.0" BorderPane.alignment="CENTER">
                      <content>
-                        <GridPane hgap="10.0" minWidth="-Infinity" prefWidth="250.0">
+                        <GridPane fx:id="gridPelaaja" hgap="10.0" minWidth="-Infinity" prefWidth="250.0">
                           <columnConstraints>
                             <ColumnConstraints fillWidth="false" halignment="RIGHT" hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="100.0" />
                             <ColumnConstraints hgrow="ALWAYS" minWidth="-Infinity" prefWidth="130.0" />
@@ -154,7 +154,7 @@
                                  <GridPane.margin>
                                     <Insets bottom="5.0" />
                                  </GridPane.margin></TextField>
-                              <TextField fx:id="editPelaajanNumero" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                              <TextField fx:id="editPelaajanNumero" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                  <GridPane.margin>
                                     <Insets bottom="5.0" />
                                  </GridPane.margin></TextField>
@@ -178,7 +178,7 @@
                                  <GridPane.margin>
                                     <Insets bottom="5.0" />
                                  </GridPane.margin></TextField>
-                              <TextField fx:id="editOsakeNro" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                              <TextField fx:id="editOsakeNro" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="8">
                                  <GridPane.margin>
                                     <Insets bottom="5.0" />
                                  </GridPane.margin></TextField>
@@ -201,6 +201,9 @@
                      </padding>
                   </ScrollPane>
                </center>
+               <bottom>
+                  <Label fx:id="labelVirhe" BorderPane.alignment="CENTER" />
+               </bottom>
             </BorderPane>
          </items>
       </SplitPane>

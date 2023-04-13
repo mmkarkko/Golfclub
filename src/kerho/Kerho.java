@@ -4,6 +4,7 @@
 package kerho;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -16,32 +17,47 @@ import java.util.List;
  *                  Pelaaja
  *                               
  * @author Miia Arkko
- * @version 6.3.2023
+ * @version 3.4.2023
  *
  */
 public class Kerho {
 
     private Pelaajat pelaajat = new Pelaajat();
     private Kierrokset kierrokset = new Kierrokset();
-    private String hakemisto = "koekelmit";
+    //private String hakemisto = "koekelmit";
     
+    
+    /**
+     * Poistaa jäsenistöstä ja harrasteista ne joilla on nro. Kesken.
+     * @param nro viitenumero, jonka mukaan poistetaan
+     * @return montako jäsentä poistettiin
+     */
+    public int poista(@SuppressWarnings("unused") int nro) {
+        return 0;
+    }
+
     
     /**
      * Lisätään uusi pelaaja
      * @param pelaaja lisättävä pelaaja
      * @throws SailoException jos lisääminen ei onnistu
+     *  @example
+     * <pre name="test">
+     * #THROWS SailoException
+     * Kerho kerho = new Kerho();
+     * Pelaaja aku1 = new Pelaaja(), aku2 = new Pelaaja();
+     * kerho.lisaa(aku1); 
+     * kerho.lisaa(aku2); 
+     * kerho.lisaa(aku1);
+     * Collection<Pelaaja> loytyneet = kerho.etsi("",-1); 
+     * Iterator<Pelaaja> it = loytyneet.iterator();
+     * it.next() === aku1;
+     * it.next() === aku2;
+     * it.next() === aku1;
+
      */
     public void lisaa(Pelaaja pelaaja) throws SailoException {
         pelaajat.lisaa(pelaaja);
-    }
-    
-    
-    /**
-     * Lisätään uusi kierros
-     * @param k lisättävä kierros
-     */
-    public void lisaa(Kierros k) {
-        kierrokset.lisaa(k);
     }
     
     
@@ -55,6 +71,41 @@ public class Kerho {
     public void korvaaTaiLisaa(Pelaaja pelaaja) throws SailoException {
         pelaajat.korvaaTaiLisaa(pelaaja);
     }
+    
+    
+    /**
+     * Lisätään uusi kierros
+     * @param k lisättävä kierros
+     * @throws SailoException jos tulee ongelmia
+     */
+    public void lisaa(Kierros k) throws SailoException {
+        kierrokset.lisaa(k);
+    }
+    
+    
+    /** 
+     * Korvaa kierroksen tietorakenteessa.  Ottaa kierroksen omistukseensa. 
+     * Etsitään samalla tunnusnumerolla oleva kierros.  Jos ei löydy, 
+     * niin lisätään uutena kierroksena. 
+     * @param kierros lisärtävän kierroksen viite.  Huom tietorakenne muuttuu omistajaksi 
+     * @throws SailoException jos tietorakenne on jo täynnä 
+     */ 
+    public void korvaaTaiLisaa(Kierros kierros) throws SailoException { 
+        kierrokset.korvaaTaiLisaa(kierros); 
+    } 
+
+    
+    /** 
+     * Palauttaa "taulukossa" hakuehtoon vastaavien pelaajien viitteet 
+     * @param hakuehto hakuehto  
+     * @param k etsittävän kentän indeksi  
+     * @return tietorakenteen löytyneistä pelaajista 
+     * @throws SailoException Jos jotakin menee väärin
+     */ 
+    public Collection<Pelaaja> etsi(String hakuehto, int k) throws SailoException { 
+        return pelaajat.etsi(hakuehto, k); 
+    } 
+
     
     
     /**
@@ -93,6 +144,21 @@ public class Kerho {
     
     
     /**
+     * Asettaa tiedostojen perusnimet
+     * @param nimi uusi nimi
+     */
+    public void setTiedosto(String nimi) {
+        File dir = new File(nimi);
+        dir.mkdirs();
+        String hakemistonNimi = "Paras Golfkerho";
+        if ( !nimi.isEmpty() ) hakemistonNimi = nimi +"/";
+        pelaajat.setTiedostonPerusNimi(hakemistonNimi + "pelaajat");
+        kierrokset.setTiedostonPerusNimi(hakemistonNimi + "kierrokset");
+    }
+
+    
+    
+    /**
      * Tarkistaa pelaajien lukumäärän
      * @return palauttaa pelaajien lukumäärän
      */
@@ -115,33 +181,93 @@ public class Kerho {
      * Lukee kerhon tiedot tiedostosta
      * @param nimi jota käyteään lukemisessa
      * @throws SailoException jos lukeminen epäonnistuu
+     * @example
+     * <pre name="test">
+     * #THROWS SailoException 
+     * #import java.io.*;
+     * #import java.util.*;
+     * 
+     *  Kerho kerho = new Kerho();
+     *  
+     *  Pelaaja aku1 = new Pelaaja(); aku1.vastaaAkuAnkka(); aku1.rekisteroi();
+     *  Pelaaja aku2 = new Pelaaja(); aku2.vastaaAkuAnkka(); aku2.rekisteroi();
+     *  Kierros pitsi21 = new Kierros(); pitsi21.vastaaPitsinNyplays(aku2.getTunnusNro());
+     *  Kierros pitsi11 = new Kierros(); pitsi11.vastaaPitsinNyplays(aku1.getTunnusNro());
+     *  Kierros pitsi22 = new Kierros(); pitsi22.vastaaPitsinNyplays(aku2.getTunnusNro()); 
+     *  Kierros pitsi12 = new Kierros(); pitsi12.vastaaPitsinNyplays(aku1.getTunnusNro()); 
+     *  Kierros pitsi23 = new Kierros(); pitsi23.vastaaPitsinNyplays(aku2.getTunnusNro());
+     *   
+     *  String hakemisto = "testikelmit";
+     *  File dir = new File(hakemisto);
+     *  File ftied  = new File(hakemisto+"/pelaajat.dat");
+     *  File fhtied = new File(hakemisto+"/kierrokset.dat");
+     *  dir.mkdir();  
+     *  ftied.delete();
+     *  fhtied.delete();
+     *  kerho.lueTiedostosta(hakemisto); #THROWS SailoException
+     *  kerho.lisaa(aku1);
+     *  kerho.lisaa(aku2);
+     *  kerho.lisaa(pitsi21);
+     *  kerho.lisaa(pitsi11);
+     *  kerho.lisaa(pitsi22);
+     *  kerho.lisaa(pitsi12);
+     *  kerho.lisaa(pitsi23);
+     *  kerho.tallenna();
+     *  kerho = new Kerho();
+     *  kerho.lueTiedostosta(hakemisto);
+     *  Collection<Pelaaja> kaikki = kerho.etsi("",-1); 
+     *  Iterator<Pelaaja> it = kaikki.iterator();
+     *  it.next() === aku1;
+     *  it.next() === aku2;
+     *  it.hasNext() === false;
+     *  List<Kierros> loytyneet = kerho.annaHarrastukset(aku1);
+     *  Iterator<Kierros> ih = loytyneet.iterator();
+     *  ih.next() === pitsi11;
+     *  ih.next() === pitsi12;
+     *  ih.hasNext() === false;
+     *  loytyneet = kerho.annaKierrokset(aku2);
+     *  ih = loytyneet.iterator();
+     *  ih.next() === pitsi21;
+     *  ih.next() === pitsi22;
+     *  ih.next() === pitsi23;
+     *  ih.hasNext() === false;
+     *  kerho.lisaa(aku2);
+     *  kerho.lisaa(pitsi23);
+     *  kerho.tallenna();
+     *  ftied.delete()  === true;
+     *  fhtied.delete() === true;
+     *  File fbak = new File(hakemisto+"/nimet.bak");
+     *  File fhbak = new File(hakemisto+"/kierrokset.bak");
+     *  fbak.delete() === true;
+     *  fhbak.delete() === true;
+     *  dir.delete() === true;
+     * </pre>
      */
     public void lueTiedostosta(String nimi) throws SailoException {
-        File dir = new File(nimi);
-        dir.mkdir();
         pelaajat = new Pelaajat(); // jos luetaan olemassa olevaan niin helpoin tyhjentää näin
         kierrokset = new Kierrokset();
 
-        hakemisto = nimi;
+        setTiedosto(nimi);
         pelaajat.lueTiedostosta(nimi);
         kierrokset.lueTiedostosta(nimi);
     }
 
 
     /**
-     * Tallettaa kerhon tiedot tiedostoon
+     * Vaikka pelaajien tallettamien epäonistuisi, niin yritetään silti tallettaa
+     * kierroksia ennen poikkeuksen heittämistä.
      * @throws SailoException jos tallettamisessa ongelmia
      */
     public void tallenna() throws SailoException {
         String virhe = "";
         try {
-            pelaajat.tallenna(hakemisto);
+            pelaajat.tallenna();
         } catch ( SailoException ex ) {
             virhe = ex.getMessage();
         }
 
         try {
-            kierrokset.tallenna(hakemisto);
+            kierrokset.tallenna();
         } catch ( SailoException ex ) {
             virhe += ex.getMessage();
         }
@@ -156,7 +282,7 @@ public class Kerho {
         Kerho kerho = new Kerho();
         
         try {
-            kerho.lueTiedostosta("koekelmit");
+            kerho.lueTiedostosta("Paras Golfkerho");
         } catch (SailoException ex) {
             System.out.println(ex.getMessage());
         }

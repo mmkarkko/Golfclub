@@ -1,14 +1,17 @@
 package kerho;
 
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.Scanner;
 
 /**
  * Pelaajat-luokka
@@ -19,17 +22,18 @@ import java.util.Scanner;
  * - Avustajaluokat: pelaaja
  * 
  * @author Miia Arkko
- * @version 20.3.2023
+ * @version 3.4.2023
  *
  */
-public class Pelaajat {
+public class Pelaajat implements Iterable<Pelaaja> {
     
     private static final int MAX_PELAAJIA = 10;
-    
-    private int lkm = 0;
-    private Pelaaja[] alkiot = new Pelaaja[MAX_PELAAJIA];
     private boolean muutettu = false;
-    
+    private int lkm = 0;
+    private String kokoNimi = "";
+    private String tiedostonPerusNimi = "";
+    private Pelaaja[] alkiot = new Pelaaja[MAX_PELAAJIA];
+
     
     /**
      * Luodaan alustava taulukko
@@ -118,11 +122,126 @@ public class Pelaajat {
      * @throws IndexOutOfBoundsException jos i ei ole sallitulla alueella  
      */
     public Pelaaja anna(int i) throws IndexOutOfBoundsException {
-        if (i < 0 || this.lkm <= i)
-            throw new IndexOutOfBoundsException("Laiton indeksi: " + i);
+        if (i < 0 || this.lkm <= i) throw new IndexOutOfBoundsException("Laiton indeksi: " + i);
         return alkiot[i];
     }
+    
+    
+    /**
+     * Luetaan pelaajien tiedostosta (kesken)
+     * @param tied tiedoston perusnimi
+     * @throws SailoException jos lukeminen ei onnistu
+     * @example
+     * <pre name="test">
+     * #THROWS SailoException 
+     * #import java.io.File;
+     * 
+     *  Pelaajat pelaajat = new Pelaajat();
+     *  Pelaaja aku1 = new Pelaaja(), aku2 = new Pelaaja();
+     *  aku1.vastaaAkuAnkka();
+     *  aku2.vastaaAkuAnkka();
+     *  String hakemisto = "testikelmit";
+     *  String tiedNimi = hakemisto+"/nimet";
+     *  File ftied = new File(tiedNimi+".dat");
+     *  File dir = new File(hakemisto);
+     *  dir.mkdir();
+     *  ftied.delete();
+     *  pelaajat.lueTiedostosta(tiedNimi); #THROWS SailoException
+     *  pelaajat.lisaa(aku1);
+     *  pelaajat.lisaa(aku2);
+     *  pelaajat.tallenna();
+     *  pelaajat = new Pelaajat();            // Poistetaan vanhat luomalla uusi
+     *  pelaajat.lueTiedostosta(tiedNimi);  // johon ladataan tiedot tiedostosta.
+     *  Iterator<Pelaaja> i = pelaajat.iterator();
+     *  i.next() === aku1;
+     *  i.next() === aku2;
+     *  i.hasNext() === false;
+     *  pelaajat.lisaa(aku2);
+     *  pelaajat.tallenna();
+     *  ftied.delete() === true;
+     *  File fbak = new File(tiedNimi+".bak");
+     *  fbak.delete() === true;
+     *  dir.delete() === true;
+     * </pre> 
+     */
+    public void lueTiedostosta(String tied) throws SailoException {
+        setTiedostonPerusNimi(tied);
+        try ( BufferedReader fi = new BufferedReader(new FileReader(getTiedostonNimi())) ) {
+            kokoNimi = fi.readLine();
+            if ( kokoNimi == null ) throw new SailoException("Kerhon nimi puuttuu");
+            String rivi = fi.readLine();
+            if ( rivi == null ) throw new SailoException("Maksimikoko puuttuu");
+            // int maxKoko = Mjonot.erotaInt(rivi,10); // tehdään jotakin
 
+            while ( (rivi = fi.readLine()) != null ) {
+                rivi = rivi.trim();
+                if ( "".equals(rivi) || rivi.charAt(0) == ';' ) continue;
+                Pelaaja pelaaja = new Pelaaja();
+                pelaaja.parse(rivi); // voisi olla virhekäsittely
+                lisaa(pelaaja);
+            }
+            muutettu = false;
+        } catch ( FileNotFoundException e ) {
+            throw new SailoException("Tiedosto " + getTiedostonNimi() + " ei aukea");
+        } catch ( IOException e ) {
+            throw new SailoException("Ongelmia tiedoston kanssa: " + e.getMessage());
+        }
+    }
+
+
+    /**
+     * Luetaan aikaisemmin annetun nimisestä tiedostosta
+     * @throws SailoException jos tulee poikkeus
+     */
+    public void lueTiedostosta() throws SailoException {
+        lueTiedostosta(getTiedostonPerusNimi());
+    }
+    
+    
+    /**
+     * Tallentaa pelaajia tiedostoon
+     * Tiedoston muoto:
+     * <pre>
+     * 1|Pelaaja Petteri|070819-5398|5,4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 1|11111 Pelilä|1|OK|1|
+     * 2|Teetime Teemu|190895-943M |19,3 |111-2221111|tsteetime@golffari.fi|Tiikuja 1|11001 Tiiala||OK|1|
+     * </pre>
+     * @throws SailoException mikäli tallennus epäonnistuu
+     */
+    public void tallenna() throws SailoException {
+        if (!muutettu) return;
+        
+        File fbak = new File(getBakNimi());
+        File ftied = new File(getTiedostonNimi());
+        fbak.delete(); // if .. System.err.println("Ei voi tuhota");
+        ftied.renameTo(fbak); // if .. System.err.println("Ei voi nimetä");
+
+        try ( PrintWriter fo = new PrintWriter(new FileWriter(ftied.getCanonicalPath())) ) {
+            fo.println(getKokoNimi());
+            fo.println(alkiot.length);
+            for (Pelaaja pelaaja : this) {
+                fo.println(pelaaja.toString());
+            }
+            //} catch ( IOException e ) { // ei heitä poikkeusta
+            //  throw new SailoException("Tallettamisessa ongelmia: " + e.getMessage());
+        } catch ( FileNotFoundException ex ) {
+            throw new SailoException("Tiedosto " + ftied.getName() + " ei aukea");
+        } catch ( IOException ex ) {
+            throw new SailoException("Tiedoston " + ftied.getName() + " kirjoittamisessa ongelmia");
+        }
+
+        muutettu = false;
+
+    }
+    
+    
+    /**
+     * Palauttaa kerhon koko nimen
+     * @return kerhon nimi merkkijonona
+     */
+    public String getKokoNimi() {
+        return kokoNimi;
+    }
+    
     
     /**
      * Palauttaa kerhon pelaajien lukumäärän
@@ -134,56 +253,43 @@ public class Pelaajat {
     
     
     /**
-     * Tallentaa pelaajia tiedostoon
-     * Tiedoston muoto:
-     * <pre>
-     * 1|Pelaaja Petteri|070819-5398|5,4|000-9999999|petepelaaja@golffari.fi|Pelimiehenkuja 1|11111 Pelilä|1|OK|1|
-     * 2|Teetime Teemu|190895-943M |19,3 |111-2221111|tsteetime@golffari.fi|Tiikuja 1|11001 Tiiala||OK|1|
-     * </pre>
-     * @param hakemisto tallennettavan tiedoston hakemisto
-     * @throws SailoException mikäli tallennus epäonnistuu
+     * Palauttaa tiedoston nimen, jota käytetään tallennukseen
+     * @return tallennustiedoston nimi
      */
-    public void tallenna(String hakemisto) throws SailoException {
-        if (!muutettu) return;
-        
-        File ftied = new File(hakemisto + "/pelaajat.dat");      
-        try (PrintStream fo = new PrintStream(new FileOutputStream(ftied, false))) {
-            for(int i = 0; i < getLkm(); i++) {
-                Pelaaja pelaaja = anna(i);
-                fo.println(pelaaja.toString());
-            }               
-        } catch (FileNotFoundException ex) {
-            throw new SailoException("Tiedosto " + ftied.getAbsolutePath() +  " ei aukea");
-        }
+    public String getTiedostonPerusNimi() {
+        return tiedostonPerusNimi;
     }
-    
+
     
     /**
-     * Luetaan pelaajien tiedostosta (kesken)
-     * @param hakemisto tiedoston hakemisto
-     * @throws SailoException jos lukeminen ei onnistu
+     * Asettaa tiedoston perusnimen ilan tarkenninta
+     * @param nimi tallennustiedoston perusnimi
      */
-    public void lueTiedostosta(String hakemisto) throws SailoException {
-        String nimi = hakemisto + "/pelaajat.dat";
-        File ftied = new File(nimi);
-        
-        try (Scanner fi = new Scanner(new FileInputStream(ftied))) { // jottaUTF8/ISO-8859 toimii
-            while (fi.hasNext()) {
-                String s = fi.nextLine();
-                if ( s==null || "".equals(s) || s.charAt(0) == ';') continue;
-                Pelaaja pelaaja = new Pelaaja();
-                pelaaja.parse(s);
-                lisaa(pelaaja);
-            }
-        } catch (FileNotFoundException ex) {
-            throw new SailoException("Ei pystytä lukemaan tiedostoa " + nimi);
-        }
-        muutettu = false;
+    public void setTiedostonPerusNimi(String nimi) {
+        tiedostonPerusNimi = nimi + "/pelaajat";
     }
-    
+
     
     /**
-     * Luokka j�senten iteroimiseksi.
+     * Palauttaa tiedoston nimen, jota käytetään tallennukseen
+     * @return tallennustiedoston nimi
+     */
+    public String getTiedostonNimi() {
+        return getTiedostonPerusNimi() + ".dat";
+    }
+
+
+    /**
+     * Palauttaa varakopiotiedoston nimen
+     * @return varakopiotiedoston nimi
+     */
+    public String getBakNimi() {
+        return tiedostonPerusNimi + ".bak";
+    }
+
+    
+    /**
+     * Luokka pelaajien iteroimiseksi.
      * @example
      * <pre name="test">
      * #THROWS SailoException 
@@ -228,7 +334,7 @@ public class Pelaajat {
 
 
         /**
-         * Onko olemassa viel� seuraavaa j�sent�
+         * Onko olemassa viel� seuraavaa pelaajaa
          * @see java.util.Iterator#hasNext()
          * @return true jos on viel� j�seni�
          */
@@ -239,8 +345,8 @@ public class Pelaajat {
 
 
         /**
-         * Annetaan seuraava j�sen
-         * @return seuraava j�sen
+         * Annetaan seuraava pelaaja
+         * @return seuraava pelaaja
          * @throws NoSuchElementException jos seuraava alkiota ei en�� ole
          * @see java.util.Iterator#next()
          */
@@ -261,8 +367,45 @@ public class Pelaajat {
             throw new UnsupportedOperationException("Me ei poisteta");
         }
     }
-
     
+    
+    /**
+     * Palautetaan iteraattori jäsenistään.
+     * @return jäsen iteraattori
+     */
+    @Override
+    public Iterator<Pelaaja> iterator() {
+        return new PelaajatIterator();
+    }
+
+
+    /** 
+     * Palauttaa "taulukossa" hakuehtoon vastaavien pelaajien viitteet 
+     * @param hakuehto hakuehto 
+     * @param k etsittävän kentän indeksi  
+     * @return tietorakenteen löytyneistä pelaajista 
+     * @example 
+     * <pre name="test"> 
+     * #THROWS SailoException  
+     *   Pelaajat pelaajat = new Pelaajat(); 
+     *   Pelaaja p1 = new Pelaaja(); p1.parse("1|Ankka Aku|030201-115H|Paratiisitie 13|"); 
+     *   Pelaaja p2 = new Pelaaja(); p2.parse("2|Ankka Tupu||030552-123B|"); 
+     *   Pelaaja p3 = new Pelaaja(); p3.parse("3|Susi Sepe|121237-121V||131313|Perämetsä"); 
+     *   Pelaaja p4 = new Pelaaja(); p4.parse("4|Ankka Iines|030245-115V|Ankkakuja 9"); 
+     *   Pelaaja p5 = new Pelaaja(); p5.parse("5|Ankka Roope|091007-408U|Ankkakuja 12"); 
+     *   pelaajat.lisaa(p1); pelaajat.lisaa(p2); pelaajat.lisaa(p3); pelaajat.lisaa(p4); pelaajat.lisaa(p5);
+     *   // TODO: toistaiseksi palauttaa kaikki pelaajat 
+     * </pre> 
+     */ 
+    @SuppressWarnings("unused")
+    public Collection<Pelaaja> etsi(String hakuehto, int k) { 
+        Collection<Pelaaja> loytyneet = new ArrayList<Pelaaja>(); 
+        for (Pelaaja p : this) { 
+            loytyneet.add(p);  
+        } 
+        return loytyneet; 
+    }
+       
     
     /**
      * @param args ei käytössä
@@ -270,12 +413,6 @@ public class Pelaajat {
      */
     public static void main(String[] args) throws SailoException {
         Pelaajat pelaajat = new Pelaajat();
-        
-        try {
-            pelaajat.lueTiedostosta("pelaajat");
-        } catch (SailoException ex) {
-            System.err.println(ex.getMessage());
-        }
         
         Pelaaja p1 = new Pelaaja();
         Pelaaja p2 = new Pelaaja();
@@ -288,27 +425,15 @@ public class Pelaajat {
         p2.rekisteroiOsake();
         p2.vastaaAkuAnkka();
         
-        try {
-            pelaajat.lisaa(p1);
-            pelaajat.lisaa(p2);
-        } catch (SailoException e) {
-            System.err.println(e.getMessage());
-        } catch (IndexOutOfBoundsException e) {
-            System.err.println(e.getMessage());
-        }
+        pelaajat.lisaa(p1);
+        pelaajat.lisaa(p2);
         
-        System.out.println("============= Jäsenet testi =================");
+        System.out.println("============= Pelaajat testi =================");
                 
         for (int i = 0; i < pelaajat.getLkm(); i++) {
-            Pelaaja p = pelaajat.anna(i);
-            System.out.println("Pelaaja indeksi: " + i);
-            p.tulosta(System.out);
-        } 
-        
-        try {
-            pelaajat.tallenna("pelaajat");
-        } catch (SailoException e) {
-            System.err.println(e.getMessage());
+            Pelaaja pelaaja = pelaajat.anna(i);
+            System.out.println("Jäsen nro: " + i);
+            pelaaja.tulosta(System.out);
         }
         
     }

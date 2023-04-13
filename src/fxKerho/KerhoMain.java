@@ -27,10 +27,7 @@ public class KerhoMain extends Application {
             scene.getStylesheets().add(getClass().getResource("kerho.css").toExternalForm());
             primaryStage.setScene(scene);
             primaryStage.setTitle("Golfkerho");
-                       
-            Kerho kerho = new Kerho();
-            kerhoCtrl.setKerho(kerho);
-            
+           
             // Platform.setImplicitExit(false); // jos tämän laittaa, pitää itse sulkea
             
             primaryStage.setOnCloseRequest((event) -> {
@@ -38,8 +35,16 @@ public class KerhoMain extends Application {
                 if ( !kerhoCtrl.voikoSulkea() ) event.consume();
             });
             
+            Kerho kerho = new Kerho();
+            kerhoCtrl.setKerho(kerho);
+            
             primaryStage.show();
-            if(!kerhoCtrl.avaa()) Platform.exit();
+            
+            Application.Parameters params = getParameters();
+            if (params.getRaw().size() > 0)
+                kerhoCtrl.lueTiedosto(params.getRaw().get(0));
+            else 
+                if (!kerhoCtrl.avaa()) Platform.exit();
         } catch(Exception e) {
             e.printStackTrace();
         }

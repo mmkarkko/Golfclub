@@ -7,6 +7,8 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Calendar;
 import fi.jyu.mit.ohj2.Mjonot;
+import kanta.Tietue;
+import static kanta.HetunTarkistus.rand;
 
 /**
  * Kierros-luokka
@@ -21,7 +23,7 @@ import fi.jyu.mit.ohj2.Mjonot;
  * @version 6.3.2023
  *
  */
-public class Kierros {
+public class Kierros implements Cloneable, Tietue{
 
     private int kierrosNro       = 0;
     private int pelaajaNro       = 0;
@@ -59,6 +61,166 @@ public class Kierros {
         this.pelaajaNro = nro;
     }
     
+    
+    /**
+     * @return kierroksen kenttien lukumäärä
+     */
+    @Override
+    public int getKenttia() {
+        return 8;
+    }
+
+
+    /**
+     * @return ensimmäinen käyttäjän syötettävän kentän indeksi
+     */
+    @Override
+    public int ekaKentta() {
+        return 1;
+    }
+    
+    
+    /**
+     * @param k minkä kentän kysymys halutaan
+     * @return valitun kentän kysymysteksti
+     */
+    @Override
+    public String getKysymys(int k) {
+        switch (k) {
+            case 0:
+                return "kierrosId";
+            case 1:
+                return "pelaajaId";
+            case 2:
+                return "päivämäärä";
+            case 3:
+                return "lähtöaika";
+            case 4:
+                return "onko tasoitus?";
+            case 5:
+                return "pelattujen reikien lkm";
+            case 6:
+                return "pelaajan tasoitus";
+            case 7:
+                return "kenttäId";
+            default:
+                return "???";
+        }
+    }
+    
+    
+    /**
+     * @param k Minkä kentän sisältö halutaan
+     * @return valitun kentän sisältö
+     * @example
+     * TODO: korjaa testit
+     * <pre name="test">
+     *   Harrastus har = new Harrastus();
+     *   har.parse("   2   |  10  |   Kalastus  | 1949 | 22 t ");
+     *   har.anna(0) === "2";   
+     *   har.anna(1) === "10";   
+     *   har.anna(2) === "Kalastus";   
+     *   har.anna(3) === "1949";   
+     *   har.anna(4) === "22";   
+     *   
+     * </pre>
+     */
+    @Override
+    public String anna(int k) {
+        switch (k) {
+            case 0:
+                return "" + kierrosNro;
+            case 1:
+                return "" + pelaajaNro;
+            case 2:
+                return pvm;
+            case 3:
+                return lahtoAika;
+            case 4:
+                return "" + onkoTasoitus;
+            case 5:
+                return "" + pelatutReiat;
+            case 6:
+                return "" + pelaajanHcp;
+            case 7:
+                return "" + pelattuKentta;
+            default:
+                return "???";
+        }
+    }
+
+    
+    /**
+     * Asetetaan valitun kentän sisältö.  Mikäli asettaminen onnistuu,
+     * palautetaan null, muutoin virheteksti.
+     * @param k minkä kentän sisältö asetetaan
+     * @param s asetettava sisältö merkkijonona
+     * @return null jos ok, muuten virheteksti
+     * @example
+     * <pre name="test">
+     *   Harrastus har = new Harrastus();
+     *   har.aseta(3,"kissa") === "aloitusvuosi: Ei kokonaisluku (kissa)";
+     *   har.aseta(3,"1940")  === null;
+     *   har.aseta(4,"kissa") === "h/vko: Ei kokonaisluku (kissa)";
+     *   har.aseta(4,"20")    === null;
+     * </pre>
+     */
+    @Override
+    public String aseta(int k, String s) {
+        String st = s.trim();
+        StringBuffer sb = new StringBuffer(st);
+        switch (k) {
+            case 0:
+                setKierrosNro(Mjonot.erota(sb, '$', getKierrosNro()));
+                return null;
+            case 1:
+                pelaajaNro = Mjonot.erota(sb, '$', pelaajaNro);
+                return null;
+            case 2:
+                pvm = Mjonot.erota(sb, '$', pvm);
+                return null;
+            case 3:
+                lahtoAika = Mjonot.erota(sb, '$', lahtoAika);
+                return null;
+            case 4:
+                onkoTasoitus = Mjonot.erota(sb, '$', onkoTasoitus);
+                return null;
+            case 5:
+                pelatutReiat = Mjonot.erota(sb,  '$', pelatutReiat);
+                return null;
+            case 6:
+                pelaajanHcp = Mjonot.erota(sb,  '$', pelaajanHcp);
+                return null;
+            case 7:
+                pelattuKentta = Mjonot.erota(sb, '$', pelattuKentta);
+                return null;
+            default:
+                return "Väärä kentän indeksi";
+        }
+    }
+
+
+    /**
+     * Tehdään identtinen klooni jäsenestä
+     * @return Object kloonattu jäsen
+     * TODO: korjaa testit
+     * @example
+     * <pre name="test">
+     * #THROWS CloneNotSupportedException 
+     *   Harrastus har = new Harrastus();
+     *   har.parse("   2   |  10  |   Kalastus  | 1949 | 22 t ");
+     *   Harrastus kopio = har.clone();
+     *   kopio.toString() === har.toString();
+     *   har.parse("   1   |  11  |   Uinti  | 1949 | 22 t ");
+     *   kopio.toString().equals(har.toString()) === false;
+     * </pre>
+     */
+    @Override
+    public Kierros clone() throws CloneNotSupportedException { 
+        return (Kierros)super.clone();
+    }
+
+
     
     /**
      * Hakee päivämäärän
@@ -105,13 +267,7 @@ public class Kierros {
      * @param out tietovirta, mihin tulostetaan
      */
     public void tulosta(PrintStream out) {
-        out.println("Kierrosnumero:  " + String.format("%03d", kierrosNro));
-        out.println("   Päivämäärä:  " + pvm + ",  Lähtöaika:  " + lahtoAika);
-        out.println("   Pelaajanumero:  " + String.format("%03d", pelaajaNro));
-        out.println("   Pelaajan tasoitus  " + pelaajanHcp);
-        out.println("   Golfkerho:  " + pelattuKentta);
-        out.println("   Pelatut reiät  " + pelatutReiat);
-        out.println("   Onko tasoituskierros: " + onkoTasoitus);      
+        out.println(kierrosNro + " " + pelaajaNro + " " + pvm + " " + lahtoAika + " " + onkoTasoitus +  " " + pelatutReiat +  " " + pelaajanHcp + " " + pelattuKentta);    
     }
     
         
@@ -165,6 +321,17 @@ public class Kierros {
     
     
     /**
+     * Asettaa pelaajan pelaajanumeron ja varmistaa, että
+     * seuraava numero on aina suurempi, kuin tähän mennessä suurin.
+     * @param nro asetettava pelaajanumero
+     */
+    private void setKierrosNro(int nro) {
+        kierrosNro = nro;
+        if ( kierrosNro >= seuraavaKierrosNro) seuraavaKierrosNro = kierrosNro +1;
+    }
+    
+    
+    /**
      * Selvitää harrastuksen tiedot | erotellusta merkkijonosta.
      * Pitää huolen että seuraavaNro on suurempi kuin tuleva tunnusnro.
      * @param rivi josta harrastuksen tiedot otetaan
@@ -185,26 +352,17 @@ public class Kierros {
      */
     public void parse(String rivi) {
         StringBuffer sb = new StringBuffer(rivi);
-        
-        setKierrosNro(Mjonot.erota(sb, '|', getKierrosNro()));
-        pelaajaNro = Mjonot.erota(sb, '|', pelaajaNro);
-        pvm = Mjonot.erota(sb, '|', pvm);
-        lahtoAika = Mjonot.erota(sb, '|', lahtoAika);
-        onkoTasoitus = Mjonot.erota(sb, '|', onkoTasoitus);
-        pelatutReiat = Mjonot.erota(sb, '|', pelatutReiat);
-        pelaajanHcp = Mjonot.erota(sb, '|', pelaajanHcp);
-        pelattuKentta = Mjonot.erota(sb, '|', pelattuKentta);     
-    }
+        for (int k = 1; k < getKenttia(); k++)
+            aseta(k, Mjonot.erota(sb, '|'));
 
-    
-    /**
-     * Asettaa pelaajan pelaajanumeron ja varmistaa, että
-     * seuraava numero on aina suurempi, kuin tähän mennessä suurin.
-     * @param nro asetettava pelaajanumero
-     */
-    private void setKierrosNro(int nro) {
-        kierrosNro = nro;
-        if ( kierrosNro >= seuraavaKierrosNro) seuraavaKierrosNro = kierrosNro +1;
+//        setKierrosNro(Mjonot.erota(sb, '|', getKierrosNro()));
+//        pelaajaNro = Mjonot.erota(sb, '|', pelaajaNro);
+//        pvm = Mjonot.erota(sb, '|', pvm);
+//        lahtoAika = Mjonot.erota(sb, '|', lahtoAika);
+//        onkoTasoitus = Mjonot.erota(sb, '|', onkoTasoitus);
+//        pelatutReiat = Mjonot.erota(sb, '|', pelatutReiat);
+//        pelaajanHcp = Mjonot.erota(sb, '|', pelaajanHcp);
+//        pelattuKentta = Mjonot.erota(sb, '|', pelattuKentta);     
     }
 
 
@@ -220,30 +378,46 @@ public class Kierros {
      */
     @Override
     public String toString() {
-        return "" + getKierrosNro() + "|" + 
-                    pelaajaNro + "|" + 
-                    pvm + "|" + 
-                    lahtoAika + "|" + 
-                    onkoTasoitus + '|' + 
-                    pelatutReiat + '|' + 
-                    pelaajanHcp + '|' + 
-                    pelattuKentta;
+        StringBuffer sb = new StringBuffer("");
+        String erotin = "";
+        for (int k = 1; k < getKenttia(); k++) {
+            sb.append(erotin);
+            sb.append(anna(k));
+            erotin = "|";
+        }
+        return sb.toString();
+
+//        return "" + getKierrosNro() + "|" + 
+//                    pelaajaNro + "|" + 
+//                    pvm + "|" + 
+//                    lahtoAika + "|" + 
+//                    onkoTasoitus + '|' + 
+//                    pelatutReiat + '|' + 
+//                    pelaajanHcp + '|' + 
+//                    pelattuKentta;
+    }
+       
+
+    @Override
+    public boolean equals(Object obj) {
+        if ( obj == null ) return false;
+        return this.toString().equals(obj.toString());
+    }
+    
+
+    @Override
+    public int hashCode() {
+        return kierrosNro;
     }
 
-    
+   
     /**
      * @param args ei kaytossa
      */
     public static void main(String[] args) {
-        Kierros k1 = new Kierros();
-        Kierros k2 = new Kierros();
-        
-        k1.rekisteroi();
-        k1.vastaaKierros(1);
-        k2.rekisteroi();
-        k2.vastaaKierros(2);   
-        
-        System.out.println(k1);
-        System.out.println(k2);
+        Kierros k = new Kierros();
+        k.vastaaKierros(2);
+        k.tulosta(System.out);
+
     }
 }
