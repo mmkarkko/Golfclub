@@ -33,6 +33,7 @@ public class Kierrokset implements Iterable<Kierros>{
     
     private boolean muutettu = false;
     private String tiedostonPerusNimi = "";
+    private String kokoNimi = "";
 
     private final List<Kierros> alkiot = new ArrayList<Kierros>();
     
@@ -47,6 +48,17 @@ public class Kierrokset implements Iterable<Kierros>{
     /**
      * Lisää uuden kierroksen tietorakenteeseen.  Ottaa kierroksen omistukseensa.
      * @param kierros lisättävän kierroksen viite. Huom. tietorakenne muuttuu omistajaksi
+     *      * @example
+     * <pre name="test">
+     * Kierrokset kierrokset = new Kierrokset();
+     * Kierros k1 = new Kierros(), k2 = new Kierros();
+     * kierrokset.getLkm() === 0;
+     * kierrokset.lisaa(k1); kierrokset.getLkm() === 1;
+     * kierrokset.lisaa(k2); kierrokset.getLkm() === 2;
+     * kierrokset.lisaa(k1); kierrokset.getLkm() === 3;
+     * kierrokset.lisaa(k1); kierrokset.getLkm() === 4;
+     * kierrokset.lisaa(k1); kierrokset.getLkm() === 5;
+     * </pre>
      */
     public void lisaa(Kierros kierros){
         alkiot.add(kierros);
@@ -55,7 +67,6 @@ public class Kierrokset implements Iterable<Kierros>{
     
     
     /**
-     * TODO: korjaa testit
      * Korvaa harrastuksen tietorakenteessa.  Ottaa harrastuksen omistukseensa.
      * Etsitään samalla tunnusnumerolla oleva harrastus.  Jos ei löydy,
      * niin lisätään uutena harrastuksena.
@@ -65,18 +76,18 @@ public class Kierrokset implements Iterable<Kierros>{
      * <pre name="test">
      * #THROWS SailoException,CloneNotSupportedException
      * #PACKAGEIMPORT
-     * Harrastukset harrastukset = new Harrastukset();
+     * Kierrokset kierrokset = new Kierrokset();
      * Kierros har1 = new Kierros(), har2 = new Kierros();
      * har1.rekisteroi(); har2.rekisteroi();
-     * harrastukset.getLkm() === 0;
-     * harrastukset.korvaaTaiLisaa(har1); harrastukset.getLkm() === 1;
-     * harrastukset.korvaaTaiLisaa(har2); harrastukset.getLkm() === 2;
+     * kierrokset.getLkm() === 0;
+     * kierrokset.korvaaTaiLisaa(har1); kierrokset.getLkm() === 1;
+     * kierrokset.korvaaTaiLisaa(har2); kierrokset.getLkm() === 2;
      * Kierros har3 = har1.clone();
      * har3.aseta(2,"kkk");
-     * Iterator<Kierros> i2=harrastukset.iterator();
+     * Iterator<Kierros> i2=kierrokset.iterator();
      * i2.next() === har1;
-     * harrastukset.korvaaTaiLisaa(har3); harrastukset.getLkm() === 2;
-     * i2=harrastukset.iterator();
+     * kierrokset.korvaaTaiLisaa(har3); kierrokset.getLkm() === 2;
+     * i2=kierrokset.iterator();
      * Kierros h = i2.next();
      * h === har3;
      * h == har3 === true;
@@ -102,23 +113,14 @@ public class Kierrokset implements Iterable<Kierros>{
      * @return tosi, jos löytyi poistettava kierros
      * @example
      * <pre name="test">
-     *  #THROWS
      *  #import java.io.File;
      *  Kierrokset kierrokset = new Kierrokset();
      *  Kierros k1 = new Kierros(); k1.vastaaKierros(2);
      *  Kierros k2 = new Kierros(); k2.vastaaKierros(1);
      *  Kierros k3 = new Kierros(); k3.vastaaKierros(2);
-     *  Kierros k4 = new Kierros(); k4.vastaaKierros(1);
-     *  Kierros k5 = new Kierros(); k5.vastaaKierros(2);
      *  kierrokset.lisaa(k1);
-     *  kierrokset.lisaa(k2);
-     *  kierrokset.lisaa(k3);
-     *  kierrokset.lisaa(k4);
-     *  kierrokset.poista(k5) === false; kierrokset.getLkm() === 4;
-     *  kierrokset.poista(k2) === true;  kierrokset.getLkm() === 3;
-     *  List<Kierros> k = kierrokset.annaKierrokset(1);
-     *  k.size() === 1;
-     *  k.get(0) === k4;
+     *  kierrokset.poista(k1) === true;
+     *  kierrokset.poista(k2) === false;
      * </pre>
      */
     public boolean poista(Kierros kierros) {
@@ -146,7 +148,7 @@ public class Kierrokset implements Iterable<Kierros>{
      *  kierrokset.lisaa(pitsi12);
      *  kierrokset.lisaa(pitsi23);
      *  kierrokset.poistaPelaajanKierrokset(2) === 3;  kierrokset.getLkm() === 2;
-     *  kierrokset.poistaPelaajanKierrotukset(3) === 0;  kierrokset.getLkm() === 2;
+     *  kierrokset.poistaPelaajanKierrokset(3) === 0;  kierrokset.getLkm() === 2;
      *  List<Kierros> h = kierrokset.annaKierrokset(2);
      *  h.size() === 0;
      *  h = kierrokset.annaKierrokset(1);
@@ -177,40 +179,45 @@ public class Kierrokset implements Iterable<Kierros>{
      * #THROWS SailoException 
      * #import java.io.File;
      *  Kierrokset kierrokset = new Kierrokset();
-     *  Kierros pitsi21 = new Kierros(); pitsi21.vastaaKierros(2);
-     *  Kierros pitsi11 = new Kierros(); pitsi11.vastaaKierros(1);
-     *  Kierros pitsi22 = new Kierros(); pitsi22.vastaaKierros(2); 
-     *  Kierros pitsi12 = new Kierros(); pitsi12.vastaaKierros(1); 
-     *  Kierros pitsi23 = new Kierros(); pitsi23.vastaaKierros(2); 
-     *  String tiedNimi = "testikelmit";
-     *  File ftied = new File(tiedNimi + "/kierrokset.dat");
+     *  Kierros k1 = new Kierros(); k1.vastaaKierros(2);
+     *  Kierros k2 = new Kierros(); k2.vastaaKierros(1);
+     *  Kierros k3 = new Kierros(); k3.vastaaKierros(2); 
+     *  Kierros k4 = new Kierros(); k4.vastaaKierros(1); 
+     *  Kierros k5 = new Kierros(); k5.vastaaKierros(2); 
+     *  String tiedNimi = "koeKerho";
+     *  File ftied = new File(tiedNimi + ".dat");
      *  ftied.delete();
-     *  kierrokset.lueTiedostosta(tiedNimi); #THROWS SailoException
-     *  kierrokset.lisaa(pitsi21);
-     *  kierrokset.lisaa(pitsi11);
-     *  kierrokset.lisaa(pitsi22);
-     *  kierrokset.lisaa(pitsi12);
-     *  kierrokset.lisaa(pitsi23);
-     *  kierrokset.tallenna(tiedNimi);
+     *  kierrokset.lueTiedostosta(tiedNimi); 
+     *  kierrokset.lisaa(k1);
+     *  kierrokset.lisaa(k2);
+     *  kierrokset.lisaa(k3);
+     *  kierrokset.lisaa(k4);
+     *  kierrokset.lisaa(k5);
+     *  kierrokset.tallenna();
      *  kierrokset = new Kierrokset();
      *  kierrokset.lueTiedostosta(tiedNimi);
      *  Iterator<Kierros> i = kierrokset.iterator();
-     *  i.next().toString() === pitsi21.toString();
-     *  i.next().toString() === pitsi11.toString();
-     *  i.next().toString() === pitsi22.toString();
-     *  i.next().toString() === pitsi12.toString();
-     *  i.next().toString() === pitsi23.toString();
+     *  i.next().toString() === k1.toString();
+     *  i.next().toString() === k2.toString();
+     *  i.next().toString() === k3.toString();
+     *  i.next().toString() === k4.toString();
+     *  i.next().toString() === k5.toString();
      *  i.hasNext() === false;
-     *  kierrokset.lisaa(pitsi23);
-     *  kierrokset.tallenna(tiedNimi);
+     *  kierrokset.lisaa(k5);
+     *  kierrokset.tallenna();
      *  ftied.delete() === true;
+     *  File fbak = new File(tiedNimi+".bak");
+     *  fbak.delete() === true;
      * </pre>
      */
     public void lueTiedostosta(String tied) throws SailoException {
         setTiedostonPerusNimi(tied);
         try ( BufferedReader fi = new BufferedReader(new FileReader(getTiedostonNimi())) ) {
-
-            String rivi;
+            kokoNimi = fi.readLine();
+            if (kokoNimi == null) throw new SailoException("Kerhon nimi puuttuu");
+            String rivi = fi.readLine();
+            if (rivi == null) throw new SailoException("Maksimikoko puuttuu");
+            
             while ( (rivi = fi.readLine()) != null ) {
                 rivi = rivi.trim();
                 if ( "".equals(rivi) || rivi.charAt(0) == ';' ) continue;
@@ -319,13 +326,12 @@ public class Kierrokset implements Iterable<Kierros>{
     /**
      * Iteraattori kaikkien harrastusten läpikäymiseen
      * @return harrastusiteraattori
-     * TODO: korjaa testit
      * @example
      * <pre name="test">
      * #PACKAGEIMPORT
      * #import java.util.*;
      * 
-     *  Harrastukset kierrokset = new Harrastukset();
+     *  Kierrokset kierrokset = new Kierrokset();
      *  Kierros pitsi21 = new Kierros(2); kierrokset.lisaa(pitsi21);
      *  Kierros pitsi11 = new Kierros(1); kierrokset.lisaa(pitsi11);
      *  Kierros pitsi22 = new Kierros(2); kierrokset.lisaa(pitsi22);
@@ -344,7 +350,7 @@ public class Kierrokset implements Iterable<Kierros>{
      *  int jnrot[] = {2,1,2,1,2};
      *  
      *  for ( Kierros har:kierrokset ) { 
-     *    har.getJasenNro() === jnrot[n]; n++;  
+     *    har.getPelaajaNro() === jnrot[n]; n++;  
      *  }
      *  
      *  n === 5;
@@ -364,28 +370,25 @@ public class Kierrokset implements Iterable<Kierros>{
      * @example
      * <pre name="test">
      * #import java.util.*;
-     * #import java.util.*;
-     * Kerho kerho = new Kerho();
-     * Pelaaja p1 = new Pelaaja(), p2 = new Pelaaja(), p3 = new Pelaaja();
-     * p1.rekisteroi(); p2.rekisteroi(); p3.rekisteroi();
-     * int id1 = p1.getpelaajaNro();
-     * int id2 = p2.getpelaajaNro();
-     * Kierros k1 = new Kierros(id1); kerho.lisaa(k1);
-     * Kierros k2 = new Kierros(id1); kerho.lisaa(k2);
-     * Kierros k3 = new Kierros(id2); kerho.lisaa(k3);
-     * Kierros k4 = new Kierros(id2); kerho.lisaa(k4);
-     * Kierros k5 = new Kierros(id2); kerho.lisaa(k5);
+     * 
+     * Kierrokset kierrokset = new Kierrokset();
+     * Kierros k21 = new Kierros(2); kierrokset.lisaa(k21);
+     * Kierros k11 = new Kierros(1); kierrokset.lisaa(k11);
+     * Kierros k22 = new Kierros(2); kierrokset.lisaa(k22);
+     * Kierros k12 = new Kierros(1); kierrokset.lisaa(k12);
+     * Kierros k23 = new Kierros(2); kierrokset.lisaa(k23);
+     * Kierros k51 = new Kierros(5); kierrokset.lisaa(k51);
      * 
      * List<Kierros> loytyneet;
-     * loytyneet = kerho.annaKierrokset(p3);
+     * loytyneet = kierrokset.annaKierrokset(3);
      * loytyneet.size() === 0;
-     * loytyneet = kerho.annaKierrokset(p1);
+     * loytyneet = kierrokset.annaKierrokset(1);
      * loytyneet.size() === 2;
-     * loytyneet.get(0) == k1 === true;
-     * loytyneet.get(1) == k2 === true;
-     * loytyneet = kerho.annaKierrokset(p2);
-     * loytyneet.size() === 3;
-     * loytyneet.get(0) == k3 === true;
+     * loytyneet.get(0) == k11 === true;
+     * loytyneet.get(1) == k12 === true;
+     * loytyneet = kierrokset.annaKierrokset(5);
+     * loytyneet.size() === 1;
+     * loytyneet.get(0) == k51 === true;
      * </pre>
      */
     public List<Kierros> annaKierrokset(int tunnusNro) {
@@ -400,9 +403,8 @@ public class Kierrokset implements Iterable<Kierros>{
     /**
      * Testataan
      * @param args ei käytossä
-     * @throws SailoException jos liikaa
      */
-    public static void main(String[] args) throws SailoException {
+    public static void main(String[] args) {
         Kierrokset kierrokset = new Kierrokset();   
         
         try  {

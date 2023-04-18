@@ -10,6 +10,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import kerho.Kentta;
 import kerho.Kerho;
 import kerho.Kierros;
 import kerho.Pelaaja;
@@ -74,7 +75,8 @@ public class KerhoGUIController implements Initializable {
     
 
     @FXML private void handleUusiKerho() {
-        ModalController.showModal(UusiKerhoGUIController.class.getResource("UusiKerhoGUIView.fxml"), "Golfkerho", null, "");
+        lisaaKerho();
+        //ModalController.showModal(UusiKerhoGUIController.class.getResource("UusiKerhoGUIView.fxml"), "Paras Golfkerho", null, "");
     }
 
 
@@ -104,9 +106,12 @@ public class KerhoGUIController implements Initializable {
 
     
     @FXML private void handleLopeta() {
-        tallenna();
-        //TODO: tässä pitää käyttäjältä varmistaa, saako sulkea
-        Platform.exit();
+        boolean vastaus = Dialogs.showQuestionDialog("Lopetus?", "Haluatko varmasti sulkea ohjelman?", "Kyllä", "Peruuta");
+        if (vastaus) {
+            tallenna();
+            Platform.exit();
+        }
+        else return;
     }
     
 
@@ -135,8 +140,7 @@ public class KerhoGUIController implements Initializable {
     }
 
 
-    @FXML void handleTulosta() {
-        //ModalController.showModal(TulostusGUIController.class.getResource("TulostusGUIView.fxml"), "Tulosta", null, "");
+    @FXML void handleTulosta() { 
         TulostusGUIController tulostusCtrl = TulostusGUIController.tulosta(null);
         tulostaValitut(tulostusCtrl.getTextArea());
     }
@@ -147,11 +151,13 @@ public class KerhoGUIController implements Initializable {
     
     
     private String kerhonNimi = "Paras Golfkerho";
+    
     private Kerho kerho;
     private TextField edits[];
     private int kentta = 0;
     private static Kierros apukierros = new Kierros();
     private static Pelaaja apupelaaja = new Pelaaja();
+    private static Kentta apukentta   = new Kentta();
     
     
     /**
@@ -197,6 +203,22 @@ public class KerhoGUIController implements Initializable {
         tableKierrokset.setEditable(false);
         tableKierrokset.setOnMouseClicked( e -> { if ( e.getClickCount() > 1 ) muokkaaKierrosta(); } );
         tableKierrokset.setOnKeyPressed( e -> {if ( e.getCode() == KeyCode.F2 ) muokkaaKierrosta();}); 
+
+    }
+      
+    
+    private void lisaaKerho() {
+        if (apukentta == null) return;
+        try {
+            Kentta kentta1 = UusiKerhoGUIController.kysyKentta(null, apukentta.clone());
+            if (kentta1 == null) return;
+            kerho.korvaaTaiLisaa(kentta1);
+            hae(kentta1.getKerhoId());
+        } catch (CloneNotSupportedException e) {
+            //
+        } catch (SailoException e) {
+            Dialogs.showMessageDialog(e.getMessage());
+        }
 
     }
     
@@ -271,9 +293,14 @@ public class KerhoGUIController implements Initializable {
      * @return true jos saa sulkaa sovelluksen, false jos ei
      */
     public boolean voikoSulkea() {
-        tallenna();
+        boolean vastaus = Dialogs.showQuestionDialog("Lopetus?", "Haluatko varmasti sulkea ohjelman?", "Kyllä", "Peruuta");
+        if (vastaus) {
+            tallenna();
+            Platform.exit();
+        }
+        //tallenna();
         // TODO: pitää tarkistaa tämäkin, onko yhteydessä toiseen lopeta
-        return true;
+        return false;
     }
     
     
@@ -379,6 +406,8 @@ public class KerhoGUIController implements Initializable {
         
         if (!Dialogs.showQuestionDialog("Poisto", "Haluatko varmasti poistaa kierroksen?", "Kyllä", "Ei"))
             return;
+        
+        // TODO: tasoituskierros? Varmistus tähän
         
         kerho.poistaKierros(kierros);
         naytaKierrokset(pelaajaKohdalla);
@@ -506,9 +535,8 @@ public class KerhoGUIController implements Initializable {
      */
     public void tulostaValitut(TextArea text) {
         try (PrintStream os = TextAreaOutputStream.getTextPrintStream(text)) {
-            os.println("Tulostetaan kaikki jäsenet");
-            Collection<Pelaaja> pelaajat = kerho.etsi("", -1); 
-            for (Pelaaja pelaaja:pelaajat) { 
+            os.println("Tulostetaan valitut pelaajat");
+            for (Pelaaja pelaaja: chooserPelaajat.getObjects()) { 
                 tulosta(os, pelaaja);
                 os.println("\n\n");
             }

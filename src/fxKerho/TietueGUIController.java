@@ -26,7 +26,6 @@ public class TietueGUIController<TYPE extends Tietue> implements ModalController
 
     @FXML private Label labelVirhe;
     @FXML private GridPane gridTietue;
-    //@FXML ScrollPane panelTietue;
 
     
     @Override
@@ -59,9 +58,9 @@ public class TietueGUIController<TYPE extends Tietue> implements ModalController
 
     @FXML private void handleOK() {
         if ( tietueKohdalla != null && tietueKohdalla.anna(tietueKohdalla.ekaKentta()).trim().equals("") ) {
-            naytaVirhe("ei saa olla tyhjä");
+            naytaVirhe("Ei saa olla tyhjä");
             return;
-        }       
+        }
         ModalController.closeStage(labelVirhe);
     }
 

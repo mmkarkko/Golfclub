@@ -24,8 +24,32 @@ public class Kerho {
 
     private Pelaajat pelaajat = new Pelaajat();
     private Kierrokset kierrokset = new Kierrokset();
+    private Kentat kentat = new Kentat();
     //private String hakemisto = "koekelmit";
 
+    
+    /**
+     * Lisää kerhoon uuden kentän
+     * @param kentta lisättävä kenttä
+     * @throws SailoException jos ei onnistu
+     */
+    public void lisaa(Kentta kentta) throws SailoException {
+        kentat.lisaa(kentta);
+    }
+    
+    
+    /**
+     * Korvaa kentan tietorakenteessa.
+     * Etsitään samalla tunnusnumerolla oleva kenttä. Jos ei löydy,
+     * lisätään uutena kenttänä.
+     * @param kentta lisättävän kentän viite
+     * @throws SailoException poikkeus
+     */
+    public void korvaaTaiLisaa(Kentta kentta) throws SailoException {
+        kentat.korvaaTaiLisaa(kentta);
+    }   
+    
+    
     
     /**
      * Lisätään uusi pelaaja
@@ -86,7 +110,7 @@ public class Kerho {
 
     
     /** 
-     * Palauttaal istan pelaajista jotkva vastaavat hakuehtoon 
+     * Palauttaa listan pelaajista jotkva vastaavat hakuehtoon 
      * @param ehto hakuehto   
      * @param k kentän indeksi jonka mukaan etsitään
      * @return löytyneet pelaajat
@@ -100,16 +124,12 @@ public class Kerho {
      * Poistaa pelaajista ja kierroksista pelaajan tiedot
      * @param pelaaja joka poistetaan
      * @return montako pelaajaa poistettiin
-     * @example
-     * <pre name="test">
-     *  #THROWS Exception
-     *  alusta();
-     *  kerho.etsi("*",0).size() === 2;
-     *  kerho.annaKierrokset(p1).size() === 2;
-     *  kerho.poista(p1) === 1;
-     *  kerho.etsi("*",0).size() === 1;
-     *  kerho.annaKierrokset(p1).size() === 0;
-     *  kerhi.annaKierrokset(p2).size() === 3;
+     * Kerho kerho = new Kerho();
+     * Pelaaja p1 = new Pelaaja();
+     * p1.rekisteroi();
+     * kerho.lisaa(p1);
+     * kerho.getPelaajia() === 1;
+     * kerho.poista(p1) === 1;
      * </pre>
      */
     public int poista(Pelaaja pelaaja) {
@@ -137,11 +157,14 @@ public class Kerho {
      * @example
      * <pre name="test">
      * #import java.util.*;
+     * 
      * Kerho kerho = new Kerho();
      * Pelaaja p1 = new Pelaaja(), p2 = new Pelaaja(), p3 = new Pelaaja();
      * p1.rekisteroi(); p2.rekisteroi(); p3.rekisteroi();
+     * 
      * int id1 = p1.getpelaajaNro();
      * int id2 = p2.getpelaajaNro();
+     * 
      * Kierros k1 = new Kierros(id1); kerho.lisaa(k1);
      * Kierros k2 = new Kierros(id1); kerho.lisaa(k2);
      * Kierros k3 = new Kierros(id2); kerho.lisaa(k3);
@@ -176,8 +199,8 @@ public class Kerho {
         if ( !nimi.isEmpty() ) hakemistonNimi = nimi +"/";
         pelaajat.setTiedostonPerusNimi(hakemistonNimi + "pelaajat");
         kierrokset.setTiedostonPerusNimi(hakemistonNimi + "kierrokset");
+        kentat.setTiedostonPerusNimi(hakemistonNimi + "kerhot");
     }
-
     
     
     /**
@@ -213,13 +236,13 @@ public class Kerho {
      *  
      *  Pelaaja aku1 = new Pelaaja(); aku1.vastaaAkuAnkka(); aku1.rekisteroi();
      *  Pelaaja aku2 = new Pelaaja(); aku2.vastaaAkuAnkka(); aku2.rekisteroi();
-     *  Kierros pitsi21 = new Kierros(); pitsi21.vastaaPitsinNyplays(aku2.getTunnusNro());
-     *  Kierros pitsi11 = new Kierros(); pitsi11.vastaaPitsinNyplays(aku1.getTunnusNro());
-     *  Kierros pitsi22 = new Kierros(); pitsi22.vastaaPitsinNyplays(aku2.getTunnusNro()); 
-     *  Kierros pitsi12 = new Kierros(); pitsi12.vastaaPitsinNyplays(aku1.getTunnusNro()); 
-     *  Kierros pitsi23 = new Kierros(); pitsi23.vastaaPitsinNyplays(aku2.getTunnusNro());
+     *  Kierros pitsi21 = new Kierros(); pitsi21.vastaaKierros(aku2.getpelaajaNro());
+     *  Kierros pitsi11 = new Kierros(); pitsi11.vastaaKierros(aku1.getpelaajaNro());
+     *  Kierros pitsi22 = new Kierros(); pitsi22.vastaaKierros(aku2.getpelaajaNro()); 
+     *  Kierros pitsi12 = new Kierros(); pitsi12.vastaaKierros(aku1.getpelaajaNro()); 
+     *  Kierros pitsi23 = new Kierros(); pitsi23.vastaaKierros(aku2.getpelaajaNro());
      *   
-     *  String hakemisto = "testikelmit";
+     *  String hakemisto = "koekerho";
      *  File dir = new File(hakemisto);
      *  File ftied  = new File(hakemisto+"/pelaajat.dat");
      *  File fhtied = new File(hakemisto+"/kierrokset.dat");
@@ -242,7 +265,7 @@ public class Kerho {
      *  it.next() === aku1;
      *  it.next() === aku2;
      *  it.hasNext() === false;
-     *  List<Kierros> loytyneet = kerho.annaHarrastukset(aku1);
+     *  List<Kierros> loytyneet = kerho.annaKierrokset(aku1);
      *  Iterator<Kierros> ih = loytyneet.iterator();
      *  ih.next() === pitsi11;
      *  ih.next() === pitsi12;
@@ -258,7 +281,7 @@ public class Kerho {
      *  kerho.tallenna();
      *  ftied.delete()  === true;
      *  fhtied.delete() === true;
-     *  File fbak = new File(hakemisto+"/nimet.bak");
+     *  File fbak = new File(hakemisto+"/pelaajat.bak");
      *  File fhbak = new File(hakemisto+"/kierrokset.bak");
      *  fbak.delete() === true;
      *  fhbak.delete() === true;
@@ -268,10 +291,12 @@ public class Kerho {
     public void lueTiedostosta(String nimi) throws SailoException {
         pelaajat = new Pelaajat(); // jos luetaan olemassa olevaan niin helpoin tyhjentää näin
         kierrokset = new Kierrokset();
+        kentat = new Kentat();
 
         setTiedosto(nimi);
         pelaajat.lueTiedostosta(nimi);
         kierrokset.lueTiedostosta(nimi);
+        kentat.lueTiedostosta(nimi);
     }
 
 
@@ -292,6 +317,12 @@ public class Kerho {
             kierrokset.tallenna();
         } catch ( SailoException ex ) {
             virhe += ex.getMessage();
+        }
+        
+        try {
+            kentat.tallenna();
+        } catch ( SailoException ex ) {
+            virhe = ex.getMessage();
         }
         if ( !"".equals(virhe) ) throw new SailoException(virhe);
     }

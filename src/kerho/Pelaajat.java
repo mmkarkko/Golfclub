@@ -47,12 +47,10 @@ public class Pelaajat implements Iterable<Pelaaja> {
     
     
     /**
-     * Lisää uuden jäsenen tietorakenteeseen.  Ottaa jäsenen omistukseensa.
-     * @param pelaaja lisätäävän jäsenen viite.  Huom tietorakenne muuttuu omistajaksi
-     * @throws SailoException jos tietorakenne on jo täynnä
+     * Lisää uuden pelaajan tietorakenteeseen.  Ottaa pelaaja omistukseensa.
+     * @param pelaaja lisätäävän pelaajan viite.  Huom tietorakenne muuttuu omistajaksi
      * @example
      * <pre name="test">
-     * #THROWS SailoException 
      * Pelaajat pelaajat = new Pelaajat();
      * Pelaaja aku1 = new Pelaaja(), aku2 = new Pelaaja();
      * pelaajat.getLkm() === 0;
@@ -69,7 +67,7 @@ public class Pelaajat implements Iterable<Pelaaja> {
      * pelaajat.lisaa(aku1); pelaajat.getLkm() === 5;
      * </pre>
      */
-    public void lisaa(Pelaaja pelaaja) throws SailoException {         
+    public void lisaa(Pelaaja pelaaja)  {         
         if (lkm >= alkiot.length) alkiot = Arrays.copyOf(alkiot, lkm+20); 
         alkiot[lkm] = pelaaja;
         lkm++;
@@ -79,30 +77,33 @@ public class Pelaajat implements Iterable<Pelaaja> {
     
     
     /**
+     * Korvaa pelaajan tietorakenteessa. Ottaa pelaajan omistukseensa
+     * Etsitään samalla pelaajanumerolla oleva pelaaja. Jos ei löydy, lisätään
+     * uutena pelaajana.
+     * @param pelaaja lisättävän pelaajan viite. Huom, tietorakenne muuttuu omistajaksi
+     * @throws SailoException jos tietorakenne täynnä
      * 
-     * @param pelaaja ...
-     * TODO: täytä
-     * @throws SailoException jos ei onnistu
      * <pre name="test">
      *  #import java.util.Iterator;
      *  #THROWS SailoException,CloneNotSupportedException
      *  #PACKAGEIMPORT
      *  Pelaajat pelaajat = new Pelaajat();
-     *  Pelaaja aku1 = new Pelaaja(), aku2 = new Pelaaja();
-     *  aku1.rekisteroi(); aku2.rekisteroi();
+     *  Pelaaja har1 = new Pelaaja(), har2 = new Pelaaja();
+     *  har1.rekisteroi(); har2.rekisteroi();
      *  pelaajat.getLkm() === 0;
-     *  pelaajat.korvaaTaiLisaa(aku1); pelaajat.getLkm() === 1;
-     *  pelaajat.korvaaTaiLisaa(aku2); pelaajat.getLkm() === 2;
-     *  Pelaaja aku3 = aku1.clone();
-     *  aku3.setPostios("00130 Kylä");
-     *  Iterator<Pelaaja> it = pelaajat.iterator();
-     *  it.next() == aku1 === true;
-     *  pelaajat.korvaaTaiLisaa(aku3); pelaajat.getLkm() === 2;
-     *  it = pelaajat.iterator();
-     *  Pelaaja j0 = it.next();
-     *  j0 === aku3;
-     *  j0 == aku3 === true;
-     *  j0 == aku1 === false;
+     *  pelaajat.korvaaTaiLisaa(har1); pelaajat.getLkm() === 1;
+     *  pelaajat.korvaaTaiLisaa(har2); pelaajat.getLkm() === 2;
+     *  Pelaaja har3 = har1.clone();
+     *  har3.aseta(2,"kkk");
+     *  Iterator<Pelaaja> i2=pelaajat.iterator();
+     *  i2.next() === har1;
+     *  pelaajat.korvaaTaiLisaa(har3); pelaajat.getLkm() === 2;
+     *  i2=pelaajat.iterator();
+     *  Pelaaja h = i2.next();
+     *  h === har3;
+     *  h == har3 === true;
+     *  h == har1 === false;
+     *  
      * </pre>
      */
     public void korvaaTaiLisaa(Pelaaja pelaaja) throws SailoException {
@@ -122,6 +123,16 @@ public class Pelaajat implements Iterable<Pelaaja> {
      * Poistaa pelaajan, jolla on valittu pelaajanumero
      * @param id poistettavan pelaajan pelaajaID
      * @return 1 jos jotakin poistettiin, 0 jos ei löydy
+     * @example
+     * <pre name="test">
+     * #THROWS SailoException 
+     * Pelaajat pelaajat = new Pelaajat();
+     * Pelaaja p1 = new Pelaaja();
+     * Pelaaja p2 = new Pelaaja();
+     * pelaajat.lisaa(p1);
+     * pelaajat.lisaa(p2);
+     * pelaajat.poista(1) === 1;
+     * </pre>
      */
     public int poista(int id) {
         int ind = etsiId(id);
@@ -131,8 +142,7 @@ public class Pelaajat implements Iterable<Pelaaja> {
             alkiot[i] = alkiot[i+1];
         alkiot[lkm] = null;
         muutettu = true;
-        return 1;
-            
+        return 1;        
     }
     
     
@@ -412,8 +422,6 @@ public class Pelaajat implements Iterable<Pelaaja> {
     }
 
 
-
-
     /** 
      * Palauttaa "taulukossa" hakuehtoon vastaavien pelaajien viitteet 
      * @param ehto mitä etsitään
@@ -437,9 +445,8 @@ public class Pelaajat implements Iterable<Pelaaja> {
     
     /**
      * @param args ei käytössä
-     * @throws SailoException jos liikaa
      */
-    public static void main(String[] args) throws SailoException {
+    public static void main(String[] args) {
         Pelaajat pelaajat = new Pelaajat();
         
         Pelaaja p1 = new Pelaaja();

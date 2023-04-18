@@ -36,12 +36,12 @@ public class Kierros implements Cloneable, Tietue{
     
     private static int seuraavaKierrosNro = 1;    
     
-    private int pv = 0;
-    private int kk = 0;
-    private int vv = 0;
-    
-    private int tunnit = 0;
-    private int minuutit = 0;
+//    private int pv = 0;
+//    private int kk = 0;
+//    private int vv = 0;
+//    
+//    private int tunnit = 0;
+//    private int minuutit = 0;
     
     
     /**
@@ -116,14 +116,15 @@ public class Kierros implements Cloneable, Tietue{
      * @example
      * <pre name="test">
      *   Kierros k = new Kierros();
-     *   k.parse("   1   |   2   |  13.4.2023  |   12.20  | ei | 18   |   Paras Golfkerho ");
+     *   k.parse("   1   |   2   |  13.4.2023  |   12.20  | ei | 18   |  15.0  |  Paras Golfkerho ");
      *   k.anna(0) === "1";   
      *   k.anna(1) === "2";   
      *   k.anna(2) === "13.4.2023";   
      *   k.anna(3) === "12.20";   
      *   k.anna(4) === "ei";
      *   k.anna(5) === "18";
-     *   k.anna(6) === "Paras Golfkerho";    
+     *   k.anna(6) === "15.0";
+     *   k.anna(7) === "Paras Golfkerho";    
      * </pre>
      */
     @Override
@@ -143,6 +144,7 @@ public class Kierros implements Cloneable, Tietue{
 
     
     /**
+     * TODO: testit
      * Asetetaan valitun kentän sisältö.  Mikäli asettaminen onnistuu,
      * palautetaan null, muutoin virheteksti.
      * @param k minkä kentän sisältö asetetaan
@@ -150,11 +152,11 @@ public class Kierros implements Cloneable, Tietue{
      * @return null jos ok, muuten virheteksti
      * @example
      * <pre name="test">
-     *   Harrastus har = new Harrastus();
-     *   har.aseta(3,"kissa") === "aloitusvuosi: Ei kokonaisluku (kissa)";
-     *   har.aseta(3,"1940")  === null;
-     *   har.aseta(4,"kissa") === "h/vko: Ei kokonaisluku (kissa)";
-     *   har.aseta(4,"20")    === null;
+     *   Kierros k = new Kierros();
+     *   k.aseta(3,"kissa") === "aloitusvuosi: Ei kokonaisluku (kissa)";
+     *   k.aseta(3,"1940")  === null;
+     *   k.aseta(4,"kissa") === "h/vko: Ei kokonaisluku (kissa)";
+     *   k.aseta(4,"20")    === null;
      * </pre>
      */
     @Override
@@ -193,18 +195,17 @@ public class Kierros implements Cloneable, Tietue{
 
 
     /**
-     * Tehdään identtinen klooni jäsenestä
-     * @return Object kloonattu jäsen
-     * TODO: korjaa testit
+     * Tehdään identtinen klooni kierroksesta
+     * @return Object kloonattu kierros
      * @example
      * <pre name="test">
      * #THROWS CloneNotSupportedException 
-     *   Harrastus har = new Harrastus();
-     *   har.parse("   2   |  10  |   Kalastus  | 1949 | 22 t ");
-     *   Harrastus kopio = har.clone();
-     *   kopio.toString() === har.toString();
-     *   har.parse("   1   |  11  |   Uinti  | 1949 | 22 t ");
-     *   kopio.toString().equals(har.toString()) === false;
+     *   Kierros k = new Kierros();
+     *   k.parse("  1   |  10  |   10.4.2023  | 10.00 | ei  |  kyllä  |  18  |   15.0   |  Paras Golfkerho ");
+     *   Kierros kopio = k.clone();
+     *   kopio.toString() === k.toString();
+     *   k.parse("   1   |  11  |   14.4.2023  | 10.20 | ei   | kyllä   |  18  |  10.0  |  Paras Golfkerho ");
+     *   kopio.toString().equals(k.toString()) === false;
      * </pre>
      */
     @Override
@@ -213,42 +214,40 @@ public class Kierros implements Cloneable, Tietue{
     }
 
     
-    /**
-     * Hakee päivämäärän
-     * @return päivämäärä tänään
-     */
-    public String paivays() {
-        pv = kalenteri.get(Calendar.DATE);
-        kk = (kalenteri.get(Calendar.MONTH)+1);
-        vv = kalenteri.get(Calendar.YEAR);
-        return pv + "." + kk + "." + vv;
-    }
+//    /**
+//     * Hakee päivämäärän
+//     * @return päivämäärä tänään
+//     */
+//    public String paivays() {
+//        pv = kalenteri.get(Calendar.DATE);
+//        kk = (kalenteri.get(Calendar.MONTH)+1);
+//        vv = kalenteri.get(Calendar.YEAR);
+//        return pv + "." + kk + "." + vv;
+//    }
     
-    
-    /**
-     * Hakee kellonajan
-     * @return kellonaika tällä hetkellä
-     */
-    public String kellonaika() {
-        tunnit = kalenteri.get(Calendar.HOUR_OF_DAY);
-        minuutit = kalenteri.get(Calendar.MINUTE);
-        return tunnit + ":" + minuutit;
-    }
+//    
+//    /**
+//     * Hakee kellonajan
+//     * @return kellonaika tällä hetkellä
+//     */
+//    public String kellonaika() {
+//        tunnit = kalenteri.get(Calendar.HOUR_OF_DAY);
+//        minuutit = kalenteri.get(Calendar.MINUTE);
+//        return tunnit + ":" + minuutit;
+//    }
     
     
     /**
      * Täyttää kierroksen kentät
-     * TODO: poista, kun kaikki toimii
      * @param nro pelaajan numero
      */
     public void vastaaKierros(int nro) {
         pelaajaNro      = nro;
-        pvm             = paivays();
-        lahtoAika       = kellonaika();
+        pvm             = "16.4.2023";
+        lahtoAika       = "15.50";
         onkoTasoitus    = "ei";
-        pelatutReiat    = (int) (Math.random() * (18 - 9) + 9);
-        pelaajanHcp     = Math.round(Math.random() * (54 - 3) + 3);
-        //pelaajanHcp     = Pelaaja.getTasoitus();
+        pelatutReiat    = 18;
+        pelaajanHcp     = 15.0;
         pelattuKentta   = "Paras Golfkerho";
     }
 
@@ -329,17 +328,10 @@ public class Kierros implements Cloneable, Tietue{
      * @param rivi josta harrastuksen tiedot otetaan
      * @example
      * <pre name="test">
-     *   Harrastus harrastus = new Harrastus();
-     *   harrastus.parse("   2   |  10  |   Kalastus  | 1949 | 22 t ");
-     *   harrastus.getJasenNro() === 10;
-     *   harrastus.toString()    === "2|10|Kalastus|1949|22";
-     *   
-     *   harrastus.rekisteroi();
-     *   int n = harrastus.getTunnusNro();
-     *   harrastus.parse(""+(n+20));
-     *   harrastus.rekisteroi();
-     *   harrastus.getTunnusNro() === n+20+1;
-     *   harrastus.toString()     === "" + (n+20+1) + "|10|Kalastus|1949|22";
+     *   Kierros kierros = new Kierros();
+     *   kierros.parse("  1   |  3  |   11.7.2023  |  18.50  |   ei  |  9   |  11.0  |   Paras Golfkerho");
+     *   kierros.getPelaajaNro() === 3;
+     *   kierros.toString()    === "1|3|11.7.2023|18.50|ei|9|11.0|Paras Golfkerho";
      * </pre>
      */
     public void parse(String rivi) {
@@ -354,9 +346,9 @@ public class Kierros implements Cloneable, Tietue{
      * @return harrastus tolppaeroteltuna merkkijonona 
      * @example
      * <pre name="test">
-     *   Kierros kierros = new Kierrokset();
-     *   kierros.parse("   2   |  10  |   Kalastus  | 1949 | 22 t ");
-     *   kierros.toString()    === "2|10|Kalastus|1949|22";
+     *   Kierros kierros = new Kierros();
+     *   kierros.parse("  1   |  3  |   11.7.2023  |  18.50  |   ei  |  9   |  11.0  |   Paras Golfkerho");
+     *   kierros.toString()    === "1|3|11.7.2023|18.50|ei|9|11.0|Paras Golfkerho";
      * </pre>
      */
     @Override

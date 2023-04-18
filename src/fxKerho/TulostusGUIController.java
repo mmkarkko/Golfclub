@@ -1,10 +1,11 @@
 package fxKerho;
 
-import fi.jyu.mit.fxgui.Dialogs;
 import fi.jyu.mit.fxgui.ModalController;
 import fi.jyu.mit.fxgui.ModalControllerInterface;
 import javafx.fxml.FXML;
+import javafx.print.PrinterJob;
 import javafx.scene.control.TextArea;
+import javafx.scene.web.WebEngine;
 
 /**
  * Luokka, joka hoitaa tulostuksen
@@ -21,7 +22,13 @@ public class TulostusGUIController  implements ModalControllerInterface<String>{
     }
 
     @FXML void handleTulosta() {
-        Dialogs.showMessageDialog("Ei osata vielä tulostaa");
+        PrinterJob job = PrinterJob.createPrinterJob();
+        if (job != null && job.showPrintDialog(null)) {
+            WebEngine webEngine = new WebEngine();
+            webEngine.loadContent("<pre>" + tulostusAlue.getText() + "</pre");
+            webEngine.print(job);
+            job.endJob();
+        }
     }
 
     @Override

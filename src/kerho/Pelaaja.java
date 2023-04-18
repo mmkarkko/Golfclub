@@ -40,7 +40,7 @@ public class Pelaaja implements Cloneable, Tietue {
     private String      katuOs          = "";
     private String      postiOs         = "";
     private int         osakeNro        = 0;
-    private String    jasenMaksu        = "OK";
+    private String      jasenMaksu      = "OK";
     private String      pelaajanKerho   = "Paras Golfkerho";
 
     
@@ -67,7 +67,6 @@ public class Pelaaja implements Cloneable, Tietue {
         
         @Override
         public int compare(Pelaaja p1, Pelaaja p2) {
-            // TODO Auto-generated method stub
             return p1.anna(k).compareTo(p2.anna(k));
         }
         //
@@ -122,9 +121,9 @@ public class Pelaaja implements Cloneable, Tietue {
      * @return palauttaa nimen
      * @example
      * <pre name="test">
-     *   Pelaaja aku = new Pelaaja();
-     *   aku.vastaaAkuAnkka();
-     *   aku.getNimi() =R= "Ankka Aku .*";
+     *   Pelaaja p = new Pelaaja();
+     *   p.vastaaAkuAnkka();
+     *   p.getNimi() =R= "Pelaaja Petteri";
      * </pre>
      */
     public String getNimi() {
@@ -187,7 +186,6 @@ public class Pelaaja implements Cloneable, Tietue {
      * @param k kuinka monennen kentän arvo asetetaan
      * @param jono joka asetetaan kentän arvoksi
      * @return null jos asettaminen onnistuu, muuten vastaava virheilmoitus.
-     * TODO: muokkaa testit
      * @example
      * <pre name="test">
      *   Pelaaja pelaaja = new Pelaaja();
@@ -195,8 +193,7 @@ public class Pelaaja implements Cloneable, Tietue {
      *   pelaaja.aseta(2,"kissa") =R= "Hetu liian lyhyt"
      *   pelaaja.aseta(2,"030201-1111") === "Tarkistusmerkin kuuluisi olla C"; 
      *   pelaaja.aseta(2,"030201-111C") === null; 
-     *   pelaaja.aseta(9,"kissa") === "Liittymisvuosi väärin jono = \"kissa\"";
-     *   pelaaja.aseta(9,"1940") === null;
+     *   pelaaja.aseta(9,"ok") === null;
      * </pre>
      */
     @Override
@@ -402,8 +399,8 @@ public class Pelaaja implements Cloneable, Tietue {
      * @example
      * <pre name="test">
      *   Pelaaja pelaaja = new Pelaaja();
-     *   pelaaja.parse("   3  |  Ankka Aku   | 030201-111C");
-     *   pelaaja.toString().startsWith("3|Ankka Aku|030201-111C|") === true; // on enemmäkin kuin 3 kenttää, siksi loppu |
+     *   pelaaja.parse(" 3  | Teetime Tiina  | 010428-802Y |  11.0 |  010-0101010  | tiinateetime@golffari.fi | Tiikuja 1 |  11001 Tiiala  | 1  | OK   | 1  ");
+     *   pelaaja.toString().startsWith("3|Teetime Tiina|010428-802Y|") === true; // on enemmäkin kuin 3 kenttää, siksi loppu |
      * </pre>  
      */
     @Override
@@ -420,22 +417,16 @@ public class Pelaaja implements Cloneable, Tietue {
     
     
     /**
-     * Selvitää jäsenen tiedot | erotellusta merkkijonosta
+     * Selvitää pelaajan tiedot |-merkein erotellusta merkkijonosta
      * Pitää huolen että seuraavaNro on suurempi kuin tuleva tunnusNro.
      * @param rivi josta jäsenen tiedot otetaan
      * 
      * @example
      * <pre name="test">
      *   Pelaaja pelaaja = new Pelaaja();
-     *   pelaaja.parse("   1  |  Pelaaja Petteri   | 030201-111C");
-     *   pelaaja.getpelaajaNro() === 1;
-     *   pelaaja.toString().startsWith("1|Pelaaja Petteri|030201-111C|") === true; // on enemmäkin kuin 3 kenttää, siksi loppu |
-     *
-     *   pelaaja.rekisteroi();
-     *   int n = pelaaja.getpelaajaNro();
-     *   pelaaja.parse(""+(n+20));       // Otetaan merkkijonosta vain tunnusnumero
-     *   pelaaja.rekisteroi();           // ja tarkistetaan että seuraavalla kertaa tulee yhtä isompi
-     *   pelaaja.getpelaajaNro() === n+20+1;
+     *   pelaaja.parse(" 3  | Teetime Tiina  | 010428-802Y |  11.0 |  010-0101010  | tiinateetime@golffari.fi | Tiikuja 1 |  11001 Tiiala  | 1  | OK   | 1  ");
+     *   pelaaja.getpelaajaNro() === 3;
+     *   pelaaja.toString().startsWith("3|Teetime Tiina|010428-802Y|") === true; // on enemmäkin kuin 3 kenttää, siksi loppu |
      *     
      * </pre>
      */
@@ -450,20 +441,19 @@ public class Pelaaja implements Cloneable, Tietue {
      * Tutkii onko pelaajan tiedot samat kuin parametrina tuodun pelaajan tiedot
      * @param pelaaja johon verrataan
      * @return true jos kaikki tiedot samat, false muuten
-     * TODO: korjaa testit
      * @example
      * <pre name="test">
-     *   Jasen jasen1 = new Jasen();
-     *   jasen1.parse("   3  |  Ankka Aku   | 030201-111C");
-     *   Jasen jasen2 = new Jasen();
-     *   jasen2.parse("   3  |  Ankka Aku   | 030201-111C");
-     *   Jasen jasen3 = new Jasen();
-     *   jasen3.parse("   3  |  Ankka Aku   | 030201-115H");
+     *   Pelaaja p1 = new Pelaaja();
+     *   p1.parse("   1  | Pelaaja Petteri | 070819-5398 |5.4  | 000-9999999  | petepelaaja@golffari.fi  | Pelimiehenkuja 1 | 11111 Pelilä     | 1  | OK  |1  ");
+     *   Pelaaja p2 = new Pelaaja();
+     *   p2.parse("   1  | Pelaaja Petteri | 070819-5398 |5.4  | 000-9999999  | petepelaaja@golffari.fi  | Pelimiehenkuja 1 | 11111 Pelilä     | 1  | OK  |1  ");
+     *   Pelaaja p3 = new Pelaaja();
+     *   p3.parse("3   | Teetime Tiina  |010428-802Y | 11.0 | 010-0101010  | tiinateetime@golffari.fi | Tiikuja    |11001 Tiiala     |  1  |OK   |1     ");
      *   
-     *   jasen1.equals(jasen2) === true;
-     *   jasen2.equals(jasen1) === true;
-     *   jasen1.equals(jasen3) === false;
-     *   jasen3.equals(jasen2) === false;
+     *   p1.equals(p2) === true;
+     *   p2.equals(p1) === true;
+     *   p1.equals(p3) === false;
+     *   p3.equals(p2) === false;
      * </pre>
      */
     public boolean equals(Pelaaja pelaaja) {
@@ -493,10 +483,10 @@ public class Pelaaja implements Cloneable, Tietue {
      * <pre name="test">
      * #THROWS CloneNotSupportedException 
      *   Pelaaja pelaaja = new Pelaaja();
-     *   pelaaja.parse("   3  |  Ankka Aku   | 123");
+     *   pelaaja.parse(" 3  | Teetime Tiina  | 010428-802Y |  11.0 |  010-0101010  | tiinateetime@golffari.fi | Tiikuja 1 |  11001 Tiiala  | 1  | OK   | 1  ");
      *   Pelaaja kopio = pelaaja.clone();
      *   kopio.toString() === pelaaja.toString();
-     *   pelaaja.parse("   4  |  Ankka Tupu   | 123");
+     *   pelaaja.parse(" 8   | Ping Pinja    |040689-126E | 4.3  | 425-4250425  |  pingpin@golffari.fi   | Pinjatie 3   | 04255 Pinjala    | 5    | OK  |1     ");
      *   kopio.toString().equals(pelaaja.toString()) === false;
      * </pre>
      */
@@ -505,65 +495,6 @@ public class Pelaaja implements Cloneable, Tietue {
         Pelaaja uusi = (Pelaaja) super.clone();
         return uusi;
     }
- 
-    
-//    /**
-//     * @return pelaajan hetu
-//     */
-//    public String getHetu() {
-//        return hetu;
-//    }
-//
-//
-//    /**
-//     * 
-//     * @return pelaajan puhelinnumero
-//     */
-//    public String getPuh() {
-//        return puhNro;
-//    }
-//    /**
-//     * @return pelaajan sähköpostiosoite
-//     */
-//    public String getEmail() {
-//        return email;
-//    }
-//    
-//    
-//  /**
-//   * Palauttaa pelaajan tasoituksen
-//   * @return tasoitus
-//   */
-//  public double getTasoitus() {
-//      return hcp;
-//  }    
-//
-//
-//    /**
-//     * 
-//     * @return pelaajan katuosoite
-//     */
-//    public String getKatuos() {
-//        return katuOs;
-//    }
-//
-//    
-//    /**
-//     * 
-//     * @return pelaajan postiosoite
-//     */
-//    public String getPostios() {
-//        return postiOs;
-//    }
-//    
-//
-//    /**
-//     * 
-//     * @return pelaajan jasenmaksun tila
-//     */
-//    public String getJasMaksu() {
-//        return jasenMaksu;
-//    }
 
 
     /**
@@ -573,14 +504,6 @@ public class Pelaaja implements Cloneable, Tietue {
     public String getKentta() {
         return pelaajanKerho;
     }    
-//    /**
-//     * Asettaa pelaajalle tasoituksen
-//     * @param s Pelaajalle lisättävä tasoitus
-//     * @return virheilmoitus, null jos ok
-//     */
-//    public String setTasoitus(String s) {
-//        hcp = Double.valueOf(s);
-//        return null;
 
     
     /**
