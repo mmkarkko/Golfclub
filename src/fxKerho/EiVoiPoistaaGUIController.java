@@ -1,9 +1,10 @@
 package fxKerho;
 
-import fi.jyu.mit.fxgui.Dialogs;
+import fi.jyu.mit.fxgui.ModalController;
 import fi.jyu.mit.fxgui.ModalControllerInterface;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 
 /**
  * @author Miia Arkko
@@ -12,12 +13,15 @@ import javafx.fxml.FXML;
  */
 public class EiVoiPoistaaGUIController implements ModalControllerInterface<String>  {
     
+    @FXML private Button textButton;
+    
+    
     /**
      * Käsittelee mitä tapahtuu, kun painetaan ok-painiketta
      * @param event tapahtuma
      */
     @FXML void handleOK(ActionEvent event) {
-        Dialogs.showMessageDialog("Malttia! Myö ei osata vielä!");
+        ModalController.closeStage(textButton);
     }
     @Override
     public String getResult() {
@@ -27,14 +31,12 @@ public class EiVoiPoistaaGUIController implements ModalControllerInterface<Strin
 
     @Override
     public void handleShown() {
-        // TODO Auto-generated method stub
-        
+        // TODO Auto-generated method stub     
     }
 
     @Override
     public void setDefault(String oletus) {
-        // TODO Auto-generated method stub
-        
+        // TODO Auto-generated method stub       
     }
     
     
