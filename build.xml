@@ -16,7 +16,7 @@
             <zipfileset excludes="META-INF/*.SF" src="C:/devel/jar/Ali.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="C:/devel/jar/fxgui.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="C:/devel/jar/Graphics.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="C:/devel/jar/Music.jar"/> 
+            <zipfileset excludes="META-INF/*.SF" src="C:/devel/jar/Music.jar"/>
         </jar>
     </target>
 </project>

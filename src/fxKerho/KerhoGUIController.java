@@ -1,11 +1,20 @@
 package fxKerho;
+
 import javafx.event.ActionEvent;
-//import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Font;
+import kerho.Kerho;
+import kerho.Kierros;
+import kerho.Pelaaja;
+import kerho.SailoException;
 
+import java.io.PrintStream;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import fi.jyu.mit.fxgui.*;
 
@@ -13,10 +22,11 @@ import fi.jyu.mit.fxgui.*;
  * Luokka Golfkerhon käyttöliittymien tapahtumien hoitamiseksi
  * 
  * @author Miia Arkko
- * @version 10.2.2023
+ * @version 24.2.2023
  *
  */
 public class KerhoGUIController implements Initializable {
+    
     @FXML private TextField textPelaajaEmail;
     @FXML private TextField textPelaajaHCP;
     @FXML private TextField textPelaajaID;
@@ -25,13 +35,18 @@ public class KerhoGUIController implements Initializable {
     @FXML private TextField textPelaajaOsakeNro;
     @FXML private TextField textPelaajaPono;
     @FXML private TextField textPelaajaPuh;
-    @FXML private TextField textPelaajanJasenmaksu;
+    @FXML private TextField textPelaajanPelaajamaksu;
     @FXML private TextField textPelaajanKotiKentta;
+    @FXML private ListChooser<Pelaaja> chooserPelaajat;
+    @FXML private ScrollPane panelPelaaja;
+    
     
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
+        alusta();
         ModalController.showModal(LandingGUIController.class.getResource("LandingGUIView.fxml"), "Golfkerho", null, "Paras golfkerho");
     }
+    
     
     /**
      * Käsitellään uuden kerhon luominen
@@ -47,7 +62,8 @@ public class KerhoGUIController implements Initializable {
      * @param event tapahtuma
      */
     @FXML public void handleLisaaKierros(ActionEvent event) {
-        ModalController.showModal(MuokkaaKierrosGUIController.class.getResource("MuokkaaKierrosGUIView.fxml"), "Lisää kierros", null, "");
+        uusiKierros();
+        //ModalController.showModal(MuokkaaKierrosGUIController.class.getResource("MuokkaaKierrosGUIView.fxml"), "Lisää kierros", null, "");
     }
 
     
@@ -56,8 +72,10 @@ public class KerhoGUIController implements Initializable {
      * @param event tapahtuma
      */
     @FXML public void handlePoistaKierros(ActionEvent event) {
+        //if (onkoTasoitus) ;
         ModalController.showModal(EiVoiPoistaaGUIController.class.getResource("EiVoiPoistaaGUIView.fxml"), "Poista kierros", null, "");
     }
+    
     
     /**
      * Käsitellään apua-toiminto
@@ -67,6 +85,7 @@ public class KerhoGUIController implements Initializable {
         Dialogs.showMessageDialog("Ei osata vielä auttaa");
     }
 
+    
     /**
      * Käsitellään tietojen avaaminen
      * @param event tapahtuma
@@ -75,6 +94,7 @@ public class KerhoGUIController implements Initializable {
         avaa();
     }
 
+    
     /**
      * Käsitellään lopetuskäsky
      * @param event tapahtuma
@@ -83,6 +103,7 @@ public class KerhoGUIController implements Initializable {
         Dialogs.showMessageDialog("Ei osata lopettaa!");
     }
 
+    
     /**
      * Käsitellään tietojen muokkaaminen
      * @param event tapahtuma
@@ -91,6 +112,7 @@ public class KerhoGUIController implements Initializable {
         ModalController.showModal(MuokkaaJasenGUIController.class.getResource("MuokkaaJasenGUIView.fxml"), "Jäsen", null, "");
     }
 
+    
     /**
      * Käsitellään jäsenen tietojen poistaminen
      * @param event tapahtuma
@@ -99,6 +121,7 @@ public class KerhoGUIController implements Initializable {
         Dialogs.showMessageDialog("Ei osata vielä poistaa");
     }
 
+    
     /**
      * Käsitellään tallennuskäsky
      * @param event tapahtuma
@@ -107,6 +130,7 @@ public class KerhoGUIController implements Initializable {
         Dialogs.showMessageDialog("Ei osata vielä tallentaa");
     }
 
+    
     /**
      * Näyttää 'tietoja' ikkunan
      * @param event tapahtuma
@@ -115,6 +139,7 @@ public class KerhoGUIController implements Initializable {
         ModalController.showModal(LandingGUIController.class.getResource("TietojaGUIView.fxml"), "Tietoja", null, "");
     }
 
+    
     /**
      * Käsitellään tulostuskäsky
      * @param event tapahtuma
@@ -125,34 +150,72 @@ public class KerhoGUIController implements Initializable {
         //tulostaValitut(tulostusCtrl.getTextArea());
     }
     
+    
     /**
      * Käsitellään uuden jäsenen lisääminen
      * @param event  tapahtuma
      */
     @FXML void handleUusiJasen(ActionEvent event) {
-        ModalController.showModal(UusiJasenGUIController.class.getResource("UusiJasenGUIView.fxml"), "Lisää jäsen", null, "");
+        uusiPelaaja();
+        //ModalController.showModal(UusiPelaajaGUIController.class.getResource("UusiPelaajaGUIView.fxml"), "Lisää jäsen", null, "");
     }
+    
+    
     
     // ============================================================
     
+    
+    
+    private Kerho kerho;
+    private TextArea areaPelaaja = new TextArea(); // TODO: poista lopuksi
+    
+    
     /**
-     * Tietojen tallennus
+     * Alustetaan
      */
-    private void tallenna() {
-        Dialogs.showMessageDialog("Tallennetetaan! Mutta ei toimi vielä");
-    }
-  
-    /**
-     * Tarkistetaan onko tallennus tehty
-     * @return true jos saa sulkaa sovelluksen, false jos ei
-     */
-    public boolean voikoSulkea() {
-        tallenna();
-        return true;
+    private void alusta() {
+        chooserPelaajat.clear();
+        areaPelaaja.setFont(new Font("Courier New", 12));
+        panelPelaaja.setContent(areaPelaaja);
+        panelPelaaja.setFitToHeight(true);
+        chooserPelaajat.addSelectionListener(e -> naytaPelaaja());
+        
     }
     
     
     /**
+     * Näyttää pelaajan tiedot
+     */
+    private void naytaPelaaja() {
+        Pelaaja pelaajaKohdalla = chooserPelaajat.getSelectedObject();
+        
+        if (pelaajaKohdalla == null) return;
+        
+        areaPelaaja.setText("");
+        try (PrintStream os = TextAreaOutputStream.getTextPrintStream(areaPelaaja)) {
+            tulosta(os, pelaajaKohdalla);
+        }  
+    }
+    
+    
+    /**
+     * Tulostaa
+     * @param os tietovirta, johon tulostetaan
+     * @param pelaaja jonka tietoja tulsotetaan
+     */
+    private void tulosta(PrintStream os, final Pelaaja pelaaja) {
+        os.println("-----------------------------------------");
+        pelaaja.tulosta(os);
+        os.println("-----------------------------------------");
+        List<Kierros> kierrokset = kerho.annaKierrokset(pelaaja);
+        for (Kierros k : kierrokset)
+            k.tulosta(os);
+        os.println("-----------------------------------------");
+    }
+    
+    
+    /**
+     * Avataan 
      * @return false, jos painetaan peruuta
      */
     public boolean avaa() {
@@ -161,6 +224,80 @@ public class KerhoGUIController implements Initializable {
         //lueTiedosto(uusinimi);
         return true;
     }
+    
+    
+    /**
+     * Haetaan jäsenet uudelleen
+     * @param jnro mikä jäsen valitaan aktiiviseksi
+     */
+    private void hae(int jnro) {
+        chooserPelaajat.clear();
+    
+        int index = 0;
+        for (int i = 0; i < kerho.getPelaajia(); i++) {
+            Pelaaja pelaaja = kerho.annaPelaaja(i);
+            if (pelaaja.getpelaajaNro() == jnro) index = i;
+            chooserPelaajat.add(pelaaja.getNimi(), pelaaja);
+        }
+        chooserPelaajat.setSelectedIndex(index); // tästä tulee muutosviesti joka näyttää pelaajan
+    }
 
+     
+    /**
+     * Asetetaan käytettävä kerho
+     * @param kerho jota käytetään
+     */
+    public void setKerho(Kerho kerho) {
+        this.kerho = kerho;
+    }
+    
+    
+    /**
+     * Tietojen tallennus
+     */
+    private void tallenna() {
+        Dialogs.showMessageDialog("Tallennetaan! Mutta ei toimi vielä");
+    }
+    
+    
+    /**
+     * Lisätään pelaajalle uusi kierros
+     */
+    private void uusiKierros() {
+        Pelaaja pelaajaKohdalla = chooserPelaajat.getSelectedObject();
+        if (pelaajaKohdalla == null) return;
+        Kierros k1 = new Kierros();
+        k1.rekisteroi();
+        k1.vastaaKierros(pelaajaKohdalla.getpelaajaNro()); // TODO: korvaa dialogilla
+        kerho.lisaa(k1);
+        hae(pelaajaKohdalla.getpelaajaNro());
+    }
+
+    
+    /**
+     * Lisätään kerhoon uusi pelaaja
+     */
+    private void uusiPelaaja() {
+        Pelaaja uusi = new Pelaaja();
+        uusi.rekisteroi();
+        uusi.rekisteroiOsake();
+        uusi.vastaaAkuAnkka(); // TODO: korvaa dialogilla
+        try {
+            kerho.lisaa(uusi);
+        } catch (SailoException e) { 
+            Dialogs.showMessageDialog("Ongelmia uuden luomisessa " + e.getMessage());
+        }
+        hae(uusi.getpelaajaNro());
+    }
+  
+    
+    /**
+     * Tarkistetaan onko tallennus tehtyja voiko sovelluksen sulkea
+     * @return true jos saa sulkaa sovelluksen, false jos ei
+     */
+    public boolean voikoSulkea() {
+        tallenna();
+        return true;
+    }
 
 }

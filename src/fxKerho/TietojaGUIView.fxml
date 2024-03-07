@@ -8,13 +8,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="295.0" prefWidth="468.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxKerho.TietojaGUIController">
+<BorderPane prefHeight="295.0" prefWidth="468.0" stylesheets="@kerho.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxKerho.TietojaGUIController">
 <center>
       <VBox alignment="CENTER" styleClass="vaaleaVihrea" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" prefHeight="50.0" text="GOLF PELAAJAREKISTERI">
+            <Label alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" prefHeight="50.0" text="GOLFKERHO">
                <font>
-                  <Font name="Arial" size="24.0" />
+                  <Font name="Garamond" size="24.0" />
                </font></Label>
             <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Versio 2.0">
                <font>
