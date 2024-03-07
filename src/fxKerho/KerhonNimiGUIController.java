@@ -4,52 +4,51 @@ import fi.jyu.mit.fxgui.ModalController;
 import fi.jyu.mit.fxgui.ModalControllerInterface;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 /**
+ * Kystään kerhon nimi ja luodaan tätä varten dialogi.
  * 
  * @author Miia Arkko
- * @version 8.2.2023
- *
+ * @version 3.4.2023
  */
-public class LandingGUIController implements ModalControllerInterface<String> {
-
+public class KerhonNimiGUIController implements ModalControllerInterface<String> {
+    
     @FXML private TextField textVastaus;
-    @FXML private ImageView imageView;
     private String vastaus = null;
 
     
     @FXML private void handleOK() {
         vastaus = textVastaus.getText();
         ModalController.closeStage(textVastaus);
-    } 
-    
+    }
 
+    
     @FXML private void handleCancel() {
         ModalController.closeStage(textVastaus);
     }
 
-   
+
     @Override
     public String getResult() {
         return vastaus;
     }
+
     
     @Override
     public void setDefault(String oletus) {
-        textVastaus.setText(oletus);       
+        textVastaus.setText(oletus);
     }
-    
+
     
     /**
-     * Mitä tehdään, kun dialogi on näytetty
+     * Mitä tehdään kun dialogi on näytetty
      */
     @Override
     public void handleShown() {
         textVastaus.requestFocus();
     }
-     
+    
     
     /**
      * Luodaan nimenkysymisdialogi ja palautetaan siihen kirjoitettu nimi tai null
@@ -59,9 +58,8 @@ public class LandingGUIController implements ModalControllerInterface<String> {
      */
     public static String kysyNimi(Stage modalityStage, String oletus) {
         return ModalController.showModal(
-                LandingGUIController.class.getResource("LandingGUIView.fxml"),
-                "Paras golfkerho",
+                KerhonNimiGUIController.class.getResource("KerhonNimiView.fxml"),
+                "Kerho",
                 modalityStage, oletus);
-    }    
-
+    }
 }
