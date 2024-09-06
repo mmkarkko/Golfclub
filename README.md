@@ -28,6 +28,7 @@ Features:
     - User Management: Add, edit, and manage club members and their details.
     - Club Management: Create and manage different clubs and their activities.
     - User Interface: Intuitive and user-friendly interface designed using JavaFX.
+    - User can run searches for members using different criteria.
     - Printing: Functionality to print information.
     - Custom Styling: Application styling managed through CSS for a consistent look and feel.
 
