@@ -1,19 +1,20 @@
 package fxKerho;
-import fi.jyu.mit.fxgui.*;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
+import kerho.Kerho;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.fxml.FXMLLoader;
 
-
 /**
  * Pääohjelma Golfkerho-ohjelman käynnistämiseksi
  * @author Miia Arkko
- * @version 10.2.2023
+ * @version 24.2.2023
  *
  */
 public class KerhoMain extends Application {
+    
     @Override
     public void start(Stage primaryStage) {
         try {
@@ -25,6 +26,10 @@ public class KerhoMain extends Application {
             scene.getStylesheets().add(getClass().getResource("kerho.css").toExternalForm());
             primaryStage.setScene(scene);
             primaryStage.setTitle("Golf Pelaajarekisteri");
+            
+            
+            Kerho kerho = new Kerho();
+            kerhoCtrl.setKerho(kerho);
             
             // Platform.setImplicitExit(false); // jos tämän laittaa, pitää itse sulkea
             
@@ -39,6 +44,7 @@ public class KerhoMain extends Application {
         }
     }
 
+    
     /**
      * Käynnistää käyttöliittymän
      * 

@@ -77,7 +77,7 @@
          <items>
             <BorderPane maxWidth="160.0" minWidth="140.0" prefHeight="200.0" prefWidth="138.0">
                <center>
-                  <ListChooser rivit="Driver Diana&#10;Fore Felix&#10;Golffari Konrad&#10;Greeni Kalle&#10;Mulligan Mikko&#10;Pelaaja Petteri&#10;Ping Pinja&#10;Range Raija&#10;Teetime Teemu&#10;Teetime Tiina&#10;" BorderPane.alignment="CENTER">
+                  <ListChooser fx:id="chooserPelaajat" rivit="Driver Diana&#10;Fore Felix&#10;Golffari Konrad&#10;Greeni Kalle&#10;Mulligan Mikko&#10;Pelaaja Petteri&#10;Ping Pinja&#10;Range Raija&#10;Teetime Teemu&#10;Teetime Tiina&#10;" BorderPane.alignment="CENTER">
                      <BorderPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </BorderPane.margin></ListChooser>
@@ -113,7 +113,7 @@
                      </padding></Label>
                </top>
                <center>
-                  <ScrollPane fitToWidth="true" minHeight="-Infinity" minWidth="-Infinity" BorderPane.alignment="CENTER">
+                  <ScrollPane fx:id="panelPelaaja" fitToWidth="true" minHeight="-Infinity" minWidth="-Infinity" prefWidth="330.0" BorderPane.alignment="CENTER">
                      <content>
                         <GridPane hgap="10.0" minWidth="-Infinity" prefWidth="250.0">
                           <columnConstraints>
