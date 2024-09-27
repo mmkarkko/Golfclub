@@ -7,12 +7,12 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="497.0" prefWidth="354.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxKerho.TulostusGUIController">
+<BorderPane stylesheets="@kerho.css" prefHeight="497.0" prefWidth="354.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxKerho.TulostusGUIController">
    <bottom>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <buttons>
             <Button mnemonicParsing="false" onAction="#handleTulosta" text="Tulosta" />
-          <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOK" text="OK" />
+          <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOK" text="Peruuta" />
         </buttons>
          <padding>
             <Insets right="10.0" />

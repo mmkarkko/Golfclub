@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxKerho.UusiKerhoGUIController">
+<BorderPane stylesheets="@kerho.css"  styleClass="vaaleaVihrea" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxKerho.UusiKerhoGUIController">
    <top>
       <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <center>
@@ -32,7 +32,7 @@
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="textKerhonNumero" text="5" GridPane.columnIndex="1">
+                  <TextField fx:id="textKerhonNumero" editable="false" text="5" GridPane.columnIndex="1">
                      <GridPane.margin>
                         <Insets top="8.0" />
                      </GridPane.margin>
@@ -42,14 +42,14 @@
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="textKerhonKatu" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="textKerhonKatuOs" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Label text="Kerhon postiosoite" GridPane.rowIndex="3">
                      <GridPane.margin>
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="kerhonPono" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <TextField fx:id="kerhonPuh" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <TextField fx:id="textKerhonPostiOs" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField fx:id="textKerhonPuhNro" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <Label text="Puhelinnumero" GridPane.rowIndex="4">
                      <GridPane.margin>
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
@@ -60,7 +60,7 @@
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="textKerhonNimi" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="textKerhonNimi" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
                <BorderPane.margin>
                   <Insets top="5.0" />
@@ -70,6 +70,9 @@
                </padding>
             </GridPane>
          </center>
+         <bottom>
+            <Label fx:id="labelVirhe" BorderPane.alignment="CENTER" />
+         </bottom>
       </BorderPane>
    </top>
    <bottom>
