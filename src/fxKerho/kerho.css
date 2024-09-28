@@ -1,3 +1,21 @@
 .vaaleaVihrea {
-	-fx-background-color: #C1E756;
+	-fx-background-color: #dbf5dc;
 }
+
+.logoKuva {
+	 -fx-background-image: url("kuvat/logo.png");
+	 -fx-background-repeat: no-repeat;
+	 -fx-background-size: cover;
+	 -fx-background-size: 45%;
+	 -fx-background-position: center;
+}
+
+.virhe {
+   /* @SuppressWarning */
+   -fx-background-color: red;
+ }
+ 
+ .normaali {
+ 	/*@SuppressWarning */
+ 	-fx-background-color: white;
+ }
